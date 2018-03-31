@@ -11,6 +11,11 @@ import { PhotoTool } from '../../../Tools/PhotoTool';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from '../../../ApiServices/UserService';
 import { E_Cliente } from '../../../Models/E_Cliente';
+import { E_Usuario } from '../../../Models/E_Usuario';
+import { Router } from '@angular/router';
+import { ImageService } from '../../../ApiServices/ImageServices';
+import { E_Imagen } from '../../../Models/E_Imagen';
+import { AppSettings } from '../../../appSettings';
 
 @Component({
     selector: 'fuse-register',
@@ -19,6 +24,8 @@ import { E_Cliente } from '../../../Models/E_Cliente';
     animations: fuseAnimations
 })
 export class FuseRegisterComponent implements OnInit {
+    ErrorText: boolean;
+    successText: boolean = false;
     CapturedPhoto: boolean;
     public dataURL: any
     registerForm: FormGroup;
@@ -37,6 +44,8 @@ export class FuseRegisterComponent implements OnInit {
         private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
         private UserService: UserService,
+        private Router: Router,
+        private ImageService: ImageService
     ) {
         this.fuseConfig.setConfig({
             layout: {
@@ -115,7 +124,8 @@ export class FuseRegisterComponent implements OnInit {
         }
     }
     SelectedDepartamento(y) {
-        var depObj = this.ListDepartamentos.find(x => x.Id = y.value)
+
+        var depObj = this.ListDepartamentos.find(x => x.Id == y.value)
         this.ListMunicipiosGroup = this.ListMunicipiosBase.filter(x => x.Id_Departamento == Number(depObj.Codigo))
     }
     Continuar() {
@@ -132,10 +142,7 @@ export class FuseRegisterComponent implements OnInit {
         context.drawImage(video, 0, 0, 640, 480);
         this.dataURL = canvas.toDataURL('image/jpeg', 0.5);
         this.CapturedPhoto = true
-        //   var formdata = new FormData();
-        //  var blob = PhotoTool.dataURItoBlob(this.dataURL);
-        //  var fd = new FormData(document.forms[0]);
-        //  fd.append("canvasImage", blob, btoa(((new Date().getMilliseconds()) * Math.random()).toString()));
+
         //  this.ImageService.UploadJsonFile(fd).subscribe((x) => console.log(true))
 
     }
@@ -145,7 +152,10 @@ export class FuseRegisterComponent implements OnInit {
     }
     EnviarInfo() {
         var ClientObj: E_Cliente = new E_Cliente()
-        debugger
+        var UserObj: E_Usuario = new E_Usuario()
+        var ImagenObj: E_Imagen = new E_Imagen()
+        var ImageBaseUrl = AppSettings.API_ImageContent
+        var password = btoa(this.registerForm.value.password)
         ClientObj.Nombre = this.registerForm.value.Nombre
         ClientObj.Correo = this.registerForm.value.email
         ClientObj.Cedula = this.registerForm.value.Cedula.replace(/\./g, "");
@@ -157,14 +167,60 @@ export class FuseRegisterComponent implements OnInit {
         ClientObj.Estado = true
         ClientObj.Direccion = ""
 
-        this.UserService.crearCliente(ClientObj).subscribe((x: boolean) => {
+        UserObj.Email = ClientObj.Correo
+        UserObj.Estado = true
+        UserObj.Passwordd = password
+        UserObj.Id_Perfil = 1
+        UserObj.UserName = ClientObj.Correo
+
+        if (this.dataURL != undefined) {
+            var formdata = new FormData();
+            var blob = PhotoTool.dataURItoBlob(this.dataURL);
+            var fd = new FormData(document.forms[0]);
+            ImagenObj.Nombre = btoa(((new Date().getMilliseconds()) * Math.random()).toString())
+            ImagenObj.Ruta = ImageBaseUrl + ImagenObj.Nombre + '.jpeg'
+            ImagenObj.aprobada = true
+            UserObj.Imagen = ImagenObj.Ruta
+            fd.append("canvasImage", blob, ImagenObj.Nombre);
+            this.ImageService.UploadJsonFile(fd).subscribe((x) => {
+                if (x) {
+                    this.ImageService.RegistrarImagen(ImagenObj).subscribe((x => {
+                        if (x) { this.RegistrarDatos(UserObj, ClientObj) }
+                    }))
+                }
+            })
+        }
+        else {
+            this.RegistrarDatos(UserObj, ClientObj)
+        }
+
+    }
+
+    RegistrarDatos(User: E_Usuario, Client: E_Cliente) {
+        
+        this.UserService.crearCliente(Client).subscribe((x: boolean) => {
             if (x) {
-                console.log(x)
+                this.UserService.ClientexCedula(Client).subscribe((x) => {
+                    User.Id_Cliente = x.Id
+                    this.UserService.crearUsuario(User).subscribe((X) => {
+                        if (X) {
+                            this.successText = true
+                        }
+                        else {
+                            this.ErrorText = true
+                        }
+                        setTimeout(() => {
+                            this.Router.navigate(["/login/"])
+                        }, 4000)
+                    })
+                })
             }
         })
     }
 
 }
+
+
 
 function confirmPassword(control: AbstractControl) {
     if (!control.parent || !control) {

@@ -5,28 +5,27 @@ import { Platform } from '@angular/cdk/platform';
 
 // Define the default config
 const DEFAULT_CONFIG = {
-    layout          : {
-        navigation      : 'left', // 'right', 'left', 'top', 'none'
+    layout: {
+        navigation: 'left', // 'right', 'left', 'top', 'none'
         navigationFolded: false, // true, false
-        toolbar         : 'none', // 'above', 'below', 'none'
-        footer          : 'none', // 'above', 'below', 'none'
-        mode            : 'fullwidth' // 'boxed', 'fullwidth'
+        toolbar: 'none', // 'above', 'below', 'none'
+        footer: 'none', // 'above', 'below', 'none'
+        mode: 'fullwidth' // 'boxed', 'fullwidth'
     },
-    colorClasses    : {
-        toolbar: 'mat-white-500-bg',
-        navbar : 'mat-fuse-dark-700-bg',
-        footer : 'mat-fuse-dark-900-bg'
+    colorClasses: {
+        toolbar: 'mat-fuse-dark-900-bg',
+        navbar: 'mat-fuse-dark-700-bg',
+        footer: 'mat-fuse-dark-900-bg'
     },
     customScrollbars: true,
-    routerAnimation : 'slideUp' // fadeIn, slideUp, slideDown, slideRight, slideLeft, none
+    routerAnimation: 'slideUp' // fadeIn, slideUp, slideDown, slideRight, slideLeft, none
 };
 
 // Create the injection token for the custom config
 export const FUSE_CONFIG = new InjectionToken('fuseCustomConfig');
 
 @Injectable()
-export class FuseConfigService
-{
+export class FuseConfigService {
     config: any;
     defaultConfig: any;
 
@@ -43,38 +42,34 @@ export class FuseConfigService
         private router: Router,
         public platform: Platform,
         @Inject(FUSE_CONFIG) @Optional() config
-    )
-    {
+    ) {
         // Set the default settings from the constant
         this.defaultConfig = DEFAULT_CONFIG;
 
         // If custom config provided with forRoot,
         // use them as default config...
-        if ( config )
-        {
+        if (config) {
             this.defaultConfig = config;
         }
 
         /**
          * Disable Custom Scrollbars if Browser is Mobile
          */
-        if ( this.platform.ANDROID || this.platform.IOS )
-        {
+        if (this.platform.ANDROID || this.platform.IOS) {
             this.defaultConfig.customScrollbars = false;
         }
 
         // Set the config from the default config
-        this.config = {...this.defaultConfig};
+        this.config = { ...this.defaultConfig };
 
         // Reload the default settings for the
         // layout on every navigation start
         router.events.subscribe(
             (event) => {
-                if ( event instanceof NavigationStart )
-                {
+                if (event instanceof NavigationStart) {
                     this.setConfig({
-                            layout: this.defaultConfig.layout
-                        }
+                        layout: this.defaultConfig.layout
+                    }
                     );
                 }
             }
@@ -89,14 +84,13 @@ export class FuseConfigService
      *
      * @param config
      */
-    setConfig(config): void
-    {
+    setConfig(config): void {
         // Set the config from the given object
         // Ugly, but works for now...
         this.config = {
             ...this.config,
             ...config,
-            layout     : {
+            layout: {
                 ...this.config.layout,
                 ...config.layout,
             },
@@ -105,9 +99,10 @@ export class FuseConfigService
                 ...config.colorClasses
             }
         };
+        this.config.colorClasses.toolbar = 'mat-fuse-dark-900-bg',
 
-        // Trigger the event
-        this.onConfigChanged.next(this.config);
+            // Trigger the event
+            this.onConfigChanged.next(this.config);
     }
 }
 

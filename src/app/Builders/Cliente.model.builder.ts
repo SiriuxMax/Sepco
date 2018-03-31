@@ -1,8 +1,8 @@
 import { E_Error } from "../Models/E_Error";
-import { E_Usuario } from "../Models/E_Usuario..model";
+import { E_Usuario } from "../Models/E_Usuario";
 import { E_Cliente } from "../Models/E_Cliente";
 
-export class UsuarioBuilder {
+export class ClienteBuilder {
     public Id: number
     public Cedula: string
     public Nombre: string
@@ -15,7 +15,8 @@ export class UsuarioBuilder {
     public Id_Municipio: number
     public Estado: boolean
     public FechaCreacion: Date
-    buildFromObject(x: any): UsuarioBuilder {
+    constructor(){}
+    buildFromObject(x: any): ClienteBuilder {
         if (x.Id != undefined) { this.Id = x.Id }
         if (x.Cedula != undefined) { this.Cedula = x.Cedula }
         if (x.Nombre != undefined) { this.Nombre = x.Nombre }

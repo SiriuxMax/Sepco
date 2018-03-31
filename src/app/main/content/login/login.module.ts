@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSpinner, MatProgressSpinnerModule } from '@angular/material';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
@@ -9,7 +9,7 @@ import { FuseLoginComponent } from './login.component';
 
 const routes = [
     {
-        path     : 'login',
+        path: 'login',
         component: FuseLoginComponent
     }
 ];
@@ -18,17 +18,16 @@ const routes = [
     declarations: [
         FuseLoginComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(routes),
 
         MatButtonModule,
         MatCheckboxModule,
         MatFormFieldModule,
         MatInputModule,
-
+        MatProgressSpinnerModule,
         FuseSharedModule
     ]
 })
-export class LoginModule
-{
+export class LoginModule {
 }

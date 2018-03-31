@@ -114,7 +114,8 @@
                 </button>
             </div>
 
-
+            <div *ngIf="successText" ><span class="successText">Usuario Creado de manera exitosa</span></div>
+            <div *ngIf="ErrorText" ><span class="ErrorText">Error al crear usuario</span></div>
 
             <button *ngIf="!ShowCamara" (click)="Continuar()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT"
                 [disabled]="registerForm.invalid">
@@ -130,7 +131,7 @@
                 <span class="text">Ya tienes cuenta?</span>
                 <a class="link" [routerLink]="'/login'">Ingresar</a>
             </div>
-
+          
         </div>
 
     </div>

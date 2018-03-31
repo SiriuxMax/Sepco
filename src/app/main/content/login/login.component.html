@@ -45,11 +45,14 @@
 
 
             </form>
-     
+            <div  *ngIf="Loading">  <mat-spinner style="margin:0 auto;"></mat-spinner></div>
+          
             <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" [disabled]="loginForm.invalid" (click)="loginNow()">
-                LOGIN
+                INGRESAR
             </button>
-
+            <div *ngIf="errorLogin">
+                <span style="color: #d43c31;">Contraseña incorrecta o cuenta es inexistente</span>
+            </div>
             <div class="register" fxLayout="column" fxLayoutAlign="center center">
                 <span class="text">No tienes Cuenta?</span>
                 <a class="link" [routerLink]="'/register'">Crear una cuenta</a>

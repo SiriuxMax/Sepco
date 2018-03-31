@@ -5,7 +5,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
 import { UserService } from '../../../ApiServices/UserService';
-import { E_Usuario } from '../../../Models/E_Usuario..model';
+import { E_Usuario } from '../../../Models/E_Usuario';
 import { PhotoTool } from '../../../Tools/PhotoTool';
 
 
@@ -16,14 +16,16 @@ import { PhotoTool } from '../../../Tools/PhotoTool';
     animations: fuseAnimations
 })
 export class FuseLoginComponent implements OnInit {
-    @ViewChild ("jojo") jojo :ElementRef
+    Loading: boolean;
+    errorLogin: boolean;
+    @ViewChild("jojo") jojo: ElementRef
     loginForm: FormGroup;
     loginFormErrors: any;
 
     constructor(
         private fuseConfig: FuseConfigService,
         private formBuilder: FormBuilder,
-        private Router: Router,private UserService:UserService 
+        private Router: Router, private UserService: UserService
     ) {
         this.fuseConfig.setConfig({
             layout: {
@@ -38,8 +40,9 @@ export class FuseLoginComponent implements OnInit {
             password: {}
         };
     }
-    
+
     ngOnInit() {
+        this.UserService.ClearCurrentCurrentUserNow()
         this.loginForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required]
@@ -48,7 +51,7 @@ export class FuseLoginComponent implements OnInit {
         this.loginForm.valueChanges.subscribe(() => {
             this.onLoginFormValuesChanged();
         });
-   
+
     }
 
     onLoginFormValuesChanged() {
@@ -69,11 +72,21 @@ export class FuseLoginComponent implements OnInit {
         }
     }
     loginNow() {
-        var user:E_Usuario = new E_Usuario();
+        var user: E_Usuario = new E_Usuario();
         user.UserName = this.loginForm.value.email
-        user.Passwordd = btoa(this.loginForm.value.password) 
-        
-        this.UserService.Login(user).subscribe((x:any)=>{console.log("jojo")})
-     //   this.Router.navigate(["/sample/"]);
+        user.Passwordd = btoa(this.loginForm.value.password)
+        this.Loading = true
+        this.UserService.Login(user).subscribe((x: E_Usuario) => {
+            if (x.error != undefined) {
+                if (x.error.Id == 1) {
+                    this.errorLogin = true
+                    this.Loading = false
+                    return
+                }
+            }
+            this.Loading = false
+            this.Router.navigate(["/sample/"])
+        })
+        //   ;
     }
 }

@@ -1,5 +1,5 @@
 import { E_Error } from "../Models/E_Error";
-import { E_Usuario } from "../Models/E_Usuario..model";
+import { E_Usuario } from "../Models/E_Usuario";
 import { E_Departamentos } from "../Models/E_Departamentos";
 import { E_Municipios } from "../Models/E_Municipios";
 

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { AppSettings } from '../appSettings';
-import { E_Usuario } from '../Models/E_Usuario..model';
+import { E_Usuario } from '../Models/E_Usuario';
 import { UsuarioBuilder } from '../Builders/Usuario.model.builder';
 import { E_Departamentos } from '../Models/E_Departamentos';
 import { DepartamentosBuilder } from '../Builders/Departamentos.model.builder';

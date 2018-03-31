@@ -3,6 +3,7 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
 import { ImageService } from '../../../ApiServices/ImageServices';
 import { PhotoTool } from '../../../Tools/PhotoTool';
+import { UserService } from '../../../ApiServices/UserService';
 
 @Component({
   selector: 'fuse-sample',
@@ -11,10 +12,12 @@ import { PhotoTool } from '../../../Tools/PhotoTool';
 })
 
 export class FuseSampleComponent implements OnInit {
-  constructor(private ImageService: ImageService) {
+  constructor(private ImageService: ImageService,
+    private UserService: UserService) {
 
   }
   ngOnInit(): void {
+    console.log(this.UserService.GetCurrentCurrentUserNow())
     PhotoTool.plauvideo()
   }
 
@@ -29,7 +32,7 @@ export class FuseSampleComponent implements OnInit {
     var dataURL = canvas.toDataURL('image/jpeg', 0.5);
     var blob = PhotoTool.dataURItoBlob(dataURL);
     var fd = new FormData(document.forms[0]);
-    fd.append("canvasImage", blob, btoa(((new Date().getMilliseconds())*Math.random()).toString()));
+    fd.append("canvasImage", blob, btoa(((new Date().getMilliseconds()) * Math.random()).toString()));
     this.ImageService.UploadJsonFile(fd).subscribe((x) => console.log(true))
   }
 

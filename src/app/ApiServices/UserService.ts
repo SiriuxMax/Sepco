@@ -4,10 +4,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { AppSettings } from '../appSettings';
-import { E_Usuario } from '../Models/E_Usuario..model';
+import { E_Usuario } from '../Models/E_Usuario';
 import { UsuarioBuilder } from '../Builders/Usuario.model.builder';
 import { E_Cliente } from '../Models/E_Cliente';
 import { HeaderBuilder } from '../Tools/HeaderBuilder';
+import { ClienteBuilder } from '../Builders/Cliente.model.builder';
 
 @Injectable()
 export class UserService {
@@ -19,8 +20,8 @@ export class UserService {
     Login(User: E_Usuario): Observable<E_Usuario> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(User)
-        return this.Http.post(this.UrlNow + "Usuario/UsuarioxNombre"
-            , request, httpOptions).map(this.ExtractDataUser)
+        return this.Http.post(this.UrlNow + "Usuario/UsuarioxNombreyPass"
+            , request, httpOptions).map(this.ExtractDataUserValid)
     }
 
     crearCliente(CLient: E_Cliente): Observable<boolean> {
@@ -30,6 +31,27 @@ export class UserService {
             , request, httpOptions).map(this.EvalBool)
     }
 
+    ClientexCedula(CLient: E_Cliente): Observable<E_Cliente> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Cliente/ClientexCedula"
+            , request, httpOptions).map(this.ExtractDataClient)
+    }
+
+    crearUsuario(User: E_Usuario): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(User)
+        return this.Http.post(this.UrlNow + "Usuario/crearUsuario"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    ExtractDataClient(res: Response): E_Cliente {
+
+        var x: E_Cliente = new E_Cliente()
+        
+        if (res != null) { x = new ClienteBuilder().buildFromObject(res).Build() }
+        return x
+    }
 
     EvalBool(res: any): boolean {
         var a: boolean = res
@@ -40,9 +62,33 @@ export class UserService {
     ExtractDataUser(res: Response): E_Usuario {
 
         var x: E_Usuario = new E_Usuario()
-        if (res != null) { x = new UsuarioBuilder().buildFromObject(res.json()).Build() }
+        if (res != null) { x = new UsuarioBuilder().buildFromObject(res).Build() }
         return x
     }
+    ExtractDataUserValid(res: object): E_Usuario {
+
+        var x: E_Usuario = new E_Usuario()
+
+        if (res != null) { x = new UsuarioBuilder().buildFromObject(res).Build() }
+        if (x.error != undefined) {
+            if (x.error.Id == 1) {
+                sessionStorage.removeItem("CurrentUser")
+                return x
+            }
+        }
+        sessionStorage.setItem("CurrentUser", JSON.stringify(res))
+        return x
+    }
+
+    GetCurrentCurrentUserNow(): E_Usuario {
+        var retrievedObject = sessionStorage.getItem('CurrentUser');
+        var x: E_Usuario = JSON.parse(retrievedObject)
+        return x
+    }
+    ClearCurrentCurrentUserNow() {
+        sessionStorage.removeItem("CurrentUser")
+    }
+
 
 }
 

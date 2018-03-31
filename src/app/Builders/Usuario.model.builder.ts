@@ -1,5 +1,5 @@
 import { E_Error } from "../Models/E_Error";
-import { E_Usuario } from "../Models/E_Usuario..model";
+import { E_Usuario } from "../Models/E_Usuario";
 
 export class UsuarioBuilder {
     public Id: number
@@ -13,6 +13,7 @@ export class UsuarioBuilder {
     public Estado: boolean
     public FechaCreacion: Date
     public error: E_Error
+    public Imagen: string
     buildFromObject(x: any): UsuarioBuilder {
         if (x.Id != undefined) { this.Id = x.Id }
         if (x.UserName != undefined) { this.UserName = x.UserName }
@@ -25,6 +26,8 @@ export class UsuarioBuilder {
         if (x.Estado != undefined) { this.Estado = x.Estado }
         if (x.FechaCreacion != undefined) { this.FechaCreacion = x.FechaCreacion }
         if (x.error != undefined) { this.error = x.error }
+        if (x.imagen != undefined) { this.error = x.imagen }
+
         return this
     }
     Build(): E_Usuario {
@@ -40,6 +43,8 @@ export class UsuarioBuilder {
         obj.Estado = this.Estado
         obj.FechaCreacion = this.FechaCreacion
         obj.error = this.error
+        obj.Imagen = this.Imagen
+
         return obj
     }
 
