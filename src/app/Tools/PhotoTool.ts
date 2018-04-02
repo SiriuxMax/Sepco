@@ -26,13 +26,13 @@ export class PhotoTool {
 
 
     public static plauvideo() {
-      
+
         var canvas: any = document.getElementById('canvas');
         var video: any = document.getElementById('video');
         var FrontCameraSelected: any
         navigator.mediaDevices.enumerateDevices()
             .then(gotDevices).then(getStream).catch(handleError);
-     
+
 
         function gotDevices(deviceInfos) {
             for (var i = 0; i !== deviceInfos.length; ++i) {
@@ -55,7 +55,7 @@ export class PhotoTool {
             navigator.mediaDevices.getUserMedia(constraints).
                 then(gotStream).catch(handleError);
         }
- 
+
         function gotStream(stream) {
             video.src = window.URL.createObjectURL(stream);
         }
@@ -66,21 +66,21 @@ export class PhotoTool {
 
     }
 
-    public static plauvideoWithCameraSelection() {
+    public static plauvideoWithCameraSelection(CameraNumber: number = 1) {
         var videoElement: any = document.querySelector('video');
-        var videoSelect: any = document.querySelector('select#videoSource');
         navigator.mediaDevices.enumerateDevices()
             .then(gotDevices).then(getStream).catch(handleError);
-        videoSelect.onchange = getStream;
+      
+        var number = 0
+        var selectedDevice
         function gotDevices(deviceInfos) {
             for (var i = 0; i !== deviceInfos.length; ++i) {
                 var deviceInfo = deviceInfos[i];
-                var option = document.createElement('option');
-                option.value = deviceInfo.deviceId;
                 if (deviceInfo.kind === 'videoinput') {
-                    option.text = deviceInfo.label || 'camera ' +
-                        (videoSelect.length + 1);
-                    videoSelect.appendChild(option);
+                    number += 1 
+                   if( CameraNumber==number)
+                   {selectedDevice = deviceInfo.deviceId; }
+                   
                 } else {
                     console.log('Found one other kind of source/device: ', deviceInfo);
                 }
@@ -89,7 +89,7 @@ export class PhotoTool {
         function getStream() {
             var constraints = {
                 video: {
-                    deviceId: { exact: videoSelect.value }
+                    deviceId: { exact: selectedDevice }
                 }
             };
 

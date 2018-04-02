@@ -10,6 +10,7 @@ import { E_Departamentos } from '../Models/E_Departamentos';
 import { DepartamentosBuilder } from '../Builders/Departamentos.model.builder';
 import { E_Municipios } from '../Models/E_Municipios';
 import { MunicipiosBuilder } from '../Builders/Municipios.model.builder';
+import { E_TipoReunion } from '../Models/E_TipoReunion';
 
 @Injectable()
 export class ParameterService {
@@ -40,9 +41,36 @@ export class ParameterService {
             , request, httpOptions).map(this.ExtractMunicipios)
     }
 
+    ListarTipoReunion(E_TipoReunion: E_TipoReunion): Observable<Array<E_TipoReunion>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify(E_TipoReunion)
+        return this.Http.post(this.UrlNow + "Admin/ListarTipoReunion"
+            , request, httpOptions).map(this.ExtractTipoReunion)
+    }
+
+
+
+    ExtractTipoReunion(res: any): Array<E_TipoReunion> {
+
+        var x: Array<E_TipoReunion> = new Array<E_TipoReunion>()
+        if (res != null) {
+
+            res.forEach((element) => {
+                var y: E_TipoReunion = new E_TipoReunion()
+                y = element
+                x.push(y)
+            });
+
+        }
+        return x
+    }
 
     ExtractMunicipios(res: any): Array<E_Municipios> {
-        
+
         var x: Array<E_Municipios> = new Array<E_Municipios>()
         if (res != null) {
             res.forEach((element) => {
@@ -53,7 +81,7 @@ export class ParameterService {
         return x
     }
     ExtractDeparatamentos(res: any): Array<E_Departamentos> {
-        
+
         var x: Array<E_Departamentos> = new Array<E_Departamentos>()
         if (res != null) {
             res.forEach((element) => {

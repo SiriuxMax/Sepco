@@ -1,3 +1,6 @@
+import { E_Usuario } from "./E_Usuario";
+import { E_Error } from "./E_Error";
+
 export class E_Cliente {
     public Id: number
     public Cedula: string
@@ -11,5 +14,7 @@ export class E_Cliente {
     public Id_Municipio: number
     public Estado: boolean
     public FechaCreacion: Date
+    public usuario: E_Usuario
+    public error :E_Error
     constructor() { }
 }

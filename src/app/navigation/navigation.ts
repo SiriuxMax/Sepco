@@ -19,6 +19,14 @@ export const navigation = [
                     'fg'   : '#FFFFFF'
                 }
             }
+            ,{
+                'id'   : 'map',
+                'title': 'Mapa',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type' : 'item',
+                'icon' : 'map',
+                'url'  : '/Maps',
+            }
         ]
     }
 ];

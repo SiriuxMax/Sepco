@@ -9,6 +9,7 @@ import 'hammerjs';
 import { FuseModule } from '@fuse/fuse.module';
 import { FuseSharedModule } from '@fuse/shared.module';
 
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { fuseConfig } from './fuse-config';
 
 import { AppComponent } from './app.component';
@@ -20,11 +21,21 @@ import { UserService } from './ApiServices/UserService';
 import { ParameterService } from './ApiServices/ParametersServices';
 import { ImageService } from './ApiServices/ImageServices';
 import { HeaderBuilder } from './Tools/HeaderBuilder';
+import { MapsGraphicModule } from './main/content/Mapas/MapsGraphic.module';
+import { EventCreatorModule } from './main/content/CreadorEventos/EventCreator.module';
+import { NavigationInfoService } from './ApiServices/NavigationInfoService';
+import { VisorEventModule } from './main/content/VisorEventos/VisorEvent.module';
+
 
 const appRoutes: Routes = [
     { path: 'sample', redirectTo: '/sample', pathMatch: 'full' },
     { path: 'register', redirectTo: '/register' },
+    { path: 'Maps', redirectTo: '/Maps', pathMatch: 'full' },
+    { path: 'eventcreator', redirectTo: '/eventcreator', pathMatch: 'full' },
+    { path: 'eventvisor', redirectTo: '/eventvisor', pathMatch: 'full' },
+
     { path: '', redirectTo: '/login', pathMatch: 'full' },
+
     {
         path: '**',
         redirectTo: 'login'
@@ -50,13 +61,17 @@ const appRoutes: Routes = [
         FuseMainModule,
         FuseSampleModule,
         LoginModule,
-        RegisterModule
+        RegisterModule,
+        MapsGraphicModule,
+        EventCreatorModule,
+        VisorEventModule
     ],
     providers: [
         UserService
         , ParameterService
         , ImageService
-        , HeaderBuilder],
+        , HeaderBuilder
+        , NavigationInfoService],
     bootstrap: [
         AppComponent
     ]

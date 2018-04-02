@@ -197,23 +197,14 @@ export class FuseRegisterComponent implements OnInit {
     }
 
     RegistrarDatos(User: E_Usuario, Client: E_Cliente) {
-        
+        Client.usuario = User
         this.UserService.crearCliente(Client).subscribe((x: boolean) => {
             if (x) {
-                this.UserService.ClientexCedula(Client).subscribe((x) => {
-                    User.Id_Cliente = x.Id
-                    this.UserService.crearUsuario(User).subscribe((X) => {
-                        if (X) {
-                            this.successText = true
-                        }
-                        else {
-                            this.ErrorText = true
-                        }
-                        setTimeout(() => {
-                            this.Router.navigate(["/login/"])
-                        }, 4000)
-                    })
-                })
+
+                setTimeout(() => {
+                    this.Router.navigate(["/login/"])
+                }, 4000)
+
             }
         })
     }

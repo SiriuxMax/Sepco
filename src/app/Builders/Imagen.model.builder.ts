@@ -7,7 +7,7 @@ export class ImagenBuilder {
     public Nombre: string
     public Ruta: string
     public FechaCreacion: Date
-    public id_reunion: number
+    public Id_Reunion: number
     public aprobada: boolean
     constructor() { }
     buildFromObject(x: any): ImagenBuilder {
@@ -15,7 +15,7 @@ export class ImagenBuilder {
         if (x.Nombre != undefined) { this.Nombre = x.Nombre }
         if (x.Ruta != undefined) { this.Ruta = x.Ruta }
         if (x.FechaCreacion != undefined) { this.FechaCreacion = x.FechaCreacion }
-        if (x.id_reunion != undefined) { this.id_reunion = x.id_reunion }
+        if (x.Id_Reunion != undefined) { this.Id_Reunion = x.Id_Reunion }
         if (x.aprobada != undefined) { this.aprobada = x.aprobada }
         return this
     }
@@ -25,7 +25,7 @@ export class ImagenBuilder {
         obj.Nombre = this.Nombre
         obj.aprobada = this.aprobada
         obj.FechaCreacion = this.FechaCreacion
-        obj.id_reunion = this.id_reunion
+        obj.Id_Reunion = this.Id_Reunion
         obj.Ruta = this.Ruta
         obj.FechaCreacion = this.FechaCreacion
         return obj

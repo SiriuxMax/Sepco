@@ -9,6 +9,7 @@ import { UsuarioBuilder } from '../Builders/Usuario.model.builder';
 import { E_Cliente } from '../Models/E_Cliente';
 import { HeaderBuilder } from '../Tools/HeaderBuilder';
 import { E_Imagen } from '../Models/E_Imagen';
+import { E_Reunion } from '../Models/E_Reunion';
 
 @Injectable()
 export class ImageService {
@@ -33,11 +34,18 @@ export class ImageService {
             , file, this.setOptions()).map((x) => { return true })
     }
 
-    RegistrarImagen(obImg: E_Imagen): Observable<boolean> {
+    RegistrarImagen(obImg: E_Imagen): Observable<number> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(obImg)
         return this.Http.post(this.UrlNow + "Imagen/crearImagen"
-            , request, httpOptions).map((x) => { return Boolean(x) })
+            , request, httpOptions).map((x) => { return Number(x) })
+    }
+
+    crearReunion(obImg: E_Reunion): Observable<number> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(obImg)
+        return this.Http.post(this.UrlNow + "Reunion/crearReunion"
+            , request, httpOptions).map((x) => { return Number(x) })
     }
 
 }
