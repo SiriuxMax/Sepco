@@ -14,6 +14,7 @@ import { AppSettings } from '../../../appSettings';
 import { ImageService } from '../../../ApiServices/ImageServices';
 import { E_Municipios } from '../../../Models/E_Municipios';
 import { Router } from '@angular/router';
+import { debug } from 'util';
 
 @Component({
     selector: 'EventCreator',
@@ -49,6 +50,7 @@ export class EventCreatorComponent implements OnInit {
             })
         this.ParameterService.ListarMunicipios()
             .subscribe((x: Array<E_Municipios>) => {
+                console.log(x)
                 this.ListMunicipiosGroup = x
             })
 
@@ -126,7 +128,7 @@ export class EventCreatorComponent implements OnInit {
         });
     }
     EnviarInfo() {
-        debugger
+        
         var objEvento: E_Reunion = new E_Reunion()
         objEvento.Titulo = this.form.value.Nombre
         objEvento.Descripcion = this.form.value.Descripcion

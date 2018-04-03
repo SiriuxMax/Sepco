@@ -14,10 +14,19 @@ export class ReunionBuilder {
     public Estado: boolean
     public FechaCreacion: Date
     public total: number
-    public NombreDepartamento: string
+    public NombreDepartamento: string  
+    public Id_Usuario:number
+    public NombreCliente: string
+    public ApellidoCliente: string
     constructor() { }
     buildFromObject(x: any): ReunionBuilder {
         if (x.Id != undefined) { this.Id = x.Id }
+        if (x.Titulo != undefined) { this.Titulo = x.Titulo }
+
+        if (x.Id_Usuario != undefined) { this.Id_Usuario = x.Id_Usuario }
+        if (x.NombreCliente != undefined) { this.NombreCliente = x.NombreCliente }
+        if (x.ApellidoCliente != undefined) { this.ApellidoCliente = x.ApellidoCliente }
+        
         if (x.Descripcion != undefined) { this.Descripcion = x.Descripcion }
         if (x.Id_Departamento != undefined) { this.Id_Departamento = x.Id_Departamento }
         if (x.Id_Municipio != undefined) { this.Id_Municipio = x.Id_Municipio }
@@ -27,12 +36,23 @@ export class ReunionBuilder {
         if (x.FechaCreacion != undefined) { this.FechaCreacion = x.FechaCreacion }
         if (x.total != undefined) { this.total = x.total }
         if (x.NombreDepartamento != undefined) { this.NombreDepartamento = x.NombreDepartamento }
+        
+        if (x.NombreCliente != undefined) { this.NombreCliente = x.NombreCliente + ' '+  x.ApellidoCliente }
+        
+        if (x.ApellidoCliente != undefined) { this.ApellidoCliente = x.ApellidoCliente }
         return this
     }
     Build(): E_Reunion {
         var obj: E_Reunion = new E_Reunion()
+
+
         obj.Id = this.Id
+        obj.Id_Usuario = this.Id_Usuario
+        obj.NombreCliente = this.NombreCliente
+        obj.ApellidoCliente = this.ApellidoCliente
+
         obj.Descripcion = this.Descripcion
+        obj.Titulo = this.Titulo
         obj.Id_Departamento = this.Id_Departamento
         obj.Id_Municipio = this.Id_Municipio
         obj.Id_TipoReunion = this.Id_TipoReunion

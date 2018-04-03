@@ -94,7 +94,8 @@ export class MapContentComponent implements OnInit {
         var TextX = this.Fields.find(x => x.id == y).Nombre
         var NUmero = this.Fields.find(x => x.id == y).NumeroReuniones.toString()
         var CodigoDepto = this.Fields.find(x => x.id == y).idBd
-        var data = { NumeroEventos: NUmero, Nombre: TextX, CodigoDepto: CodigoDepto }
+        var IdDepto = this.ListDepartamentos.find(x => x.Codigo == CodigoDepto.toString()).Id
+        var data = { NumeroEventos: NUmero, Nombre: TextX, CodigoDepto: CodigoDepto, IdDepto: IdDepto }
 
         this.openDialog(data)
     }

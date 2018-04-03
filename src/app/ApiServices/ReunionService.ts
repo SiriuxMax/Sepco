@@ -10,13 +10,13 @@ import { E_Cliente } from '../Models/E_Cliente';
 import { HeaderBuilder } from '../Tools/HeaderBuilder';
 import { E_Imagen } from '../Models/E_Imagen';
 import { E_Reunion } from '../Models/E_Reunion';
+import { ReunionBuilder } from '../Builders/Reunion.model.builder';
 import { UserService } from './UserService';
-import { ImagenBuilder } from '../Builders/Imagen.model.builder';
+
 
 @Injectable()
-export class ImageService {
-    constructor(private Http: HttpClient, private HeaderBuilder: HeaderBuilder
-        , private UserService: UserService) { }
+export class ReunionService {
+    constructor(private Http: HttpClient, private HeaderBuilder: HeaderBuilder,private UserService:UserService) { }
     private UrlNow: string = AppSettings.API_URL
     private textarea: HTMLTextAreaElement;
 
@@ -28,49 +28,39 @@ export class ImageService {
         };
         return httpOptions;
     }
-    UploadJsonFile(file): Observable<boolean> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-            })
-        };
-        return this.Http.post(this.UrlNow + "Imagen/UploadJsonFile"
-            , file, this.setOptions()).map((x) => { return true })
-    }
-
-    RegistrarImagen(obImg: E_Imagen): Observable<number> {
-        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
-
+    ReunionesxDepto(Obj:E_Reunion): Observable<Array<E_Reunion>> {
+    var IdUser =   this.UserService.GetCurrentCurrentUserNow().Id
+    Obj.Id_Usuario =IdUser
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+        let request = JSON.stringify(Obj)
+        return this.Http.post(this.UrlNow + "Reunion/ReunionesxDepto"
+            , request, httpOptions).map(this.ExtractReunion)
+    }
+    ExtractReunion(res: any): Array<E_Reunion> {
+
+        var x: Array<E_Reunion> = new Array<E_Reunion>()
+        if (res != null) {
+            res.forEach((element) => {
+                x.push(new ReunionBuilder().buildFromObject(element).Build())
+            });
+
+        }
+        return x
+    }
+    
+    RegistrarImagen(obImg: E_Imagen): Observable<number> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(obImg)
         return this.Http.post(this.UrlNow + "Imagen/crearImagen"
             , request, httpOptions).map((x) => { return Number(x) })
     }
 
     crearReunion(obImg: E_Reunion): Observable<number> {
-        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
-
-        obImg.Id_Usuario = IdUser
-        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+        const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(obImg)
         return this.Http.post(this.UrlNow + "Reunion/crearReunion"
             , request, httpOptions).map((x) => { return Number(x) })
     }
-
-    ImagenxReunion(obImg: E_Imagen): Observable<E_Imagen> {
-        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
-        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
-        var request = JSON.stringify(obImg)
-        return this.Http.post(this.UrlNow + "Imagen/ImagenxReunion"
-            , request, httpOptions).map(this.ExtractImageClient)
-    }
-
-    ExtractImageClient(res: any): E_Imagen {
-        var x: E_Imagen = new E_Imagen()
-        if (res != null) { x = new ImagenBuilder().buildFromObject(res[0]).Build() }
-        return x
-    }
-
-
 
 }
 

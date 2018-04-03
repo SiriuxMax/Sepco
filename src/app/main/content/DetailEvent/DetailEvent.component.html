@@ -1,0 +1,60 @@
+<div class="page-layout carded fullwidth single-scroll" fusePerfectScrollbar>
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg mat-accent-bg"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- CONTENT HEADER -->
+        <div class="header white-fg p-24" fxLayout="row" fxLayoutAlign="start center">
+            <h2>Evento {{dataEvento.NombreDepartamento}}</h2>
+        </div>
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card mat-white-bg">
+
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar px-24 py-8">
+                <span>Detalles del Evento </span>
+            </div>
+            <!-- / CONTENT TOOLBAR -->
+
+            <!-- CONTENT src="assets/images/beach.jpg" -->
+            <div class="content p-24">
+
+                <div class="demo-content">
+
+                    <img  [src]="imageUrl"  alt="beach" style="max-width: 640px; width: 100%;">
+
+                    <h1>{{dataEvento.Titulo}}</h1>
+                    <h4 class="secondary-text">Creado por  {{dataEvento.NombreCliente}}</h4>
+
+                    <p>
+                            {{dataEvento.Descripcion}}   
+                    </p>
+
+                    <blockquote>
+                        <p>
+                            Nunc vel lacinia lorem. Nullam tincidunt sed purus eu placerat. Donec id dictum erat. Etiam enim ex, dapibus et tortor id,
+                            posuere pretium est. Maecenas fringilla ipsum vitae neque elementum, at eleifend ante sollicitudin.
+                            Donec viverra augue dolor, a venenatis tellus consectetur sit amet.
+                        </p>
+                        <footer>
+                            John Doe
+                        </footer>
+                    </blockquote>
+                </div>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

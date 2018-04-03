@@ -1,29 +1,5 @@
-<div fxLayout="column">
-    <div>
-        <div>
-            <span class="register">Captura la foto de tu evento</span>
-        </div>
-        <div class="fotoContainer" [hidden]="CapturedPhoto">
-            <video id="video" autoplay width="640" height="auto" class="viewCamera"></video>
-        </div>
-        <div class="fotoContainer" [hidden]="!CapturedPhoto">
-            <canvas id="canvas" width="640" height="480" style="width: 100%;" class="viewCamera"></canvas>
-        </div>
-    </div>
-    <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutAlign="center">
-        <button fxFlex="45" (click)="RegisterPhoto()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
-            <i class="material-icons">&#xE3B0;</i> Capturar
-        </button>
-        <button fxFlex="45" (click)="CancelFoto()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
-            <i class="material-icons">&#xE5C9;</i> Rechazar
-        </button>
-    </div>
-    <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutAlign="center">
-        <button fxFlex="45" (click)="changeCamera()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
-            <i class="material-icons">&#xE86A;</i> Camara
-        </button>
-        <button fxFlex="45" (click)="EnviarFoto()"  mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
-            <i class="material-icons">&#xE864;</i> Enviar
-        </button>
-    </div>
+<div (click)="GotoDetailsNow()">
+  <span><i class="material-icons">&#xE413;</i> Ver Detalles</span>  
+   
+
 </div>

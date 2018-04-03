@@ -13,6 +13,10 @@ import { E_Imagen } from '../../../Models/E_Imagen';
 import { AppSettings } from '../../../appSettings';
 import { ImageService } from '../../../ApiServices/ImageServices';
 import { DetailDialogComponent } from './DetailDialog/DetailDialog.component';
+import { ReunionBuilder } from '../../../Builders/Reunion.model.builder';
+import { ReunionService } from '../../../ApiServices/ReunionService';
+import { Router } from '@angular/router';
+
 
 @Component({
     selector: 'VisorEvent',
@@ -20,21 +24,56 @@ import { DetailDialogComponent } from './DetailDialog/DetailDialog.component';
     styleUrls: ['./VisorEvent.component.scss']
 })
 export class VisorEventComponent implements OnInit {
-    rows: any[];
+    rows = [];
+
+    selected = [];
     loadingIndicator = true;
     reorderable = true;
     DeptoName = ""
     DatoDepto: any
-    constructor(private NavigationData: NavigationInfoService) {
-        
-        this.DatoDepto = this.NavigationData.storage
-       // NumeroEventos: NUmero, Nombre: TextX, CodigoDepto: CodigoDepto
+    constructor(private NavigationData: NavigationInfoService,
+        private ReunionService: ReunionService,
+        private Router: Router,
+        private dialog: MatDialog) {
+
+        if (this.NavigationData.storage == undefined) { this.Router.navigate(["/Maps"]) }
+        this.DatoDepto = this.NavigationData.storage.IdDepto
+
+
+        // NumeroEventos: NUmero, Nombre: TextX, CodigoDepto: CodigoDepto ,IdDepto:IdDepto
     }
+    ObtenerReuniones() {
+        var ObjReu: E_Reunion = new E_Reunion()
+        ObjReu.Id_Departamento = this.DatoDepto
+        this.ReunionService.ReunionesxDepto(ObjReu).subscribe((x) => {
+            this.rows = x;
+            this.loadingIndicator = false;
+        }
+
+
+        )
+    }
+
 
     ngOnInit() {
 
-        this.rows = [];
-        this.loadingIndicator = false;
 
+        this.loadingIndicator = true;
+        this.ObtenerReuniones()
+
+    }
+    selectedEvent(x) {
+        console.log(x)
+        const dialogRef = this.dialog.open(DetailDialogComponent, {
+            //    height: '450px',
+            data:x
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result != undefined) {
+
+            }
+
+        });
     }
 }

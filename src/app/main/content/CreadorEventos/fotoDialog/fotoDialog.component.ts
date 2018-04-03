@@ -40,7 +40,7 @@ export class fotoDialogComponent implements OnInit {
         this.dialogRef.close();
     }
     RegisterPhoto() {
-        debugger
+        
         var canvas: any = document.getElementById('canvas');
         var context = canvas.getContext('2d');
         var video: any = document.getElementById('video');

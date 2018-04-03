@@ -25,6 +25,8 @@ import { MapsGraphicModule } from './main/content/Mapas/MapsGraphic.module';
 import { EventCreatorModule } from './main/content/CreadorEventos/EventCreator.module';
 import { NavigationInfoService } from './ApiServices/NavigationInfoService';
 import { VisorEventModule } from './main/content/VisorEventos/VisorEvent.module';
+import { ReunionService } from './ApiServices/ReunionService';
+import { DetailEventModule } from './main/content/DetailEvent/DetailEvent.module';
 
 
 const appRoutes: Routes = [
@@ -33,6 +35,8 @@ const appRoutes: Routes = [
     { path: 'Maps', redirectTo: '/Maps', pathMatch: 'full' },
     { path: 'eventcreator', redirectTo: '/eventcreator', pathMatch: 'full' },
     { path: 'eventvisor', redirectTo: '/eventvisor', pathMatch: 'full' },
+
+    { path: 'detailevent', redirectTo: '/detailevent', pathMatch: 'full' },
 
     { path: '', redirectTo: '/login', pathMatch: 'full' },
 
@@ -64,14 +68,16 @@ const appRoutes: Routes = [
         RegisterModule,
         MapsGraphicModule,
         EventCreatorModule,
-        VisorEventModule
+        VisorEventModule,
+        DetailEventModule
     ],
     providers: [
         UserService
         , ParameterService
         , ImageService
         , HeaderBuilder
-        , NavigationInfoService],
+        , NavigationInfoService
+        , ReunionService],
     bootstrap: [
         AppComponent
     ]
