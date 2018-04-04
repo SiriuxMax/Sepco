@@ -70,8 +70,17 @@ export class ImageService {
         return x
     }
 
-
-
+    ListarImagenesPendientes(): Observable<Array<E_Imagen>> {
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+        return this.Http.post(this.UrlNow + "Imagen/ListarImagenesPendientes"
+            , "", httpOptions).map(this.ExtractListImageClient)
+    }
+    ExtractListImageClient(res: any): Array<E_Imagen> {
+        var x: Array<E_Imagen> = new Array<E_Imagen>()
+        if (res != null) { x.push(new ImagenBuilder().buildFromObject(res).Build()) }
+        return x
+    }
 }
 
 

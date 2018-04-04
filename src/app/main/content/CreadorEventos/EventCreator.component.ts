@@ -128,7 +128,7 @@ export class EventCreatorComponent implements OnInit {
         });
     }
     EnviarInfo() {
-        
+
         var objEvento: E_Reunion = new E_Reunion()
         objEvento.Titulo = this.form.value.Nombre
         objEvento.Descripcion = this.form.value.Descripcion
@@ -155,13 +155,11 @@ export class EventCreatorComponent implements OnInit {
                         if (x) {
                             this.ImageService.RegistrarImagen(ImagenObj).subscribe((x => {
                                 if (x) {
-                                this.SucceSave = true
+                                    this.SucceSave = true
                                     setTimeout(() => {
                                         this.Router.navigate(["/Maps/"])
                                     }, 4000)
                                 }
-
-
                             }))
                         }
                     })

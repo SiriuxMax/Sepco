@@ -1,0 +1,32 @@
+<div id="ngx-datatable" class="page-layout simple fullwidth" fusePerfectScrollbar>
+
+    <!-- HEADER -->
+    <div class="header mat-accent-bg p-24 h-160" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
+            <div class="h2 mt-16">Listado de Eventos</div>
+            <div class="h2 ">{{DatoDepto?.Nombre | uppercase }}</div>
+        </div>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content p-24">
+
+
+        <ngx-datatable [selected]="selected" [selectionType]="'single'" (select)="selectedEvent($event)" class="material" [rows]="rows"
+            [loadingIndicator]="loadingIndicator" [columnMode]="'force'" [headerHeight]="48" [footerHeight]="56" [rowHeight]="'auto'"
+            [scrollbarH]="true" [reorderable]="reorderable" [limit]="10">
+
+
+
+            <ngx-datatable-column name="Titulo" prop="Titulo"></ngx-datatable-column>
+
+            <ngx-datatable-column name="Descripcion" prop="Descripcion"></ngx-datatable-column>
+
+            <ngx-datatable-column name="Creador por" prop="NombreCliente"></ngx-datatable-column>
+            <ngx-datatable-column name="Fecha Creacion" prop="FechaCreacion"></ngx-datatable-column>
+        </ngx-datatable>
+
+    </div>
+
+</div>

@@ -27,6 +27,9 @@ import { NavigationInfoService } from './ApiServices/NavigationInfoService';
 import { VisorEventModule } from './main/content/VisorEventos/VisorEvent.module';
 import { ReunionService } from './ApiServices/ReunionService';
 import { DetailEventModule } from './main/content/DetailEvent/DetailEvent.module';
+import { TipoEventoModule } from './main/content/TipoEvento/tipo-evento.module';
+import { AdminServices } from './ApiServices/AdminServices';
+import { AceptImageModule } from './main/content/AceptarImagenes/AceptImage.module';
 
 
 const appRoutes: Routes = [
@@ -35,15 +38,11 @@ const appRoutes: Routes = [
     { path: 'Maps', redirectTo: '/Maps', pathMatch: 'full' },
     { path: 'eventcreator', redirectTo: '/eventcreator', pathMatch: 'full' },
     { path: 'eventvisor', redirectTo: '/eventvisor', pathMatch: 'full' },
-
+    { path: 'tipoevento', redirectTo: '/tipoevento', pathMatch: 'full' },
     { path: 'detailevent', redirectTo: '/detailevent', pathMatch: 'full' },
-
+    { path: 'aceptimage', redirectTo: '/aceptimage', pathMatch: 'full' },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-
-    {
-        path: '**',
-        redirectTo: 'login'
-    },
+    { path: '**', redirectTo: 'login' },
 
 
 ];
@@ -69,7 +68,9 @@ const appRoutes: Routes = [
         MapsGraphicModule,
         EventCreatorModule,
         VisorEventModule,
-        DetailEventModule
+        DetailEventModule,
+        TipoEventoModule,
+        AceptImageModule
     ],
     providers: [
         UserService
@@ -77,7 +78,8 @@ const appRoutes: Routes = [
         , ImageService
         , HeaderBuilder
         , NavigationInfoService
-        , ReunionService],
+        , ReunionService
+        , AdminServices],
     bootstrap: [
         AppComponent
     ]

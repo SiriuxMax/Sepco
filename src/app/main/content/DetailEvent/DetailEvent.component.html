@@ -27,24 +27,43 @@
 
                 <div class="demo-content">
 
-                    <img  [src]="imageUrl"  alt="beach" style="max-width: 640px; width: 100%;">
+                    <img [src]="imageUrl" alt="beach" style="max-width: 640px; width: 100%;">
 
                     <h1>{{dataEvento.Titulo}}</h1>
-                    <h4 class="secondary-text">Creado por  {{dataEvento.NombreCliente}}</h4>
+                    <h4 class="secondary-text">Creado por {{dataEvento.NombreCliente}}</h4>
 
                     <p>
-                            {{dataEvento.Descripcion}}   
+                        {{dataEvento.Descripcion}}
                     </p>
 
-                    <blockquote>
+                    <form name="registerForm" [formGroup]="registerForm" novalidate>
+                        <mat-form-field class="example-full-width">
+                            <textarea matInput placeholder="Deja tu comentario" formControlName="Comentario" required></textarea>
+                            <mat-error *ngIf="registerFormErrors.Comentario.required">
+                                Comentario es requerido
+                            </mat-error>
+                        </mat-form-field>
+                    </form>
+                    <div fxLayout="row" >
+                        <button  (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="registerForm.invalid">
+                            Enviar Comentario
+                        </button>
+                        <div  class="icoLike">
+                            <i class="material-icons">&#xE8DC;</i>
+                        </div>
+                    </div>
+
+
+
+                    <blockquote *ngFor="let item of ListComentarios">
                         <p>
-                            Nunc vel lacinia lorem. Nullam tincidunt sed purus eu placerat. Donec id dictum erat. Etiam enim ex, dapibus et tortor id,
-                            posuere pretium est. Maecenas fringilla ipsum vitae neque elementum, at eleifend ante sollicitudin.
-                            Donec viverra augue dolor, a venenatis tellus consectetur sit amet.
+                            {{item.Descripcion}}
                         </p>
+
                         <footer>
-                            John Doe
+                            User: {{item.Id_usuario}}
                         </footer>
+                        <hr>
                     </blockquote>
                 </div>
 
