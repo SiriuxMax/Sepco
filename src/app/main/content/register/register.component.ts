@@ -15,7 +15,8 @@ import { E_Usuario } from '../../../Models/E_Usuario';
 import { Router } from '@angular/router';
 import { ImageService } from '../../../ApiServices/ImageServices';
 import { E_Imagen } from '../../../Models/E_Imagen';
-import { AppSettings } from '../../../appSettings';
+import { AppSettings } from '../../../app.settings';
+
 
 @Component({
     selector: 'fuse-register',
@@ -154,7 +155,7 @@ export class FuseRegisterComponent implements OnInit {
         var ClientObj: E_Cliente = new E_Cliente()
         var UserObj: E_Usuario = new E_Usuario()
         var ImagenObj: E_Imagen = new E_Imagen()
-        var ImageBaseUrl = AppSettings.API_ImageContent
+        var ImageBaseUrl = AppSettings.Global().API_ImageContent
         var password = btoa(this.registerForm.value.password)
         ClientObj.Nombre = this.registerForm.value.Nombre
         ClientObj.Correo = this.registerForm.value.email
@@ -179,7 +180,7 @@ export class FuseRegisterComponent implements OnInit {
             var fd = new FormData(document.forms[0]);
             ImagenObj.Nombre = btoa(((new Date().getMilliseconds()) * Math.random()).toString())
             ImagenObj.Ruta = ImageBaseUrl + ImagenObj.Nombre + '.jpeg'
-            ImagenObj.aprobada = true
+            ImagenObj.Aprobada = true
             UserObj.Imagen = ImagenObj.Ruta
             fd.append("canvasImage", blob, ImagenObj.Nombre);
             this.ImageService.UploadJsonFile(fd).subscribe((x) => {

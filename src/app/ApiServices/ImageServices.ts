@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { AppSettings } from '../appSettings';
+import { AppSettings } from '../app.settings';
 import { E_Usuario } from '../Models/E_Usuario';
 import { UsuarioBuilder } from '../Builders/Usuario.model.builder';
 import { E_Cliente } from '../Models/E_Cliente';
@@ -17,7 +17,7 @@ import { ImagenBuilder } from '../Builders/Imagen.model.builder';
 export class ImageService {
     constructor(private Http: HttpClient, private HeaderBuilder: HeaderBuilder
         , private UserService: UserService) { }
-    private UrlNow: string = AppSettings.API_URL
+        private UrlNow: string = AppSettings.Global().API
     private textarea: HTMLTextAreaElement;
 
     private setOptions() {
@@ -39,7 +39,7 @@ export class ImageService {
 
     RegistrarImagen(obImg: E_Imagen): Observable<number> {
         var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
-
+        obImg.Id_Usuario = IdUser
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(obImg)
         return this.Http.post(this.UrlNow + "Imagen/crearImagen"
@@ -76,10 +76,38 @@ export class ImageService {
         return this.Http.post(this.UrlNow + "Imagen/ListarImagenesPendientes"
             , "", httpOptions).map(this.ExtractListImageClient)
     }
+
+    imagenesFiltro(CLient: E_Imagen): Observable<Array<E_Imagen>> {
+        debugger;
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id        
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)        
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Imagen/ImagenFiltrar"
+            , request, httpOptions).map(this.ExtractListImageClient)
+    }
+
     ExtractListImageClient(res: any): Array<E_Imagen> {
+        debugger;
         var x: Array<E_Imagen> = new Array<E_Imagen>()
-        if (res != null) { x.push(new ImagenBuilder().buildFromObject(res).Build()) }
+        res.forEach(element => {
+            x.push(new ImagenBuilder().buildFromObject(element).Build())
+        });       
         return x
+    }
+
+    aprobarImagen(CLient: E_Imagen): Observable<boolean> {
+        debugger;
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        CLient.Aprobada=true;
+        CLient.Id_Usuario=IdUser;
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)        
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Imagen/AprobarImagen", request, httpOptions).map(this.EvalBool)
+    }
+
+    EvalBool(res: any): boolean {
+        var a: boolean = res
+        return a
     }
 }
 

@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material';
 import { PhotoTool } from '../../../Tools/PhotoTool';
 import { E_Reunion } from '../../../Models/E_Reunion';
 import { E_Imagen } from '../../../Models/E_Imagen';
-import { AppSettings } from '../../../appSettings';
+
 import { ImageService } from '../../../ApiServices/ImageServices';
 import { DetailDialogComponent } from './DetailDialog/DetailDialog.component';
 import { ReunionBuilder } from '../../../Builders/Reunion.model.builder';

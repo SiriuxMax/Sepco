@@ -8,6 +8,7 @@ import { ReunionService } from '../../../ApiServices/ReunionService';
 import { E_Comentarios } from '../../../Models/E_Comentarios';
 import { UserService } from '../../../ApiServices/UserService';
 import { E_Usuario } from '../../../Models/E_Usuario';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'DetailEvent',
@@ -26,12 +27,20 @@ export class DetailEventComponent implements OnInit {
         private ImageService: ImageService,
         private formBuilder: FormBuilder,
         private ReunionService: ReunionService,
-        private UserService: UserService) {
+        private UserService: UserService,
+        private Router: Router
+    ) {
 
 
     }
+
+    ReturnPage(){
+        this.Router.navigate(['/eventvisor'])
+    }
     ngOnInit(): void {
         var ImaObj: E_Imagen = new E_Imagen()
+        
+        if (this.NavigationData.dataEvento == undefined) { this.Router.navigate(['/Maps']) }
         this.dataEvento = this.NavigationData.dataEvento != undefined ? this.NavigationData.dataEvento : new E_Reunion()
         ImaObj.Id_Reunion = this.dataEvento.Id
         this.ImageService.ImagenxReunion(ImaObj).subscribe((x) => {

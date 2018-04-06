@@ -11,8 +11,12 @@
   <!-- <label for="videoSource">Video source: </label>
   <select id="videoSource"></select>
 </div>-->
-  <input type="file" id="btnUpload" value="Upload"  class="upload" />
-
+  <input type="file" id="btnUpload" value="Upload" class="upload" />
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
 
 
 

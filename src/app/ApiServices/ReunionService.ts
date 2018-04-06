@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { AppSettings } from '../appSettings';
+import { AppSettings } from '../app.settings';
 import { E_Usuario } from '../Models/E_Usuario';
 import { UsuarioBuilder } from '../Builders/Usuario.model.builder';
 import { E_Cliente } from '../Models/E_Cliente';
@@ -19,7 +19,7 @@ import { ComentariosBuilder } from '../Builders/Comentarios.model.builder';
 @Injectable()
 export class ReunionService {
     constructor(private Http: HttpClient, private HeaderBuilder: HeaderBuilder, private UserService: UserService) { }
-    private UrlNow: string = AppSettings.API_URL
+    private UrlNow: string = AppSettings.Global().API
     private textarea: HTMLTextAreaElement;
 
     private setOptions() {
@@ -85,7 +85,7 @@ export class ReunionService {
         x.forEach(element => {
             y.push(new ComentariosBuilder().buildFromObject(element).Build())
         });
-        debugger
+        
         y.sort((x, y) => y.Id - x.Id)
         return y
 

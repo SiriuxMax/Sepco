@@ -10,11 +10,12 @@ import { fotoDialogComponent } from './fotoDialog/fotoDialog.component';
 import { PhotoTool } from '../../../Tools/PhotoTool';
 import { E_Reunion } from '../../../Models/E_Reunion';
 import { E_Imagen } from '../../../Models/E_Imagen';
-import { AppSettings } from '../../../appSettings';
+
 import { ImageService } from '../../../ApiServices/ImageServices';
 import { E_Municipios } from '../../../Models/E_Municipios';
 import { Router } from '@angular/router';
 import { debug } from 'util';
+import { AppSettings } from '../../../app.settings';
 
 @Component({
     selector: 'EventCreator',
@@ -138,15 +139,15 @@ export class EventCreatorComponent implements OnInit {
         objEvento.Id_TipoReunion = this.form.value.TipoEvento
         objEvento.Id_Municipio = this.form.value.Municipio.Id
         var ImagenObj: E_Imagen = new E_Imagen()
-        var ImageBaseUrl = AppSettings.API_ImageContent
-
+        var ImageBaseUrl = AppSettings.Global().API_ImageContent
+        debugger
         if (this.dataURL != undefined) {
             var formdata = new FormData();
             var blob = PhotoTool.dataURItoBlob(this.dataURL);
             var fd = new FormData(document.forms[0]);
             ImagenObj.Nombre = btoa(((new Date().getMilliseconds()) * Math.random()).toString())
             ImagenObj.Ruta = ImageBaseUrl + ImagenObj.Nombre + '.jpeg'
-            ImagenObj.aprobada = true
+            ImagenObj.Aprobada = true
             fd.append("canvasImage", blob, ImagenObj.Nombre);
             this.ImageService.crearReunion(objEvento).subscribe((IdReunion) => {
                 if (IdReunion != 0) {
@@ -166,11 +167,28 @@ export class EventCreatorComponent implements OnInit {
                 }
 
             })
+        }
+        else {
+            this.ImageService.crearReunion(objEvento).subscribe((IdReunion) => {
+                if (IdReunion != 0) {
+                    ImagenObj.Nombre = 'RutaNula'
+                    ImagenObj.Ruta = 'RutaNula'
+                    ImagenObj.Aprobada = true
+                    ImagenObj.Id_Reunion = IdReunion
+                    this.ImageService.RegistrarImagen(ImagenObj).subscribe((x => {
+                        if (x) {
+                            this.SucceSave = true
+                            setTimeout(() => {
+                                this.Router.navigate(["/Maps/"])
+                            }, 4000)
+                        }
+                    }))
+                }
 
-
+            })
 
         }
+
     }
-
-
 }
+

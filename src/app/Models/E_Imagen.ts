@@ -4,7 +4,8 @@ export class E_Imagen {
     public Ruta: string
     public FechaCreacion: Date
     public Id_Reunion: number
-    public aprobada: boolean
-
-    constructor(){}
+    public Aprobada: boolean
+    public Id_Usuario: number
+    public Cedula: string
+    constructor() { }
 }

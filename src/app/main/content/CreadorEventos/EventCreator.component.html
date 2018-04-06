@@ -90,7 +90,7 @@
                         <i class="material-icons">&#xE3B0;</i> Capturar
                     </button>
                 </div>
-                <button  (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="form.invalid || noFoto">
+                <button  (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="form.invalid">
                     Enviar Informacion
                 </button>
                 <div fxLayout="row" *ngIf="SucceSave" fxLayoutAlign="start center" fxFlex="1 0 auto">

@@ -38,7 +38,7 @@ const routes: Routes = [
         NgxDatatableModule,
         MatCheckboxModule
 
-    ], entryComponents: [AceptImageComponent]
+    ], entryComponents: [AceptImageComponent,OkImageComponent]
 
 })
 export class AceptImageModule {

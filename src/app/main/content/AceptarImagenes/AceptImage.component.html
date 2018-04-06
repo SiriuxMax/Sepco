@@ -3,7 +3,7 @@
     <!-- HEADER -->
     <div class="header mat-accent-bg p-24 h-160" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
         <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
-            <div class="h2 mt-16">Listado de Eventos</div>
+            <div class="h2 mt-16">Listado de Imagenes</div>
             <div class="h2 ">{{DatoDepto?.Nombre | uppercase }}</div>
         </div>
     </div>
@@ -11,7 +11,41 @@
 
     <!-- CONTENT -->
     <div class="content p-24">
+        <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row">                                                                  
+            <mat-form-field fxFlex="100">
+                <input matInput placeholder="Cedula"  [(ngModel)]="cedula" >                
+            </mat-form-field>            
 
+            <mat-form-field fxFlex="100">
+                <input matInput placeholder="Nombre Cliente"  [(ngModel)]="nombrefil" >                               
+            </mat-form-field>  
+            
+            <mat-form-field>
+                <mat-select placeholder="Estado"  [(ngModel)]="Aprobada">
+                    <mat-option [value]="1">Aprobada</mat-option>
+                    <mat-option [value]="0">No Aprobada</mat-option>
+                </mat-select>                  
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-select placeholder="Departamentos" [(ngModel)]="DepartamentoSeleccionado"  (change)="SelectedDepartamento($event)">
+                    <mat-option *ngFor="let Item of ListDepartamentos" [value]="Item.Id">
+                        {{ Item.Nombre }}
+                    </mat-option>
+                </mat-select>                  
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-select placeholder="Municipios" [(ngModel)]="MunicipioSeleccionado" >
+                    <mat-option *ngFor="let Item of ListMunicipiosGroup" [value]="Item.Id">
+                        {{ Item.Nombre }}
+                    </mat-option>
+                </mat-select>                
+            </mat-form-field>
+            <button  (click)="filtrar()" mat-raised-button color="accent" class="submit-button" aria-label="">
+                    Buscar 
+                   </button>
+        </div>
 
         <ngx-datatable [selected]="selected" [selectionType]="'single'" (select)="selectedEvent($event)" class="material" [rows]="rows"
             [loadingIndicator]="loadingIndicator" [columnMode]="'force'" [headerHeight]="48" [footerHeight]="56" [rowHeight]="'auto'"
@@ -19,11 +53,11 @@
 
 
 
-            <ngx-datatable-column name="Titulo" prop="Titulo"></ngx-datatable-column>
+            <ngx-datatable-column name="Id" prop="Id"></ngx-datatable-column>
 
-            <ngx-datatable-column name="Descripcion" prop="Descripcion"></ngx-datatable-column>
+            <ngx-datatable-column name="Nombre" prop="Nombre"></ngx-datatable-column>
 
-            <ngx-datatable-column name="Creador por" prop="NombreCliente"></ngx-datatable-column>
+            <ngx-datatable-column name="Ruta" prop="Ruta"></ngx-datatable-column>
             <ngx-datatable-column name="Fecha Creacion" prop="FechaCreacion"></ngx-datatable-column>
         </ngx-datatable>
 

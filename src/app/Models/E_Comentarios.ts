@@ -8,5 +8,7 @@ export class E_Comentarios {
     public Id_usuario: number
     public Estado: boolean
     public FechaCreacion: Date
+    public nombrecliente:string
+    public apellidocliente:string
     constructor() { }
 }

@@ -4,15 +4,22 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { hmrBootstrap } from './hmr';
+import { StartupService } from 'app/ApiServices/startup.service';
 
 if ( environment.production )
 {
     enableProdMode();
 }
 
-const bootstrap = () => platformBrowserDynamic().bootstrapModule(AppModule);
+//const bootstrap = () => platformBrowserDynamic().bootstrapModule(AppModule);
 
-if ( environment.hmr )
+StartupService.loadParametry()
+  .then(() => {
+    platformBrowserDynamic().bootstrapModule(AppModule);
+  });
+
+  
+/*if ( environment.hmr )
 {
     if ( module['hot'] )
     {
@@ -28,3 +35,4 @@ else
 {
     bootstrap();
 }
+*/

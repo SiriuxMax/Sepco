@@ -17,8 +17,11 @@
         <div class="content-card mat-white-bg">
 
             <!-- CONTENT TOOLBAR -->
-            <div class="toolbar px-24 py-8">
+            <div class="toolbar px-24 py-8 headerback">
                 <span>Detalles del Evento </span>
+                <div class="icoLike" (click)="ReturnPage()">
+                    <i class="material-icons">&#xE166;</i>
+                </div>
             </div>
             <!-- / CONTENT TOOLBAR -->
 
@@ -44,11 +47,11 @@
                             </mat-error>
                         </mat-form-field>
                     </form>
-                    <div fxLayout="row" >
-                        <button  (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="registerForm.invalid">
+                    <div fxLayout="row">
+                        <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="registerForm.invalid">
                             Enviar Comentario
                         </button>
-                        <div  class="icoLike">
+                        <div class="icoLike">
                             <i class="material-icons">&#xE8DC;</i>
                         </div>
                     </div>
@@ -61,7 +64,7 @@
                         </p>
 
                         <footer>
-                            User: {{item.Id_usuario}}
+                            {{item.nombrecliente}}  {{item.apellidocliente}}
                         </footer>
                         <hr>
                     </blockquote>

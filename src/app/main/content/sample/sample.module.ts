@@ -6,10 +6,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { FuseSampleComponent } from './sample.component';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
 const routes = [
     {
-        path     : 'sample',
+        path: 'sample',
         component: FuseSampleComponent
     }
 ];
@@ -18,18 +19,20 @@ const routes = [
     declarations: [
         FuseSampleComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(routes),
 
         TranslateModule,
 
-        FuseSharedModule
+        FuseSharedModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatInputModule
     ],
-    exports     : [
+    exports: [
         FuseSampleComponent
     ]
 })
 
-export class FuseSampleModule
-{
+export class FuseSampleModule {
 }

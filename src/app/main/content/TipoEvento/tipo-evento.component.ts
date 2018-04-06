@@ -9,7 +9,6 @@ import { MatDialog } from '@angular/material';
 import { PhotoTool } from '../../../Tools/PhotoTool';
 import { E_Reunion } from '../../../Models/E_Reunion';
 import { E_Imagen } from '../../../Models/E_Imagen';
-import { AppSettings } from '../../../appSettings';
 import { AdminServices } from '../../../ApiServices/AdminServices';
 import { E_Municipios } from '../../../Models/E_Municipios';
 import { Router } from '@angular/router';

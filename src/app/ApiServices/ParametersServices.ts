@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { AppSettings } from '../appSettings';
+import { AppSettings } from '../app.settings';
 import { E_Usuario } from '../Models/E_Usuario';
 import { UsuarioBuilder } from '../Builders/Usuario.model.builder';
 import { E_Departamentos } from '../Models/E_Departamentos';
@@ -15,7 +15,7 @@ import { E_TipoReunion } from '../Models/E_TipoReunion';
 @Injectable()
 export class ParameterService {
     constructor(private Http: HttpClient) { }
-    private UrlNow: string = AppSettings.API_URL
+    private UrlNow: string = AppSettings.Global().API
     private textarea: HTMLTextAreaElement;
 
     /** Copy the text value to the clipboard. */
