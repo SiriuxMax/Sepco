@@ -14,6 +14,7 @@ import { ReunionBuilder } from '../Builders/Reunion.model.builder';
 import { UserService } from './UserService';
 import { E_Comentarios } from '../Models/E_Comentarios';
 import { ComentariosBuilder } from '../Builders/Comentarios.model.builder';
+import { E_Sector } from '../Models/E_Sector';
 
 
 @Injectable()
@@ -51,14 +52,16 @@ export class ReunionService {
     }
 
     RegistrarImagen(obImg: E_Imagen): Observable<number> {
-        const httpOptions = this.HeaderBuilder.HeadNow()
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(obImg)
         return this.Http.post(this.UrlNow + "Imagen/crearImagen"
             , request, httpOptions).map((x) => { return Number(x) })
     }
 
     crearReunion(obImg: E_Reunion): Observable<number> {
-        const httpOptions = this.HeaderBuilder.HeadNow()
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(obImg)
         return this.Http.post(this.UrlNow + "Reunion/crearReunion"
             , request, httpOptions).map((x) => { return Number(x) })
@@ -67,14 +70,16 @@ export class ReunionService {
 
 
     crearComentario(obImg: E_Comentarios): Observable<number> {
-        const httpOptions = this.HeaderBuilder.HeadNow()
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(obImg)
         return this.Http.post(this.UrlNow + "Comentario/crearComentario"
             , request, httpOptions).map((x) => { return Number(x) })
     }
 
     ComentariosXImagen(obImg: E_Comentarios): Observable<Array<E_Comentarios>> {
-        const httpOptions = this.HeaderBuilder.HeadNow()
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(obImg)
         return this.Http.post(this.UrlNow + "Comentario/ComentariosXImagen"
             , request, httpOptions).map(this.extracComentarios)
@@ -91,6 +96,13 @@ export class ReunionService {
 
     }
 
+    CrearSector(objSector:E_Sector):Observable<number>{
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+        var request = JSON.stringify(objSector)
+        return this.Http.post(this.UrlNow + "Reunion/CrearSector"
+            , request, httpOptions).map((x) => { return Number(x) })
+    }
 }
 
 

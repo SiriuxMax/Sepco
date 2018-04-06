@@ -1,6 +1,6 @@
 import { Component, AfterViewChecked, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { NavigationInfoService } from '../../../../ApiServices/NavigationInfoService';
+import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
 import { Router } from '@angular/router';
 
 @Component({

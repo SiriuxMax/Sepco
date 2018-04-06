@@ -4,9 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
-import { UserService } from '../../../ApiServices/UserService';
-import { E_Usuario } from '../../../Models/E_Usuario';
-import { PhotoTool } from '../../../Tools/PhotoTool';
+import { UserService } from 'app/ApiServices/UserService';
+import { E_Usuario } from 'app/Models/E_Usuario';
+import { PhotoTool } from 'app/Tools/PhotoTool';
 
 
 @Component({

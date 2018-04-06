@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { E_Reunion } from '../../../Models/E_Reunion';
-import { NavigationInfoService } from '../../../ApiServices/NavigationInfoService';
-import { ImageService } from '../../../ApiServices/ImageServices';
-import { E_Imagen } from '../../../Models/E_Imagen';
+import { E_Reunion } from 'app/Models/E_Reunion';
+import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
+import { ImageService } from 'app/ApiServices/ImageServices';
+import { E_Imagen } from 'app/Models/E_Imagen';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { ReunionService } from '../../../ApiServices/ReunionService';
-import { E_Comentarios } from '../../../Models/E_Comentarios';
-import { UserService } from '../../../ApiServices/UserService';
-import { E_Usuario } from '../../../Models/E_Usuario';
+import { ReunionService } from 'app/ApiServices/ReunionService';
+import { E_Comentarios } from 'app/Models/E_Comentarios';
+import { UserService } from 'app/ApiServices/UserService';
+import { E_Usuario } from 'app/Models/E_Usuario';
 import { Router } from '@angular/router';
 
 @Component({

@@ -1,9 +1,9 @@
 
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.service';
-import { ImageService } from '../../../ApiServices/ImageServices';
-import { PhotoTool } from '../../../Tools/PhotoTool';
-import { UserService } from '../../../ApiServices/UserService';
+import { ImageService } from 'app/ApiServices/ImageServices';
+import { PhotoTool } from 'app/Tools/PhotoTool';
+import { UserService } from 'app/ApiServices/UserService';
 
 @Component({
   selector: 'fuse-sample',

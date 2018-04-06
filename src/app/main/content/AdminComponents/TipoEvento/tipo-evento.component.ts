@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ParameterService } from '../../../ApiServices/ParametersServices';
-import { E_Departamentos } from '../../../Models/E_Departamentos';
-import { E_TipoReunion } from '../../../Models/E_TipoReunion';
-import { GenerateMask } from '../../../Tools/MaskedLibrary';
-import { NavigationInfoService } from '../../../ApiServices/NavigationInfoService';
+import { ParameterService } from 'app/ApiServices/ParametersServices';
+import { E_Departamentos } from 'app/Models/E_Departamentos';
+import { E_TipoReunion } from 'app/Models/E_TipoReunion';
+import { GenerateMask } from 'app/Tools/MaskedLibrary';
+import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
 import { MatDialog } from '@angular/material';
-import { PhotoTool } from '../../../Tools/PhotoTool';
-import { E_Reunion } from '../../../Models/E_Reunion';
-import { E_Imagen } from '../../../Models/E_Imagen';
-import { AdminServices } from '../../../ApiServices/AdminServices';
-import { E_Municipios } from '../../../Models/E_Municipios';
+import { PhotoTool } from 'app/Tools/PhotoTool';
+import { E_Reunion } from 'app/Models/E_Reunion';
+import { E_Imagen } from 'app/Models/E_Imagen';
+import { AdminServices } from 'app/ApiServices/AdminServices';
+import { E_Municipios } from 'app/Models/E_Municipios';
 import { Router } from '@angular/router';
 
 @Component({

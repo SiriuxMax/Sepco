@@ -3,19 +3,23 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
-import { ParameterService } from '../../../ApiServices/ParametersServices';
-import { E_Departamentos } from '../../../Models/E_Departamentos';
-import { E_Municipios } from '../../../Models/E_Municipios';
-import { GenerateMask } from '../../../Tools/MaskedLibrary';
-import { PhotoTool } from '../../../Tools/PhotoTool';
+
+import { E_Departamentos } from 'app/Models/E_Departamentos';
+import { E_Municipios } from 'app/Models/E_Municipios';
+
+import { PhotoTool } from 'app/Tools/PhotoTool';
 import { Observable } from 'rxjs/Observable';
-import { UserService } from '../../../ApiServices/UserService';
-import { E_Cliente } from '../../../Models/E_Cliente';
-import { E_Usuario } from '../../../Models/E_Usuario';
+import { UserService } from 'app/ApiServices/UserService';
+
+import { E_Usuario } from 'app/Models/E_Usuario';
 import { Router } from '@angular/router';
-import { ImageService } from '../../../ApiServices/ImageServices';
-import { E_Imagen } from '../../../Models/E_Imagen';
-import { AppSettings } from '../../../app.settings';
+import { ImageService } from 'app/ApiServices/ImageServices';
+import { E_Imagen } from 'app/Models/E_Imagen';
+
+import { ParameterService } from 'app/ApiServices/ParametersServices';
+import { E_Cliente } from 'app/Models/E_Cliente';
+import { AppSettings } from 'app/app.settings';
+import { GenerateMask } from 'app/Tools/MaskedLibrary';
 
 
 @Component({
