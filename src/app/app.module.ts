@@ -30,7 +30,8 @@ import { DetailEventModule } from './main/content/ClienteComponents/DetailEvent/
 import { TipoEventoModule } from './main/content/AdminComponents/TipoEvento/tipo-evento.module';
 import { AdminServices } from './ApiServices/AdminServices';
 import { AceptImageModule } from './main/content/AdminComponents/AceptarImagenes/AceptImage.module';
-
+import { MainPageAdminModule } from './main/content/AdminComponents/MainPageAdmin/MainPageAdmin.module'
+import { ParamSectoresModule } from './main/content/AdminComponents/ParamSectores/ParamSectores.module';
 
 const appRoutes: Routes = [
     { path: 'sample', redirectTo: '/sample', pathMatch: 'full' },
@@ -41,10 +42,10 @@ const appRoutes: Routes = [
     { path: 'tipoevento', redirectTo: '/tipoevento', pathMatch: 'full' },
     { path: 'detailevent', redirectTo: '/detailevent', pathMatch: 'full' },
     { path: 'aceptimage', redirectTo: '/aceptimage', pathMatch: 'full' },
+    { path: 'mainpageadmin', redirectTo: '/mainpageadmin', pathMatch: 'full' },  
+    { path: 'paramsectores', redirectTo: '/paramsectores', pathMatch: 'full' },      
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: 'login' },
-
-
 ];
 
 @NgModule({
@@ -70,7 +71,9 @@ const appRoutes: Routes = [
         VisorEventModule,
         DetailEventModule,
         TipoEventoModule,
-        AceptImageModule
+        AceptImageModule,
+        ParamSectoresModule,
+        MainPageAdminModule
     ],
     providers: [
         UserService

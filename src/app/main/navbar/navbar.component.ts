@@ -4,10 +4,11 @@ import { Subscription } from 'rxjs/Subscription';
 import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
-import { navigation } from 'app/navigation/navigation';
+import { navigation, navigationAdmin } from 'app/navigation/navigation';
 import { navigationClient } from 'app/navigation/navigation';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { AppSettings } from '../../app.settings';
+import { UserService } from 'app/ApiServices/UserService';
 
 @Component({
     selector: 'fuse-navbar',
@@ -40,12 +41,22 @@ export class FuseNavbarComponent implements OnDestroy {
 
     constructor(
         private sidebarService: FuseSidebarService,
-        private navigationService: FuseNavigationService
+        private navigationService: FuseNavigationService,
+        private userService: UserService
     ) {
         // Navigation data
-        if (AppSettings.Global().TipoAplicacion == 1) {
-            this.navigation = navigationClient;
+        //   if (AppSettings.Global().TipoAplicacion == 1) 
+        if (this.userService.GetCurrentCurrentUserNow() == null) {
+            this.navigation = navigation;
         }
+        else {
+            if (this.userService.GetCurrentCurrentUserNow().Id_Perfil == 1) {
+                this.navigation = navigationClient;
+            } else if (this.userService.GetCurrentCurrentUserNow().Id_Perfil == 2) {
+                this.navigation = navigationAdmin;
+            }
+        }
+
 
 
         // Default layout

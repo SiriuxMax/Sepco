@@ -19,14 +19,7 @@ export const navigation = [
                     'fg': '#FFFFFF'
                 }
             }
-            , {
-                'id': 'map',
-                'title': 'Mapa',
-                'translate': 'NAV.SAMPLE.TITLE',
-                'type': 'item',
-                'icon': 'map',
-                'url': '/Maps',
-            }
+           
         ]
     }
 ];
@@ -45,6 +38,33 @@ export const navigationClient = [
                 'type': 'item',
                 'icon': 'map',
                 'url': '/Maps',
+            }
+        ]
+    }
+];
+
+export const navigationAdmin = [
+    {
+        'id': 'applications',
+        'title': 'Menu',
+        'translate': 'NAV.APPLICATIONS',
+        'type': 'group',
+        'children': [
+            {
+                'id': 'tipoevento',
+                'title': 'Tipo Evento',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/tipoevento',
+            },
+            {
+                'id': 'aceptimage',
+                'title': 'Aprobar Imagenes',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/aceptimage',
             }
         ]
     }

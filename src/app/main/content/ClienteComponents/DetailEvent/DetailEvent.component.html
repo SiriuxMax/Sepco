@@ -30,8 +30,9 @@
 
                 <div class="demo-content">
 
-                    <img [src]="imageUrl" alt="beach" style="max-width: 640px; width: 100%;">
-
+                    <img *ngIf="imageUrl != 'RutaNula'" [src]="imageUrl" alt="beach" style="max-width: 640px; width: 100%;">
+                    
+                   
                     <h1>{{dataEvento.Titulo}}</h1>
                     <h4 class="secondary-text">Creado por {{dataEvento.NombreCliente}}</h4>
 

@@ -15,11 +15,11 @@ import { Router } from '@angular/router';
 
 @Component({
     moduleId: module.id,
-    selector: 'tipo-evento',
-    templateUrl: 'tipo-evento.component.html',
-    styleUrls: ['tipo-evento.component.scss']
+    selector: 'ParamSectores',
+    templateUrl: 'ParamSectores.component.html',
+    styleUrls: ['ParamSectores.component.scss']
 })
-export class TipoEventoComponent implements OnInit {
+export class ParamSectoresComponent implements OnInit {
     SucceSave: boolean;
     ListMunicipio: Array<E_Municipios> = new Array<E_Municipios>()
     ListMunicipiosGroup: Array<E_Municipios> = new Array<E_Municipios>()

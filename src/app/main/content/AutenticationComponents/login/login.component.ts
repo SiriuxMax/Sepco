@@ -85,7 +85,15 @@ export class FuseLoginComponent implements OnInit {
                 }
             }
             this.Loading = false
-            this.Router.navigate(["/sample/"])
+          if(this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 1)  
+          {
+            this.Router.navigate(["/Maps/"])
+          }else if(this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 2)
+          {
+            this.Router.navigate(["/mainpageadmin/"])
+          }
+           
+            
         })
         //   ;
     }

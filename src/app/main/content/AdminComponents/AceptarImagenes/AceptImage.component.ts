@@ -53,6 +53,11 @@ export class AceptImageComponent implements OnInit {
 
         // NumeroEventos: NUmero, Nombre: TextX, CodigoDepto: CodigoDepto ,IdDepto:IdDepto
     }
+
+    ReturnPage(event:Event){
+        event.preventDefault();
+        this.Router.navigate(['/mainpageadmin'])
+     }
     ObtenerReuniones() {
         
         var ObjReu: E_Imagen = new E_Imagen()
