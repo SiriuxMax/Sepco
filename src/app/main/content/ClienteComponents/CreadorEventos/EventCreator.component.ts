@@ -17,6 +17,8 @@ import { debug } from 'util';
 import { AppSettings } from '../../../../app.settings';
 import { ParameterService } from 'app/ApiServices/ParametersServices';
 import { E_Sector } from '../../../../Models/E_Sector';
+import { E_DirectorDepartamento } from '../../../../Models/E_DirectorDepartamento';
+import { AdminServices } from 'app/ApiServices/AdminServices';
 
 @Component({
     selector: 'EventCreator',
@@ -24,6 +26,7 @@ import { E_Sector } from '../../../../Models/E_Sector';
     styleUrls: ['./EventCreator.component.scss']
 })
 export class EventCreatorComponent implements OnInit {
+    DirectorTecnicoSector: string;
     SucceSave: boolean;
 
     dataURL: any;
@@ -43,9 +46,10 @@ export class EventCreatorComponent implements OnInit {
         private NavigationData: NavigationInfoService,
         private dialog: MatDialog,
         private ImageService: ImageService,
-        private Router: Router
+        private Router: Router,
+        private AdminServices: AdminServices
     ) {
-        console.log(JSON.stringify(this.NavigationData.storage))
+
         this.ParameterService.listarDepartamentos()
             .subscribe((x: Array<E_Departamentos>) => {
                 this.ListDepartamentos = x
@@ -71,12 +75,21 @@ export class EventCreatorComponent implements OnInit {
     }
 
     SelectedDepartamento(y) {
-
+        this.DirectorTecnicoSector = "Sin Asignación"
+        var objDir: E_DirectorDepartamento = new E_DirectorDepartamento()
+        objDir.Id_Departamento = y.value.Id
         var objSector: E_Sector = new E_Sector()
         objSector.Id_Departamento = y.value.Id
         this.ParameterService.ListarSector(objSector)
             .subscribe((x: Array<E_Sector>) => {
                 this.ListSector = x
+            })
+        this.AdminServices.ListarDirectorDepto(objDir)
+            .subscribe((x: Array<E_DirectorDepartamento>) => {
+                if (x.length > 0) {
+                    this.DirectorTecnicoSector = x[0].Nombres + ' ' + x[0].Apellidos
+                }
+
             })
     }
 

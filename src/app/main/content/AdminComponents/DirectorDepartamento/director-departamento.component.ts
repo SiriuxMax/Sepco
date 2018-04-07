@@ -115,22 +115,14 @@ export class DirectorDepartamentoComponent implements OnInit {
     }
 
     SelectedDepartamento(y) {
-        this.DirectorTecnicoSector = "Sin Asignación"
-        var objDir: E_DirectorDepartamento = new E_DirectorDepartamento()
-        objDir.Id_Departamento = y.value.Id
+    
         var objSector: E_Sector = new E_Sector()
         objSector.Id_Departamento = y.value.Id
         this.ParameterService.ListarSector(objSector)
             .subscribe((x: Array<E_Sector>) => {
                 this.ListSectorGroup = x
             })
-        this.AdminServices.ListarDirectorDepto(objDir)
-            .subscribe((x: Array<E_DirectorDepartamento>) => {
-                if (x.length > 0) {
-                    this.DirectorTecnicoSector = x[0].Nombres + ' ' + x[0].Apellidos
-                }
-
-            })
+ 
     }
 
 
