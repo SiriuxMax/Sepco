@@ -72,8 +72,18 @@ export const navigationAdmin = [
                 'translate': 'NAV.SAMPLE.TITLE',
                 'type': 'item',
                 'icon': 'map',
-                'url': '/paramsectores',
+                'url': '/sector',
             },
+            {
+                'id': 'directordepartamento',
+                'title': 'Director Departamento',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/directordepartamento',
+            },
+
+            
             
         ]
     }

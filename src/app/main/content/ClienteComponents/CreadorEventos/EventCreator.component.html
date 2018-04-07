@@ -53,13 +53,13 @@
                     </mat-form-field>
 
                     <mat-form-field fxFlex="50">
-                            <mat-select placeholder="Municipio" formControlName="Municipio" [(ngModel)]="MunicipioSeleccionado" required>
-                                <mat-option *ngFor="let Item of ListMunicipio" [value]="Item">
+                            <mat-select placeholder="Sector" formControlName="Sector"  required>
+                                <mat-option *ngFor="let Item of ListSector" [value]="Item">
                                     {{ Item.Nombre }}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="formErrors.Municipio.required">
-                                    Municipio es requerido
+                            <mat-error *ngIf="formErrors.Sector.required">
+                                Sector es requerido
                             </mat-error>
                         </mat-form-field>
                     <mat-form-field fxFlex="100">
@@ -85,8 +85,19 @@
                             Numero de personas requerido
                         </mat-error>
                     </mat-form-field>
+
+                    <mat-form-field fxFlex="50">
+                        <input matInput placeholder="Costo" formControlName="Costo" [textMask]="{mask: MaskPrice}" required>
+                        <mat-error *ngIf="formErrors.Costo.required">
+                            Costo requerido
+                        </mat-error>
+                    </mat-form-field>
                    
-                    <button  fxFlex="50"  (click)="AbrirCamara()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" >
+                   
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                    <button  fxFlex="100"  (click)="AbrirCamara()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" >
                         <i class="material-icons">&#xE3B0;</i> Capturar
                     </button>
                 </div>

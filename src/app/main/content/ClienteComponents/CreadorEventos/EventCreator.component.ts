@@ -12,11 +12,11 @@ import { E_Reunion } from 'app/Models/E_Reunion';
 import { E_Imagen } from 'app/Models/E_Imagen';
 
 import { ImageService } from 'app/ApiServices/ImageServices';
-import { E_Municipios } from 'app/Models/E_Municipios';
 import { Router } from '@angular/router';
 import { debug } from 'util';
 import { AppSettings } from '../../../../app.settings';
 import { ParameterService } from 'app/ApiServices/ParametersServices';
+import { E_Sector } from '../../../../Models/E_Sector';
 
 @Component({
     selector: 'EventCreator',
@@ -25,16 +25,16 @@ import { ParameterService } from 'app/ApiServices/ParametersServices';
 })
 export class EventCreatorComponent implements OnInit {
     SucceSave: boolean;
-    ListMunicipio: Array<E_Municipios> = new Array<E_Municipios>()
-    ListMunicipiosGroup: Array<E_Municipios> = new Array<E_Municipios>()
-    MunicipioSeleccionado: any
+
     dataURL: any;
     MaskedNumberNoDecimal: any[]
+    MaskPrice: any[]
     form: FormGroup;
     formErrors: any;
     noFoto: boolean = true
     DepartamentoSeleccionado: any
     TipoEventoSeleccionado: any
+    ListSector: Array<E_Sector> = new Array<E_Sector>()
     ListDepartamentos: Array<E_Departamentos> = new Array<E_Departamentos>()
     ListTipoEvento: Array<E_TipoReunion> = new Array<E_TipoReunion>()
     // Horizontal Stepper
@@ -50,11 +50,7 @@ export class EventCreatorComponent implements OnInit {
             .subscribe((x: Array<E_Departamentos>) => {
                 this.ListDepartamentos = x
             })
-        this.ParameterService.ListarMunicipios()
-            .subscribe((x: Array<E_Municipios>) => {
-                console.log(x)
-                this.ListMunicipiosGroup = x
-            })
+
 
         this.ParameterService.ListarTipoReunion(new E_TipoReunion())
             .subscribe((x: Array<E_TipoReunion>) => {
@@ -67,27 +63,36 @@ export class EventCreatorComponent implements OnInit {
             Descripcion: {},
             Departamentos: {},
             TipoEvento: {},
-            Municipio: {},
-            Personas: {}
+            Sector: {},
+            Personas: {},
+            Costo: {}
         };
 
     }
+
     SelectedDepartamento(y) {
 
-        this.ListMunicipio = this.ListMunicipiosGroup.filter(x => x.Id_Departamento == Number(y.value.Codigo))
+        var objSector: E_Sector = new E_Sector()
+        objSector.Id_Departamento = y.value.Id
+        this.ParameterService.ListarSector(objSector)
+            .subscribe((x: Array<E_Sector>) => {
+                this.ListSector = x
+            })
     }
+
     ngOnInit() {
         this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
-
+        this.MaskPrice = GenerateMask.numberMask
 
         this.form = this.formBuilder.group({
 
             Nombre: ['', Validators.required],
             Descripcion: ['', Validators.required],
             Departamentos: [undefined, Validators.required],
-            Municipio: [undefined, Validators.required],
+            Sector: [undefined, Validators.required],
             TipoEvento: [undefined, Validators.required],
             Personas: ['', Validators.required],
+            Costo: ['', Validators.required],
         });
 
         this.form.valueChanges.subscribe(() => {
@@ -137,13 +142,14 @@ export class EventCreatorComponent implements OnInit {
         objEvento.NombreDepartamento = this.form.value.Departamentos.Nombre
         objEvento.CantidadPersonas = this.form.value.Personas
         objEvento.Id_TipoReunion = this.form.value.TipoEvento
-        objEvento.Id_Municipio = this.form.value.Municipio.Id
+        objEvento.Id_Sector = this.form.value.Sector.Id
+        objEvento.Costo = this.form.value.Costo.replace(/\./g, "");
         var ImagenObj: E_Imagen = new E_Imagen()
         var ImageBaseUrl = AppSettings.Global().API_ImageContent
         debugger
         if (this.dataURL != undefined) {
             var formdata = new FormData();
-          //  var blob = PhotoTool.dataURItoBlob(this.dataURL);
+            //  var blob = PhotoTool.dataURItoBlob(this.dataURL);
             var fd = new FormData(document.forms[0]);
             ImagenObj.Nombre = btoa(((new Date().getMilliseconds()) * Math.random()).toString())
             ImagenObj.Ruta = ImageBaseUrl + ImagenObj.Nombre + '.jpeg'

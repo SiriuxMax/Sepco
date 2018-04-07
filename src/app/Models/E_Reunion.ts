@@ -13,5 +13,7 @@ export class E_Reunion {
     public Id_Usuario: number
     public NombreCliente: string
     public ApellidoCliente: string
+    public Id_Sector: number
+    public Costo: number
     constructor() { }
 }

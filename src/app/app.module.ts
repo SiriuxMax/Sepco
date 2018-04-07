@@ -33,6 +33,8 @@ import { AceptImageModule } from './main/content/AdminComponents/AceptarImagenes
 import { MainPageAdminModule } from './main/content/AdminComponents/MainPageAdmin/MainPageAdmin.module'
 import { ParamSectoresModule } from './main/content/AdminComponents/ParamSectores/ParamSectores.module';
 import { UserInfoModule } from 'app/main/content/AutenticationComponents/UserInfo/UserInfo.module';
+import { DirectorDepartamentoModule } from './main/content/AdminComponents/DirectorDepartamento/director-departamento.module';
+import { SectorModule } from './main/content/AdminComponents/Sector/sector.module';
 
 const appRoutes: Routes = [
     { path: 'sample', redirectTo: '/sample', pathMatch: 'full' },
@@ -44,7 +46,10 @@ const appRoutes: Routes = [
     { path: 'detailevent', redirectTo: '/detailevent', pathMatch: 'full' },
     { path: 'aceptimage', redirectTo: '/aceptimage', pathMatch: 'full' },
     { path: 'mainpageadmin', redirectTo: '/mainpageadmin', pathMatch: 'full' },  
-    { path: 'paramsectores', redirectTo: '/paramsectores', pathMatch: 'full' },      
+    { path: 'sector', redirectTo: '/sector', pathMatch: 'full' },
+
+    { path: 'directordepartamento', redirectTo: '/directordepartamento', pathMatch: 'full' },
+          
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: 'login' },
 ];
@@ -73,9 +78,10 @@ const appRoutes: Routes = [
         DetailEventModule,
         TipoEventoModule,
         AceptImageModule,
-        ParamSectoresModule,
+        SectorModule,
         MainPageAdminModule,
         UserInfoModule,
+        DirectorDepartamentoModule
     ],
     providers: [
         UserService

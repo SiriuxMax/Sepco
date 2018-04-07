@@ -11,6 +11,12 @@ import { HeaderBuilder } from '../Tools/HeaderBuilder';
 import { E_Imagen } from '../Models/E_Imagen';
 import { E_Reunion } from '../Models/E_Reunion';
 import { E_TipoReunion } from '../Models/E_TipoReunion';
+import { E_DirectorDepartamento } from '../Models/E_DirectorDepartamento';
+import { E_Individuo1 } from '../Models/E_Individuo1';
+import { E_Individuo2 } from '../Models/E_Individuo2';
+import { E_Sector } from '../Models/E_Sector';
+import { E_ZonaElectoral } from '../Models/E_ZonaElectoral';
+import { E_PuestoVotacion } from '../Models/E_PuestoVotacion';
 
 
 @Injectable()
@@ -47,6 +53,48 @@ export class AdminServices {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Admin/crearTipoReunion"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    crearDirectorDepartamento(CLient: E_DirectorDepartamento): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearDirectorDepartamento"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    crearIndividuo1(CLient: E_Individuo1): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearIndividuo1"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    crearIndividuo2(CLient: E_Individuo2): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearIndividuo2"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    crearSector(CLient: E_Sector): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearSector"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    crearZonaElectoral(CLient: E_ZonaElectoral): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearZonaElectoral"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    crearPuestoVotacion(CLient: E_PuestoVotacion): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearPuestoVotacion"
             , request, httpOptions).map(this.EvalBool)
     }
 

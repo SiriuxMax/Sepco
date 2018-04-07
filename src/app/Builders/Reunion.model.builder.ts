@@ -14,10 +14,12 @@ export class ReunionBuilder {
     public Estado: boolean
     public FechaCreacion: Date
     public total: number
-    public NombreDepartamento: string  
-    public Id_Usuario:number
+    public NombreDepartamento: string
+    public Id_Usuario: number
     public NombreCliente: string
     public ApellidoCliente: string
+    public Id_Sector: number
+    public Costo: number
     constructor() { }
     buildFromObject(x: any): ReunionBuilder {
         if (x.Id != undefined) { this.Id = x.Id }
@@ -26,7 +28,7 @@ export class ReunionBuilder {
         if (x.Id_Usuario != undefined) { this.Id_Usuario = x.Id_Usuario }
         if (x.NombreCliente != undefined) { this.NombreCliente = x.NombreCliente }
         if (x.ApellidoCliente != undefined) { this.ApellidoCliente = x.ApellidoCliente }
-        
+
         if (x.Descripcion != undefined) { this.Descripcion = x.Descripcion }
         if (x.Id_Departamento != undefined) { this.Id_Departamento = x.Id_Departamento }
         if (x.Id_Municipio != undefined) { this.Id_Municipio = x.Id_Municipio }
@@ -36,10 +38,12 @@ export class ReunionBuilder {
         if (x.FechaCreacion != undefined) { this.FechaCreacion = x.FechaCreacion }
         if (x.total != undefined) { this.total = x.total }
         if (x.NombreDepartamento != undefined) { this.NombreDepartamento = x.NombreDepartamento }
-        
-        if (x.NombreCliente != undefined) { this.NombreCliente = x.NombreCliente + ' '+  x.ApellidoCliente }
-        
+
+        if (x.NombreCliente != undefined) { this.NombreCliente = x.NombreCliente + ' ' + x.ApellidoCliente }
+
         if (x.ApellidoCliente != undefined) { this.ApellidoCliente = x.ApellidoCliente }
+        if (x.Id_Sector != undefined) { this.Id_Sector = x.Id_Sector }
+        if (x.Costo != undefined) { this.Costo = x.Costo }
         return this
     }
     Build(): E_Reunion {
@@ -61,6 +65,8 @@ export class ReunionBuilder {
         obj.FechaCreacion = this.FechaCreacion
         obj.total = this.total
         obj.NombreDepartamento = this.NombreDepartamento
+        obj.Id_Sector = this.Id_Sector
+        obj.Costo = this.Costo
         return obj
     }
 
