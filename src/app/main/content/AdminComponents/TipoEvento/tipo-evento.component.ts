@@ -103,7 +103,10 @@ export class TipoEventoComponent implements OnInit {
         objEvento.Descripcion = this.form.value.Descripcion
         objEvento.Estado = this.form.value.checked
         objEvento.Fecha = new Date();
-        this.AdminServices.crearTipoReunion(objEvento).subscribe((x: boolean) => { this.SucceSave = x })
+        this.AdminServices.crearTipoReunion(objEvento).subscribe((x: boolean) => {
+             this.SucceSave = x 
+         
+            })
 
     }
 

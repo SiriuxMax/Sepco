@@ -5,6 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { UserService } from '../../ApiServices/UserService';
+import { MatDialog } from '@angular/material';
+import { UserInfoComponent } from '../content/AutenticationComponents/UserInfo/UserInfo.component';
 
 @Component({
     selector: 'fuse-toolbar',
@@ -27,7 +29,8 @@ export class FuseToolbarComponent {
         private fuseConfig: FuseConfigService,
         private sidebarService: FuseSidebarService,
         private translate: TranslateService,
-        private UserService: UserService
+        private UserService: UserService,
+        private dialog: MatDialog
     ) {
         this.PerfilNow = this.UserService.GetCurrentCurrentUserNow() != null ?
             this.UserService.GetCurrentCurrentUserNow().Imagen : ""
@@ -113,5 +116,15 @@ export class FuseToolbarComponent {
 
         // Use the selected language for translations
         this.translate.use(lang.id);
+    }
+
+    showUserInfo() {
+        const dialogRef = this.dialog.open(UserInfoComponent, {
+            height: '350px',
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
     }
 }

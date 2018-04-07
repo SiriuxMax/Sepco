@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { FuseConfigService } from '@fuse/services/config.service';
@@ -29,10 +29,14 @@ import { GenerateMask } from 'app/Tools/MaskedLibrary';
     animations: fuseAnimations
 })
 export class FuseRegisterComponent implements OnInit {
+    showerrorFile: boolean;
+    descEnable: boolean;
+    fileName: any;
     ErrorText: boolean;
     successText: boolean = false;
     CapturedPhoto: boolean;
     public dataURL: any
+    form: FormGroup;
     registerForm: FormGroup;
     registerFormErrors: any;
     fakeObservable: any;
@@ -43,6 +47,7 @@ export class FuseRegisterComponent implements OnInit {
     public ListMunicipiosBase: Array<E_Municipios> = new Array<E_Municipios>()
     public ListMunicipiosGroup: Array<E_Municipios> = new Array<E_Municipios>()
     public MaskedNumber: any[]
+    @ViewChild('fileInput') fileInput: ElementRef;
     public MaskedNumberNoDecimal: any[]
     constructor(
         private fuseConfig: FuseConfigService,
@@ -50,7 +55,8 @@ export class FuseRegisterComponent implements OnInit {
         private ParameterService: ParameterService,
         private UserService: UserService,
         private Router: Router,
-        private ImageService: ImageService
+        private ImageService: ImageService,
+        private fb: FormBuilder
     ) {
         this.fuseConfig.setConfig({
             layout: {
@@ -72,6 +78,12 @@ export class FuseRegisterComponent implements OnInit {
             Departamentos: {},
             Municipios: {}
         };
+
+        this.form = this.fb.group({
+            name: [{ value: '', disabled: true }, Validators.required],
+            description: [{ value: '', disabled: this.descEnable }, Validators.required],
+            file: null
+        });
     }
 
 
@@ -177,21 +189,30 @@ export class FuseRegisterComponent implements OnInit {
         UserObj.Passwordd = password
         UserObj.Id_Perfil = 1
         UserObj.UserName = ClientObj.Correo
+        debugger
+        var file = undefined
+        const fileBrowser = this.fileInput.nativeElement;
 
-        if (this.dataURL != undefined) {
+        if (fileBrowser.files && fileBrowser.files[0]) {
+
+            this.fileName = fileBrowser.files[0].name;
+            file = fileBrowser.files[0];
+        }
+
+        if (file != undefined) {
             var formdata = new FormData();
-            var blob = PhotoTool.dataURItoBlob(this.dataURL);
+            //    var blob = PhotoTool.dataURItoBlob(this.dataURL);
             var fd = new FormData(document.forms[0]);
             ImagenObj.Nombre = btoa(((new Date().getMilliseconds()) * Math.random()).toString())
             ImagenObj.Ruta = ImageBaseUrl + ImagenObj.Nombre + '.jpeg'
             ImagenObj.Aprobada = true
             UserObj.Imagen = ImagenObj.Ruta
-            fd.append("canvasImage", blob, ImagenObj.Nombre);
+            fd.append("canvasImage", file, ImagenObj.Nombre);
             this.ImageService.UploadJsonFile(fd).subscribe((x) => {
                 if (x) {
-                    this.ImageService.RegistrarImagen(ImagenObj).subscribe((x => {
-                        if (x) { this.RegistrarDatos(UserObj, ClientObj) }
-                    }))
+
+                    this.RegistrarDatos(UserObj, ClientObj)
+
                 }
             })
         }
@@ -213,8 +234,34 @@ export class FuseRegisterComponent implements OnInit {
             }
         })
     }
+    fileChange($event) {
+        const fileBrowser = this.fileInput.nativeElement;
+        this.showerrorFile = false
+        const newFile: any = {};
+        if (fileBrowser.files && fileBrowser.files[0]) {
+            this.fileName = fileBrowser.files[0].name;
+            const file = fileBrowser.files[0];
+            if (file.type == "image/jpeg" || file.type == "image/png" || file.type == "image/jpg") {
+                this.showerrorFile = false
+            }
+            else {
+                this.showerrorFile = true
+                this.fileInput.nativeElement.value = ""
+            }
+
+        }
+        else {
+            this.showerrorFile = true
+            this.fileInput.nativeElement.value = ""
+        }
+
+    }
+
+
+
 
 }
+
 
 
 

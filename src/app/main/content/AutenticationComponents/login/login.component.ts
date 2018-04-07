@@ -78,22 +78,20 @@ export class FuseLoginComponent implements OnInit {
         this.Loading = true
         this.UserService.Login(user).subscribe((x: E_Usuario) => {
             if (x.error != undefined) {
-                if (x.error.Id == 1) {
+                if (x.error.Id == 1 || x.error.Id == 2) {
                     this.errorLogin = true
                     this.Loading = false
                     return
                 }
             }
             this.Loading = false
-          if(this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 1)  
-          {
-            this.Router.navigate(["/Maps/"])
-          }else if(this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 2)
-          {
-            this.Router.navigate(["/mainpageadmin/"])
-          }
-           
-            
+            if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 1) {
+                this.Router.navigate(["/Maps/"])
+            } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 2) {
+                this.Router.navigate(["/mainpageadmin/"])
+            }
+
+
         })
         //   ;
     }

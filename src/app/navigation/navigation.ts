@@ -65,7 +65,16 @@ export const navigationAdmin = [
                 'type': 'item',
                 'icon': 'map',
                 'url': '/aceptimage',
-            }
+            },
+            {
+                'id': 'paramsectores',
+                'title': 'Sectores',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/paramsectores',
+            },
+            
         ]
     }
 ];

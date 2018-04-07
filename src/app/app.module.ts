@@ -32,6 +32,7 @@ import { AdminServices } from './ApiServices/AdminServices';
 import { AceptImageModule } from './main/content/AdminComponents/AceptarImagenes/AceptImage.module';
 import { MainPageAdminModule } from './main/content/AdminComponents/MainPageAdmin/MainPageAdmin.module'
 import { ParamSectoresModule } from './main/content/AdminComponents/ParamSectores/ParamSectores.module';
+import { UserInfoModule } from 'app/main/content/AutenticationComponents/UserInfo/UserInfo.module';
 
 const appRoutes: Routes = [
     { path: 'sample', redirectTo: '/sample', pathMatch: 'full' },
@@ -73,7 +74,8 @@ const appRoutes: Routes = [
         TipoEventoModule,
         AceptImageModule,
         ParamSectoresModule,
-        MainPageAdminModule
+        MainPageAdminModule,
+        UserInfoModule,
     ],
     providers: [
         UserService

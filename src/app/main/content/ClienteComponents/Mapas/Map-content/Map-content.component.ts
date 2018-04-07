@@ -8,6 +8,8 @@ import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
+import { ReunionService } from '../../../../../ApiServices/ReunionService';
+import { E_Reunion } from '../../../../../Models/E_Reunion';
 
 @Component({
     selector: 'Map-content',
@@ -17,11 +19,12 @@ import { map } from 'rxjs/operators/map';
 export class MapContentComponent implements OnInit {
     public filteredStates2$: Observable<Array<E_Departamentos[]>>;
     stateCtrl: FormControl = new FormControl();
-
+    CounterReunion: Array<E_Reunion> = new Array<E_Reunion>()
     ListDepartamentos: E_Departamentos[];
     Fields: Array<FieldObj> = MapFields.Fields()
     constructor(public dialog: MatDialog,
-        private ParameterService: ParameterService) {
+        private ParameterService: ParameterService,
+        private ReunionService: ReunionService) {
         this.ParameterService.listarDepartamentos()
             .subscribe((x: Array<E_Departamentos>) => {
 
@@ -30,6 +33,12 @@ export class MapContentComponent implements OnInit {
         this.filteredStates2$ = this.stateCtrl.valueChanges.pipe(
             startWith(''),
             map(name => this.filterStatesComplex(name))
+        )
+
+        this.ReunionService.ContarReuniones().subscribe(
+            (x: Array<E_Reunion>) => {
+                this.setChangedFields(x)
+            }
         )
     }
 
@@ -41,8 +50,7 @@ export class MapContentComponent implements OnInit {
         console.log(Y.option.value)
         var idfiels = this.Fields.find(x => x.idBd == Y.option.value.Codigo).id
         this.DepartamentoSeleccionado(idfiels, true)
-        //  var obj = document.getElementById(idfiels)
-        //  console.log(obj)
+
     }
 
     filterStatesComplex(val: any): any[] {
@@ -58,6 +66,14 @@ export class MapContentComponent implements OnInit {
 
     ngOnInit(): void {
 
+    }
+
+    setChangedFields(x: Array<E_Reunion>) {
+        this.Fields.forEach(function (obj) {
+            if (x.some(x => x.Id_Departamento == obj.idBd)) {
+                obj.NumeroReuniones = x.find(x => x.Id_Departamento == obj.idBd).total
+            }
+        })
     }
     handleMouseMove(event) {
 

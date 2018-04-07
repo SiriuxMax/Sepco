@@ -3,26 +3,18 @@
         <div>
             <span class="register">Captura la foto de tu evento</span>
         </div>
-        <div class="fotoContainer" [hidden]="CapturedPhoto">
-            <video id="video" autoplay width="640" height="auto" class="viewCamera"></video>
-        </div>
-        <div class="fotoContainer" [hidden]="!CapturedPhoto">
-            <canvas id="canvas" width="640" height="480" class="viewCanvas"></canvas>
-        </div>
+        <form novalidate [formGroup]="form">
+            <input type="file" id="file" class="inputImage" (change)="fileChange($event)" #fileInput/>
+
+        </form>
+        <div *ngIf="showerrorFile" style="color:brown">Archivo debe ser de extension jpeg,jpg o png</div>
+
+
     </div>
+
     <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutAlign="center">
-        <button fxFlex="45" (click)="RegisterPhoto()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
-            <i class="material-icons">&#xE3B0;</i> Capturar
-        </button>
-        <button fxFlex="45" (click)="CancelFoto()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
-            <i class="material-icons">&#xE5C9;</i> Rechazar
-        </button>
-    </div>
-    <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutAlign="center">
-        <button fxFlex="45" (click)="changeCamera()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
-            <i class="material-icons">&#xE86A;</i> Camara
-        </button>
-        <button fxFlex="45" (click)="EnviarFoto()"  mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
+       
+        <button fxFlex="50" (click)="EnviarFoto()" mat-raised-button color="accent" class="submit-button"  [disabled]="showerrorFile" aria-label="CREATE AN ACCOUNT">
             <i class="material-icons">&#xE864;</i> Enviar
         </button>
     </div>

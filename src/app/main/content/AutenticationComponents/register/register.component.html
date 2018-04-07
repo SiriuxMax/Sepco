@@ -93,29 +93,29 @@
 
 
             </form>
-            <div *ngIf="ShowCamara">
+
+            <div [hidden]="!ShowCamara">
                 <div>
                     <span class="register">(Opcional) puedes tomarte una foto como avatar</span>
                 </div>
-                <div [hidden]="CapturedPhoto" class="fotoContainer">
-                    <video id="video" autoplay style="width: 100%;" width="640" height="auto"></video>
-                </div>
-                <div [hidden]="!CapturedPhoto" class="fotoContainer">
-                    <canvas id="canvas" width="640" height="480" style="width: 100%;"></canvas>
-                </div>
+
+                <form novalidate [formGroup]="form">
+                    <input type="file" id="file" (change)="fileChange($event)" #fileInput/>
+
+                </form>
+                <div *ngIf="showerrorFile" style="color:brown">Archivo debe ser de extension jpeg,jpg o png</div>
+
 
             </div>
-            <div class="favButtons"  *ngIf="ShowCamara">
-                <button mat-fab class="camera" (click)="RegisterPhoto()">
-                    <mat-icon aria-label="Example icon-button with a heart icon">camera_enhance</mat-icon>
-                </button>
-                <button  mat-fab class="cancel" (click)="CancelPhoto()">
-                    <mat-icon aria-label="Example icon-button with a heart icon">clear</mat-icon>
-                </button>
+
+
+            <div *ngIf="successText">
+                <span class="successText">Usuario Creado de manera exitosa</span>
+            </div>
+            <div *ngIf="ErrorText">
+                <span class="ErrorText">Error al crear usuario</span>
             </div>
 
-            <div *ngIf="successText" ><span class="successText">Usuario Creado de manera exitosa</span></div>
-            <div *ngIf="ErrorText" ><span class="ErrorText">Error al crear usuario</span></div>
 
             <button *ngIf="!ShowCamara" (click)="Continuar()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT"
                 [disabled]="registerForm.invalid">
@@ -131,7 +131,7 @@
                 <span class="text">Ya tienes cuenta?</span>
                 <a class="link" [routerLink]="'/login'">Ingresar</a>
             </div>
-          
+
         </div>
 
     </div>

@@ -38,7 +38,8 @@ export class ImageService {
     }
 
     RegistrarImagen(obImg: E_Imagen): Observable<number> {
-        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id 
         obImg.Id_Usuario = IdUser
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(obImg)

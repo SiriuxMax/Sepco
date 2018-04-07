@@ -24,6 +24,13 @@ export class UserService {
             , request, httpOptions).map(this.ExtractDataUserValid)
     }
 
+    ClientexId(User: E_Cliente): Observable<E_Cliente> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(User)
+        return this.Http.post(this.UrlNow + "Cliente/ClientexId"
+            , request, httpOptions).map(this.ExtractDataClient)
+    }
+
     crearCliente(CLient: E_Cliente): Observable<boolean> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(CLient)

@@ -118,7 +118,6 @@ export class EventCreatorComponent implements OnInit {
 
     AbrirCamara() {
         const dialogRef = this.dialog.open(fotoDialogComponent, {
-            height: '450px',
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -144,12 +143,12 @@ export class EventCreatorComponent implements OnInit {
         debugger
         if (this.dataURL != undefined) {
             var formdata = new FormData();
-            var blob = PhotoTool.dataURItoBlob(this.dataURL);
+          //  var blob = PhotoTool.dataURItoBlob(this.dataURL);
             var fd = new FormData(document.forms[0]);
             ImagenObj.Nombre = btoa(((new Date().getMilliseconds()) * Math.random()).toString())
             ImagenObj.Ruta = ImageBaseUrl + ImagenObj.Nombre + '.jpeg'
             ImagenObj.Aprobada = true
-            fd.append("canvasImage", blob, ImagenObj.Nombre);
+            fd.append("canvasImage", this.dataURL, ImagenObj.Nombre);
             this.ImageService.crearReunion(objEvento).subscribe((IdReunion) => {
                 if (IdReunion != 0) {
                     ImagenObj.Id_Reunion = IdReunion

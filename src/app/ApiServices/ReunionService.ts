@@ -90,13 +90,23 @@ export class ReunionService {
         x.forEach(element => {
             y.push(new ComentariosBuilder().buildFromObject(element).Build())
         });
-        
+
         y.sort((x, y) => y.Id - x.Id)
         return y
 
     }
+    ContarReuniones(): Observable<Array<E_Reunion>> {
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
 
-    CrearSector(objSector:E_Sector):Observable<number>{
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+
+        return this.Http.post(this.UrlNow + "Reunion/ContarReuniones"
+            , "", httpOptions).map(this.ExtractReunion)
+    }
+
+
+
+    CrearSector(objSector: E_Sector): Observable<number> {
         var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(objSector)
