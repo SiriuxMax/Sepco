@@ -16,24 +16,24 @@
             </div>
         </div>
         <div class="content p-24">
-            <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row">
+            <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row" style="display: none;" class="filtros">
 
-                <mat-form-field fxFlex="100">
+                <mat-form-field fxFlex="100" style="display: none;">
                     <input matInput placeholder="Cedula" [(ngModel)]="cedula">
                 </mat-form-field>
 
-                <mat-form-field fxFlex="100">
+                <mat-form-field fxFlex="100" style="display: none;">
                     <input matInput placeholder="Nombre Cliente" [(ngModel)]="nombrefil">
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field style="display: none;">
                     <mat-select placeholder="Estado" [(ngModel)]="Aprobada">
                         <mat-option [value]="1">Aprobada</mat-option>
                         <mat-option [value]="0">No Aprobada</mat-option>
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field style="display: none;">
                     <mat-select placeholder="Departamentos" [(ngModel)]="DepartamentoSeleccionado" (change)="SelectedDepartamento($event)">
                         <mat-option *ngFor="let Item of ListDepartamentos" [value]="Item.Id">
                             {{ Item.Nombre }}
@@ -41,14 +41,14 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field style="display: none;">
                     <mat-select placeholder="Municipios" [(ngModel)]="MunicipioSeleccionado">
                         <mat-option *ngFor="let Item of ListMunicipiosGroup" [value]="Item.Id">
                             {{ Item.Nombre }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <button (click)="filtrar()" mat-raised-button color="accent" class="submit-button" aria-label="">
+                <button (click)="filtrar()" mat-raised-button color="accent" class="submit-button" aria-label="" style="display: none;">
                     Buscar
                 </button>
             </div>
@@ -63,7 +63,7 @@
 
                 <ngx-datatable-column name="Nombre" prop="Nombre"></ngx-datatable-column>
 
-                <ngx-datatable-column name="Ruta" prop="Ruta"></ngx-datatable-column>
+                 <!-- <ngx-datatable-column name="Ruta" prop="Ruta"></ngx-datatable-column>  -->
                 <ngx-datatable-column name="Fecha Creacion" prop="FechaCreacion"></ngx-datatable-column>
             </ngx-datatable>
 

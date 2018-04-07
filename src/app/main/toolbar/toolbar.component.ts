@@ -127,4 +127,9 @@ export class FuseToolbarComponent {
             console.log(`Dialog result: ${result}`);
         });
     }
+
+    logOut() {
+        this.UserService.ClearCurrentCurrentUserNow()
+        this.router.navigate(['/login'])
+    }
 }

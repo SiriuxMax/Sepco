@@ -1,12 +1,22 @@
 <div id="ngx-datatable" class="page-layout simple fullwidth" fusePerfectScrollbar>
 
     <!-- HEADER -->
+
+
     <div class="header mat-accent-bg p-24 h-160" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
         <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
             <div class="h2 mt-16">Listado de Eventos</div>
             <div class="h2 ">{{DatoDepto?.Nombre | uppercase }}</div>
         </div>
     </div>
+
+    <div class=" px-24 py-8 headerback">
+        <div class="h2 mb-24">Datos del evento</div>
+        <div class="icoLike" (click)="ReturnPage($event)">
+            <i class="material-icons">&#xE166;</i>
+        </div>
+    </div>
+
     <!-- / HEADER -->
 
     <!-- CONTENT -->

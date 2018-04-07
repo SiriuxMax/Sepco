@@ -35,7 +35,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <input matInput placeholder="Nombre" formControlName="Nombre" required>
                         <mat-error *ngIf="formErrors.Nombre.required">
                             Nombre es requerido
@@ -46,13 +46,13 @@
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <input matInput placeholder="Apellido" formControlName="Apellido" required>
                         <mat-error *ngIf="formErrors.Apellido.required">
                             Apellido es requerido
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <input matInput placeholder="Dirección" formControlName="Direccion" required>
                         <mat-error *ngIf="formErrors.Direccion.required">
                             Dirección es requerido
@@ -62,7 +62,7 @@
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <input matInput placeholder="Email" formControlName="email" required>
                         <mat-error *ngIf="formErrors.email.required">
                             Correo electronico es requerido
@@ -72,7 +72,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <input matInput placeholder="Telefono Fijo" formControlName="Telefonof" [textMask]="{mask: MaskedNumberNoDecimal}">
                     </mat-form-field>
 
@@ -80,14 +80,14 @@
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <input matInput placeholder="Telefono Celular" formControlName="Celular" [textMask]="{mask: MaskedNumberNoDecimal}" required>
                         <mat-error *ngIf="formErrors.Celular.required">
                             Celular es requerido
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <mat-select placeholder="Departamentos" formControlName="Departamentos" [(ngModel)]="DepartamentoSeleccionado" (change)="SelectedDepartamento($event)"
                             required>
                             <mat-option *ngFor="let Item of ListDepartamentos" [value]="Item">
@@ -103,8 +103,8 @@
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-                    <mat-form-field  fxFlex="50">
-                        <mat-select placeholder="Sector" [(ngModel)]="SectorSeleccionado" formControlName="Sector" required>
+                    <mat-form-field fxFlex="50">
+                        <mat-select placeholder="Sector"  formControlName="Sector" required>
                             <mat-option *ngFor="let Item of ListSectorGroup" [value]="Item.Id">
                                 {{ Item.Nombre }}
                             </mat-option>
@@ -112,6 +112,11 @@
                         <mat-error *ngIf="formErrors.Sector.required">
                             Sector es requerido
                         </mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="50">
+                        <input matInput placeholder="Director Departamento Encargado" [(ngModel)]="DirectorTecnicoSector" 
+                        [ngModelOptions]="{standalone: true}" disabled>
+
                     </mat-form-field>
                 </div>
 

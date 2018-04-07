@@ -133,6 +133,11 @@ export class EventCreatorComponent implements OnInit {
 
         });
     }
+
+    ReturnPage(event: Event) {
+        event.preventDefault();
+        this.Router.navigate(['/Maps'])
+    }
     EnviarInfo() {
 
         var objEvento: E_Reunion = new E_Reunion()
@@ -165,7 +170,7 @@ export class EventCreatorComponent implements OnInit {
                                     this.SucceSave = true
                                     setTimeout(() => {
                                         this.Router.navigate(["/Maps/"])
-                                    }, 4000)
+                                    }, 2000)
                                 }
                             }))
                         }
@@ -186,7 +191,7 @@ export class EventCreatorComponent implements OnInit {
                             this.SucceSave = true
                             setTimeout(() => {
                                 this.Router.navigate(["/Maps/"])
-                            }, 4000)
+                            }, 2000)
                         }
                     }))
                 }

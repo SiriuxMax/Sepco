@@ -9,6 +9,7 @@ import { navigationClient } from 'app/navigation/navigation';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { AppSettings } from '../../app.settings';
 import { UserService } from 'app/ApiServices/UserService';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'fuse-navbar',
@@ -42,7 +43,8 @@ export class FuseNavbarComponent implements OnDestroy {
     constructor(
         private sidebarService: FuseSidebarService,
         private navigationService: FuseNavigationService,
-        private userService: UserService
+        private userService: UserService,
+        private route: Router
     ) {
         // Navigation data
         //   if (AppSettings.Global().TipoAplicacion == 1) 
@@ -72,6 +74,8 @@ export class FuseNavbarComponent implements OnDestroy {
             this.navigationServiceWatcher.unsubscribe();
         }
     }
+
+   
 
     toggleSidebarOpened(key) {
         this.sidebarService.getSidebar(key).toggleOpen();

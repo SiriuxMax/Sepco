@@ -88,7 +88,7 @@ export class ImageService {
     }
 
     ExtractListImageClient(res: any): Array<E_Imagen> {
-        debugger;
+        
         var x: Array<E_Imagen> = new Array<E_Imagen>()
         res.forEach(element => {
             x.push(new ImagenBuilder().buildFromObject(element).Build())

@@ -56,7 +56,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field fxFlex="100">
-                        <mat-select placeholder="ZonaElectoral" [(ngModel)]="ZonaElectoralSeleccionado" formControlName="ZonaElectoral" required>
+                        <mat-select placeholder="ZonaElectoral" formControlName="ZonaElectoral" required>
                             <mat-option *ngFor="let Item of ListZonaElectoralGroup" [value]="Item.Id">
                                 {{ Item.Nombre }}
                             </mat-option>
@@ -65,7 +65,7 @@
                             Zona Electoral es requerido
                         </mat-error>
                     </mat-form-field>
-                    <mat-checkbox class="remember-me" aria-label="Remember Me" [checked]="true" [(ngModel)]="checked" formControlName="checkedActivo">
+                    <mat-checkbox class="remember-me" aria-label="Remember Me" formControlName="checkedActivo">
                         Activo
                     </mat-checkbox>
                 </div>

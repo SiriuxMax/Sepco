@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-           
+
 
         </div>
 
@@ -27,7 +27,7 @@
             <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <img class="avatar" [src]="PerfilNow">
-                    <span class="username mr-12" >{{Nombres}}</span>
+                    <span class="username mr-12">{{Nombres}}</span>
                     <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
                 </div>
             </button>
@@ -39,7 +39,7 @@
                     <span>Mi Perfil</span>
                 </button>
 
-                <button mat-menu-item class="">
+                <button mat-menu-item class="" (click)="logOut()">
                     <mat-icon>exit_to_app</mat-icon>
                     <span>Salir</span>
                 </button>
@@ -50,7 +50,7 @@
 
 
 
-        
+
         </div>
     </div>
 </mat-toolbar>

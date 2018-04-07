@@ -17,11 +17,13 @@ import { E_Individuo2 } from '../Models/E_Individuo2';
 import { E_Sector } from '../Models/E_Sector';
 import { E_ZonaElectoral } from '../Models/E_ZonaElectoral';
 import { E_PuestoVotacion } from '../Models/E_PuestoVotacion';
+import { UserService } from 'app/ApiServices/UserService';
+import { DirectorDepartamentoBuilder } from 'app/Builders/DirectorDepartamento.model.builder';
 
 
 @Injectable()
 export class AdminServices {
-    constructor(private Http: HttpClient, private HeaderBuilder: HeaderBuilder) { }
+    constructor(private Http: HttpClient, private HeaderBuilder: HeaderBuilder, private UserService: UserService) { }
     private UrlNow: string = AppSettings.Global().API
     private textarea: HTMLTextAreaElement;
 
@@ -57,9 +59,10 @@ export class AdminServices {
     }
 
     crearDirectorDepartamento(CLient: E_DirectorDepartamento): Observable<boolean> {
-        const httpOptions = this.HeaderBuilder.HeadNow()
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
         var request = JSON.stringify(CLient)
-        return this.Http.post(this.UrlNow + "Admin/crearDirectorDepartamento"
+        return this.Http.post(this.UrlNow + "Admin/crearDirectorDepto"
             , request, httpOptions).map(this.EvalBool)
     }
 
@@ -69,6 +72,26 @@ export class AdminServices {
         return this.Http.post(this.UrlNow + "Admin/crearIndividuo1"
             , request, httpOptions).map(this.EvalBool)
     }
+
+
+    ListarDirectorDepto(CLient: E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/ListarDirectorDepto"
+            , request, httpOptions).map(this.ExtractListDirector)
+    }
+
+
+    ExtractListDirector(res: any): Array<E_DirectorDepartamento> {
+
+        var x: Array<E_DirectorDepartamento> = new Array<E_DirectorDepartamento>()
+        res.forEach(element => {
+            x.push(new DirectorDepartamentoBuilder().buildFromObject(element).Build())
+        });
+        return x
+    }
+
+
 
     crearIndividuo2(CLient: E_Individuo2): Observable<boolean> {
         const httpOptions = this.HeaderBuilder.HeadNow()

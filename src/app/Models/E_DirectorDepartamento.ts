@@ -1,8 +1,8 @@
 export class E_DirectorDepartamento {
     public Id: number
     public Cedula: string
-    public Nombre: string
-    public Apellido: string
+    public Nombres: string
+    public Apellidos: string
     public Direccion: string
     public Correo: string
     public Telefono: string
@@ -12,6 +12,6 @@ export class E_DirectorDepartamento {
     public FechaCreacion: Date
     public Id_Sector: number
     public CambiarClave: boolean
-    public CreadoPor: string     
+    public CreadoPor: number     
     constructor() { }
 }

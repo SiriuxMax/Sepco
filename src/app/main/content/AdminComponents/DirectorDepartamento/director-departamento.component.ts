@@ -21,6 +21,7 @@ import { UserService } from '../../../../ApiServices/UserService';
     styleUrls: ['director-departamento.component.scss']
 })
 export class DirectorDepartamentoComponent implements OnInit {
+    DirectorTecnicoSector: string
     SucceSave: boolean;
     dataURL: any;
     public MaskedNumber: any[]
@@ -36,7 +37,6 @@ export class DirectorDepartamentoComponent implements OnInit {
     public Nombre: string;
     public descripcion: string;
     public checked;
-    // Horizontal Stepper
     constructor(private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
         private NavigationData: NavigationInfoService,
@@ -115,35 +115,64 @@ export class DirectorDepartamentoComponent implements OnInit {
     }
 
     SelectedDepartamento(y) {
-        debugger
+        this.DirectorTecnicoSector = "Sin Asignación"
+        var objDir: E_DirectorDepartamento = new E_DirectorDepartamento()
+        objDir.Id_Departamento = y.value.Id
         var objSector: E_Sector = new E_Sector()
         objSector.Id_Departamento = y.value.Id
         this.ParameterService.ListarSector(objSector)
             .subscribe((x: Array<E_Sector>) => {
                 this.ListSectorGroup = x
             })
+        this.AdminServices.ListarDirectorDepto(objDir)
+            .subscribe((x: Array<E_DirectorDepartamento>) => {
+                if (x.length > 0) {
+                    this.DirectorTecnicoSector = x[0].Nombres + ' ' + x[0].Apellidos
+                }
+
+            })
     }
 
+
+
     EnviarInfo() {
+
         var objDirectorDepartamento: E_DirectorDepartamento = new E_DirectorDepartamento()
-        objDirectorDepartamento.Cedula = this.form.value.Cedula
-        objDirectorDepartamento.Nombre = this.form.value.Nombre
-        objDirectorDepartamento.Apellido = this.form.value.Apellido
+        objDirectorDepartamento.Cedula = this.form.value.Cedula.replace(/\./g, "");
+        objDirectorDepartamento.Nombres = this.form.value.Nombre
+        objDirectorDepartamento.Apellidos = this.form.value.Apellido
         objDirectorDepartamento.Direccion = this.form.value.Direccion
-        objDirectorDepartamento.Correo = this.form.value.Correo
-        objDirectorDepartamento.Telefono = this.form.value.Telefono
+        objDirectorDepartamento.Correo = this.form.value.email
+        objDirectorDepartamento.Telefono = this.form.value.Telefonof
         objDirectorDepartamento.Celular = this.form.value.Celular
-        objDirectorDepartamento.Id_Departamento = this.form.value.Departamentos
+        objDirectorDepartamento.Id_Departamento = this.form.value.Departamentos.Id
         objDirectorDepartamento.Estado = true
         objDirectorDepartamento.FechaCreacion = new Date();
         objDirectorDepartamento.Id_Sector = this.form.value.Sector
         objDirectorDepartamento.CambiarClave = true
-        objDirectorDepartamento.CreadoPor = this.UserService.GetCurrentCurrentUserNow().Email;
+        objDirectorDepartamento.CreadoPor = this.UserService.GetCurrentCurrentUserNow().Id;
 
-        this.AdminServices.crearDirectorDepartamento(objDirectorDepartamento).subscribe((x: boolean) => { this.SucceSave = x })
+        this.AdminServices.crearDirectorDepartamento(objDirectorDepartamento).subscribe((x: boolean) => {
+            this.SucceSave = x
+            if (x) { this.clearform() }
+        })
 
     }
 
+    clearform() {
+        this.form.setValue({
+            Cedula: '',
+            Nombre: '',
+            Apellido: '',
+            Direccion: '',
+            email: '',
+            Telefonof: '',
+            Celular: '',
+            Departamentos: 0,
+            Sector: 0
+        })
+
+    }
 
 }
 

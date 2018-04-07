@@ -48,7 +48,10 @@ export class VisorEventComponent implements OnInit {
 
         )
     }
-
+    ReturnPage(event: Event) {
+        event.preventDefault();
+        this.Router.navigate(['/Maps'])
+    }
 
     ngOnInit() {
 

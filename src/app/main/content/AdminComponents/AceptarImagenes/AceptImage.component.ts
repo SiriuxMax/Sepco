@@ -63,7 +63,7 @@ export class AceptImageComponent implements OnInit {
         var ObjReu: E_Imagen = new E_Imagen()
         //ObjReu.Id_Departamento = this.DatoDepto
         this.ImageService.ListarImagenesPendientes().subscribe((x) => {
-            debugger;
+            
             this.rows = x;
             this.loadingIndicator = false;
         }
@@ -79,7 +79,7 @@ export class AceptImageComponent implements OnInit {
     }
 
     filtrar() {
-        debugger;
+        
         var ima: E_Imagen = new E_Imagen();
         ima.Nombre = this.nombrefil == undefined ? null : this.cedula ;
         ima.Cedula = this.cedula == undefined ? null : this.cedula ;
@@ -106,7 +106,7 @@ export class AceptImageComponent implements OnInit {
 
     }
     selectedEvent(x) {
-        debugger;
+        
         console.log(x)
         const dialogRef = this.dialog.open(OkImageComponent, {            
             data: x.selected[0]
