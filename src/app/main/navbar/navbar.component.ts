@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
-import { navigation, navigationAdmin } from 'app/navigation/navigation';
+import { navigation, navigationAdmin, navigationDirectorDepartamento, navigationIndividuo1 } from 'app/navigation/navigation';
 import { navigationClient } from 'app/navigation/navigation';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { AppSettings } from '../../app.settings';
@@ -57,6 +57,12 @@ export class FuseNavbarComponent implements OnDestroy {
             } else if (this.userService.GetCurrentCurrentUserNow().Id_Perfil == 2) {
                 this.navigation = navigationAdmin;
             }
+            else if (this.userService.GetCurrentCurrentUserNow().Id_Perfil == 3) {
+                this.navigation = navigationDirectorDepartamento;
+            }
+            else if (this.userService.GetCurrentCurrentUserNow().Id_Perfil == 4) {
+                this.navigation = navigationIndividuo1;
+            }
         }
 
 
@@ -75,7 +81,7 @@ export class FuseNavbarComponent implements OnDestroy {
         }
     }
 
-   
+
 
     toggleSidebarOpened(key) {
         this.sidebarService.getSidebar(key).toggleOpen();

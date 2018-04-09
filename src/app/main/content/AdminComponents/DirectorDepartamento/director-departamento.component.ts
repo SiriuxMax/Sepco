@@ -13,6 +13,8 @@ import { AdminServices } from 'app/ApiServices/AdminServices';
 import { E_Sector } from 'app/Models/E_Sector';
 import { Router } from '@angular/router';
 import { UserService } from '../../../../ApiServices/UserService';
+import { E_Usuario } from '../../../../Models/E_Usuario';
+import { E_Cliente } from '../../../../Models/E_Cliente';
 
 @Component({
     moduleId: module.id,
@@ -21,6 +23,8 @@ import { UserService } from '../../../../ApiServices/UserService';
     styleUrls: ['director-departamento.component.scss']
 })
 export class DirectorDepartamentoComponent implements OnInit {
+    PasswordTemp: string;
+    UserNameTemp: string;
     DirectorTecnicoSector: string
     SucceSave: boolean;
     dataURL: any;
@@ -115,14 +119,14 @@ export class DirectorDepartamentoComponent implements OnInit {
     }
 
     SelectedDepartamento(y) {
-    
+
         var objSector: E_Sector = new E_Sector()
         objSector.Id_Departamento = y.value.Id
         this.ParameterService.ListarSector(objSector)
             .subscribe((x: Array<E_Sector>) => {
                 this.ListSectorGroup = x
             })
- 
+
     }
 
 
@@ -134,7 +138,7 @@ export class DirectorDepartamentoComponent implements OnInit {
         objDirectorDepartamento.Nombres = this.form.value.Nombre
         objDirectorDepartamento.Apellidos = this.form.value.Apellido
         objDirectorDepartamento.Direccion = this.form.value.Direccion
-        objDirectorDepartamento.Correo = this.form.value.email
+        objDirectorDepartamento.Correo = this.form.value.email.toLowerCase()
         objDirectorDepartamento.Telefono = this.form.value.Telefonof
         objDirectorDepartamento.Celular = this.form.value.Celular
         objDirectorDepartamento.Id_Departamento = this.form.value.Departamentos.Id
@@ -144,9 +148,36 @@ export class DirectorDepartamentoComponent implements OnInit {
         objDirectorDepartamento.CambiarClave = true
         objDirectorDepartamento.CreadoPor = this.UserService.GetCurrentCurrentUserNow().Id;
 
+        var objUsuario: E_Usuario = new E_Usuario()
+        var objCliente: E_Cliente = new E_Cliente()
+        var passTemp = Math.random().toString(36).slice(2).substring(0, 6);
+        objUsuario.Passwordd = btoa(passTemp)
+        objUsuario.UserName = objDirectorDepartamento.Correo
+        objUsuario.Email = objDirectorDepartamento.Correo
+        objUsuario.Estado = true
+        objUsuario.Id_Perfil = 3 // Correponde a Director Depratamento
+        objCliente.Nombre = objDirectorDepartamento.Nombres
+        objCliente.Correo = objDirectorDepartamento.Correo
+        objCliente.Cedula = objDirectorDepartamento.Cedula
+        objCliente.Telefono = objDirectorDepartamento.Telefono
+        objCliente.Celular = objDirectorDepartamento.Celular
+        objCliente.Id_Departamento = objDirectorDepartamento.Id_Departamento
+        objCliente.Apellido = objDirectorDepartamento.Apellidos
+        objCliente.Estado = true
+        objCliente.Direccion = objDirectorDepartamento.Direccion
+        objCliente.usuario = objUsuario
+
         this.AdminServices.crearDirectorDepartamento(objDirectorDepartamento).subscribe((x: boolean) => {
-            this.SucceSave = x
-            if (x) { this.clearform() }
+            if (x) {
+                this.UserService.crearCliente(objCliente).subscribe((y: boolean) => {
+                    if (y) {
+                        this.UserNameTemp = objUsuario.UserName
+                        this.PasswordTemp = passTemp
+                        this.SucceSave = x
+                        this.clearform()
+                    }
+                })
+            }
         })
 
     }

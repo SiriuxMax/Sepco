@@ -77,6 +77,7 @@ export class FuseLoginComponent implements OnInit {
         user.Passwordd = btoa(this.loginForm.value.password)
         this.Loading = true
         this.UserService.Login(user).subscribe((x: E_Usuario) => {
+            debugger
             if (x.error != undefined) {
                 if (x.error.Id == 1 || x.error.Id == 2) {
                     this.errorLogin = true
@@ -89,6 +90,10 @@ export class FuseLoginComponent implements OnInit {
                 this.Router.navigate(["/Maps/"])
             } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 2) {
                 this.Router.navigate(["/mainpageadmin/"])
+            } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 3) {
+                this.Router.navigate(["/mainpagedirector/"])
+            } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 4) {
+                this.Router.navigate(["/mainpageindividuo1/"])
             }
 
 

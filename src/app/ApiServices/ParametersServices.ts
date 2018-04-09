@@ -57,7 +57,7 @@ export class ParameterService {
             })
         };
         var request = JSON.stringify("")
-        return this.Http.post(this.UrlNow + "Admin/listarTipoIndividuo1"
+        return this.Http.post(this.UrlNow + "Individuo/listarTipoIndividuo1"
             , request, httpOptions).map(this.ExtractTipoIndividuo1)
     }
     listarTipoIndividuo2(): Observable<Array<E_TipoIndividuo2>> {
@@ -67,7 +67,7 @@ export class ParameterService {
             })
         };
         var request = JSON.stringify("")
-        return this.Http.post(this.UrlNow + "Admin/listarTipoIndividuo2"
+        return this.Http.post(this.UrlNow + "Individuo/ListarTipoIndividuo2"
             , request, httpOptions).map(this.ExtractTipoIndividuo2)
     }
 

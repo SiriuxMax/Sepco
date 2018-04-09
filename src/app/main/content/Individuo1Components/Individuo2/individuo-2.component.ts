@@ -12,6 +12,10 @@ import { E_Imagen } from 'app/Models/E_Imagen';
 import { AdminServices } from 'app/ApiServices/AdminServices';
 import { Router } from '@angular/router';
 import { UserService } from '../../../../ApiServices/UserService';
+import { E_Departamentos } from '../../../../Models/E_Departamentos';
+import { E_Municipios } from 'app/Models/E_Municipios';
+import { E_Cliente } from 'app/Models/E_Cliente';
+import { E_Sector } from '../../../../Models/E_Sector';
 
 @Component({
     moduleId: module.id,
@@ -20,7 +24,11 @@ import { UserService } from '../../../../ApiServices/UserService';
     styleUrls: ['individuo-2.component.scss']
 })
 export class Individuo2Component implements OnInit {
-    SucceSave: boolean;   
+    ListSector: E_Sector[];
+    formDinamic: FormGroup;
+    ListMunicipiosBase: E_Municipios[];
+    ListDepartamentos: E_Departamentos[];
+    SucceSave: boolean;
     dataURL: any;
     public MaskedNumber: any[]
     MaskedNumberNoDecimal: any[]
@@ -28,7 +36,7 @@ export class Individuo2Component implements OnInit {
     formErrors: any;
     noFoto: boolean = true
     TipoIndividuo2Seleccionado: any
-    ListTipoIndividuo2: Array<E_TipoIndividuo2> = new Array<E_TipoIndividuo2>() 
+    ListTipoIndividuo2: Array<E_TipoIndividuo2> = new Array<E_TipoIndividuo2>()
     public Nombre: string;
     public descripcion: string;
     public checked;
@@ -41,7 +49,7 @@ export class Individuo2Component implements OnInit {
         private Router: Router,
         private UserService: UserService
     ) {
-                
+
         this.formErrors = {
             email: {},
             Cedula: {},
@@ -49,26 +57,37 @@ export class Individuo2Component implements OnInit {
             Nombre: {},
             Apellido: {},
             Celular: {},
-            TipoIndividuo2: {},     
+            TipoIndividuo2: {},
             Direccion: {}
         };
 
     }
 
-    ReturnPage(event:Event){
+    ReturnPage(event: Event) {
         event.preventDefault();
-        this.Router.navigate(['/mainpageadmin'])
-     }
+        this.Router.navigate(['/mainpageindividuo1'])
+    }
     ngOnInit() {
         this.MaskedNumber = GenerateMask.numberMask
         this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
         this.ParameterService.listarTipoIndividuo2()
             .subscribe((x: Array<E_TipoIndividuo2>) => {
-                this.ListTipoIndividuo2 = x
+                var objPerf = this.UserService.GetCurrentCurrentUserNow().Id_Perfil
+                switch (objPerf) {
+                    case 4: var objSelection = 1
+                        break;
+                    case 5: var objSelection = 2
+                        break;
+                    case 6: var objSelection = 3
+                        break;
+                    default:
+                        break;
+                }
+                this.ListTipoIndividuo2 = x.filter((y) => y.Id_tipoindividuo1 == objSelection)
             })
-       
+
         this.form = this.formBuilder.group({
-            email: ['', [Validators.required, Validators.email]],        
+            email: ['', [Validators.required, Validators.email]],
             Cedula: ['', [Validators.required]],
             Telefonof: [''],
             Celular: ['', [Validators.required]],
@@ -79,9 +98,37 @@ export class Individuo2Component implements OnInit {
 
         });
 
+        this.formDinamic = this.formBuilder.group({
+            Municipio: [undefined, [Validators.required]],
+            Nombre: [undefined, [Validators.required]],
+            Sector : [undefined, [Validators.required]],
+        });
+
         this.form.valueChanges.subscribe(() => {
             this.onFormValuesChanged();
         });
+
+        var IdClienteDirector = this.UserService.GetCurrentCurrentUserNow().Id_Cliente
+        var ObjClientDirector = new E_Cliente()
+        ObjClientDirector.Id = IdClienteDirector
+        this.UserService.ClientexId(ObjClientDirector)
+            .subscribe((x: E_Cliente) => {
+                var ObjSector: E_Sector = new E_Sector()
+                ObjSector.Id_Departamento = x.Id_Departamento
+                this.ParameterService.ListarSector(ObjSector).subscribe((x) => {
+                    this.ListSector = x
+                })
+                this.ParameterService.listarDepartamentos()
+                    .subscribe((y: Array<E_Departamentos>) => {
+                        var codigoDepto = y.find((z) => z.Id == x.Id_Departamento).Codigo
+                        this.ParameterService.ListarMunicipios()
+                            .subscribe((w: Array<E_Municipios>) => {
+                                this.ListMunicipiosBase = w.filter((w1) => w1.Id_Departamento == Number(codigoDepto))
+                            })
+                    })
+            })
+
+
 
     }
 
@@ -102,7 +149,7 @@ export class Individuo2Component implements OnInit {
                 this.formErrors[field] = control.errors;
             }
         }
-    }  
+    }
 
     EnviarInfo() {
         var objIndividuo2: E_Individuo2 = new E_Individuo2()
@@ -112,15 +159,15 @@ export class Individuo2Component implements OnInit {
         objIndividuo2.Direccion = this.form.value.Direccion
         objIndividuo2.Correo = this.form.value.Correo
         objIndividuo2.Telefono = this.form.value.Telefono
-        objIndividuo2.Celular = this.form.value.Celular       
+        objIndividuo2.Celular = this.form.value.Celular
         objIndividuo2.Estado = true
         objIndividuo2.FechaCreacion = new Date();
-        objIndividuo2.Id_Individuo1 = this.UserService.GetCurrentCurrentUserNow().Id      
+        objIndividuo2.Id_Individuo1 = this.UserService.GetCurrentCurrentUserNow().Id
         objIndividuo2.Id_TipoEstadoRevision = 1 //Pendiente revision por SAC
         objIndividuo2.Id_TipoIndividuo2 = this.form.value.TipoIndividuo2
         objIndividuo2.CambiarClave = true
-                
-        this.AdminServices.crearIndividuo2(objIndividuo2).subscribe((x: boolean) => { this.SucceSave = x })
+
+        //   this.AdminServices.crearIndividuo2(objIndividuo2).subscribe((x: boolean) => { this.SucceSave = x })
 
     }
 

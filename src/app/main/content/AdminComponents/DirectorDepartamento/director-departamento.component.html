@@ -104,7 +104,7 @@
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
                     <mat-form-field fxFlex="50">
-                        <mat-select placeholder="Sector"  formControlName="Sector" required>
+                        <mat-select placeholder="Sector" formControlName="Sector" required>
                             <mat-option *ngFor="let Item of ListSectorGroup" [value]="Item.Id">
                                 {{ Item.Nombre }}
                             </mat-option>
@@ -125,7 +125,10 @@
                     Enviar Información
                 </button>
                 <div fxLayout="row" *ngIf="SucceSave" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div fxFlex="100" style="color:#19611e">Registro Exitoso!</div>
+                    <div fxFlex="100" style="color:#19611e">Registro Exitoso! Usuario creado Nombre :
+                        <span style="font-weight: bolder"> {{UserNameTemp}} </span> - Contraseña Temporal :
+                        <span style="font-weight: bolder">{{PasswordTemp}}</span>
+                    </div>
                 </div>
 
             </form>

@@ -88,3 +88,45 @@ export const navigationAdmin = [
         ]
     }
 ];
+
+export const navigationDirectorDepartamento = [
+    {
+        'id': 'applications',
+        'title': 'Menu',
+        'translate': 'NAV.APPLICATIONS',
+        'type': 'group',
+        'children': [
+            {
+                'id': 'tipoevento',
+                'title': 'Creación Individuo 1',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/individuo1',
+            },
+                     
+            
+        ]
+    }
+];
+
+export const navigationIndividuo1 = [
+    {
+        'id': 'applications',
+        'title': 'Menu',
+        'translate': 'NAV.APPLICATIONS',
+        'type': 'group',
+        'children': [
+            {
+                'id': 'tipoevento',
+                'title': 'Creación Individuo 2',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/individuo2',
+            },
+                     
+            
+        ]
+    }
+];

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ParameterService } from 'app/ApiServices/ParametersServices';
-import { E_TipoIndividuo1 } from 'app/Models/E_TipoIndividuo1';
-import { E_Individuo1 } from 'app/Models/E_Individuo1';
+import { E_TipoIndividuo2 } from 'app/Models/E_TipoIndividuo2';
+import { E_Individuo2 } from 'app/Models/E_Individuo2';
 import { GenerateMask } from 'app/Tools/MaskedLibrary';
 import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
 import { MatDialog } from '@angular/material';
@@ -15,20 +15,20 @@ import { UserService } from '../../../../ApiServices/UserService';
 
 @Component({
     moduleId: module.id,
-    selector: 'individuo-1',
-    templateUrl: 'individuo-1.component.html',
-    styleUrls: ['individuo-1.component.scss']
+    selector: 'IndividuoDinamico',
+    templateUrl: 'IndividuoDinamico.component.html',
+    styleUrls: ['IndividuoDinamico.component.scss']
 })
-export class Individuo1Component implements OnInit {
-    SucceSave: boolean;   
+export class IndividuoDinamicoComponent implements OnInit {
+    SucceSave: boolean;
     dataURL: any;
     public MaskedNumber: any[]
     MaskedNumberNoDecimal: any[]
     form: FormGroup;
     formErrors: any;
     noFoto: boolean = true
-    TipoIndividuo1Seleccionado: any
-    ListTipoIndividuo1: Array<E_TipoIndividuo1> = new Array<E_TipoIndividuo1>() 
+    TipoIndividuo2Seleccionado: any
+    ListTipoIndividuo2: Array<E_TipoIndividuo2> = new Array<E_TipoIndividuo2>()
     public Nombre: string;
     public descripcion: string;
     public checked;
@@ -41,7 +41,7 @@ export class Individuo1Component implements OnInit {
         private Router: Router,
         private UserService: UserService
     ) {
-                
+
         this.formErrors = {
             email: {},
             Cedula: {},
@@ -49,34 +49,39 @@ export class Individuo1Component implements OnInit {
             Nombre: {},
             Apellido: {},
             Celular: {},
-            TipoIndividuo1: {},     
+            TipoIndividuo2: {},
             Direccion: {}
         };
 
     }
 
-    ReturnPage(event:Event){
+    ReturnPage(event: Event) {
         event.preventDefault();
-        this.Router.navigate(['/mainpageadmin'])
-     }
+        this.Router.navigate(['/mainpageindividuo1'])
+    }
     ngOnInit() {
         this.MaskedNumber = GenerateMask.numberMask
         this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
-        this.ParameterService.listarTipoIndividuo1()
-            .subscribe((x: Array<E_TipoIndividuo1>) => {
-                this.ListTipoIndividuo1 = x
+        this.ParameterService.listarTipoIndividuo2()
+            .subscribe((x: Array<E_TipoIndividuo2>) => {
+                debugger
+                var objPerf = this.UserService.GetCurrentCurrentUserNow().Id_Perfil
+                switch (objPerf) {
+                    case 4: var objSelection = 1
+                        break;
+                    case 5: var objSelection = 2
+                        break;
+                    case 6: var objSelection = 3
+                        break;
+                    default:
+                        break;
+                }
+                this.ListTipoIndividuo2 = x.filter((y) => y.Id_tipoindividuo1 == objSelection)
             })
-       
-        this.form = this.formBuilder.group({
-            email: ['', [Validators.required, Validators.email]],        
-            Cedula: ['', [Validators.required]],
-            Telefonof: [''],
-            Celular: ['', [Validators.required]],
-            Nombre: ['', [Validators.required]],
-            Apellido: ['', [Validators.required]],
-            Direccion: ['', [Validators.required]],
-            TipoIndividuo1: [undefined, [Validators.required]]
 
+        this.form = this.formBuilder.group({
+            Cedula: ['', [Validators.required]],         
+            Nombre: ['', [Validators.required]],
         });
 
         this.form.valueChanges.subscribe(() => {
@@ -102,25 +107,25 @@ export class Individuo1Component implements OnInit {
                 this.formErrors[field] = control.errors;
             }
         }
-    }  
+    }
 
     EnviarInfo() {
-        var objIndividuo1: E_Individuo1 = new E_Individuo1()
-        objIndividuo1.Cedula = this.form.value.Cedula
-        objIndividuo1.Nombre = this.form.value.Nombre
-        objIndividuo1.Apellido = this.form.value.Apellido
-        objIndividuo1.Direccion = this.form.value.Direccion
-        objIndividuo1.Correo = this.form.value.Correo
-        objIndividuo1.Telefono = this.form.value.Telefono
-        objIndividuo1.Celular = this.form.value.Celular       
-        objIndividuo1.Estado = true
-        objIndividuo1.FechaCreacion = new Date();
-        objIndividuo1.Id_DirectorDepartamento = this.UserService.GetCurrentCurrentUserNow().Id
-        objIndividuo1.Id_TipoIndividuo1 = this.form.value.TipoIndividuo1
-        objIndividuo1.Id_TipoEstadoRevision = 1 //Pendiente revision por SAC
-        objIndividuo1.CambiarClave = true
-                
-        this.AdminServices.crearIndividuo1(objIndividuo1).subscribe((x: boolean) => { this.SucceSave = x })
+        var objIndividuo2: E_Individuo2 = new E_Individuo2()
+        objIndividuo2.Cedula = this.form.value.Cedula
+        objIndividuo2.Nombre = this.form.value.Nombre
+        objIndividuo2.Apellido = this.form.value.Apellido
+        objIndividuo2.Direccion = this.form.value.Direccion
+        objIndividuo2.Correo = this.form.value.Correo
+        objIndividuo2.Telefono = this.form.value.Telefono
+        objIndividuo2.Celular = this.form.value.Celular
+        objIndividuo2.Estado = true
+        objIndividuo2.FechaCreacion = new Date();
+        objIndividuo2.Id_Individuo1 = this.UserService.GetCurrentCurrentUserNow().Id
+        objIndividuo2.Id_TipoEstadoRevision = 1 //Pendiente revision por SAC
+        objIndividuo2.Id_TipoIndividuo2 = this.form.value.TipoIndividuo2
+        objIndividuo2.CambiarClave = true
+
+        this.AdminServices.crearIndividuo2(objIndividuo2).subscribe((x: boolean) => { this.SucceSave = x })
 
     }
 

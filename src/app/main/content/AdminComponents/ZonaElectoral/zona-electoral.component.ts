@@ -21,7 +21,8 @@ import { E_Municipios } from 'app/Models/E_Municipios';
     styleUrls: ['zona-electoral.component.scss']
 })
 export class ZonaElectoralComponent implements OnInit {
-    SucceSave: boolean;   
+    EstadoFormulario: boolean = false
+    SucceSave: boolean;
     dataURL: any;
     public MaskedNumber: any[]
     MaskedNumberNoDecimal: any[]
@@ -46,35 +47,37 @@ export class ZonaElectoralComponent implements OnInit {
         private Router: Router,
         private UserService: UserService
     ) {
-                
-        this.formErrors = {           
+
+        this.formErrors = {
             Nombre: {},
             Departamentos: {},
-            Municipios: {}
+            Municipios: {},
+            checkedActivo: {}
         };
 
     }
 
-    ReturnPage(event:Event){
+    ReturnPage(event: Event) {
         event.preventDefault();
         this.Router.navigate(['/mainpageadmin'])
-     }
+    }
     ngOnInit() {
         this.MaskedNumber = GenerateMask.numberMask
         this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
         this.ParameterService.listarDepartamentos()
-        .subscribe((x: Array<E_Departamentos>) => {
-            this.ListDepartamentos = x
-        })
+            .subscribe((x: Array<E_Departamentos>) => {
+                this.ListDepartamentos = x
+            })
         this.ParameterService.ListarMunicipios()
-        .subscribe((x: Array<E_Municipios>) => {
-            this.ListMunicipiosBase = x
-        })
-       
+            .subscribe((x: Array<E_Municipios>) => {
+                this.ListMunicipiosBase = x
+            })
+
         this.form = this.formBuilder.group({
             Nombre: ['', [Validators.required]],
             Departamentos: [undefined, [Validators.required]],
-            Municipios: [undefined, [Validators.required]]         
+            Municipios: [undefined, [Validators.required]],
+            checkedActivo: [false, [Validators.required]]
         });
 
         this.form.valueChanges.subscribe(() => {
@@ -100,7 +103,7 @@ export class ZonaElectoralComponent implements OnInit {
                 this.formErrors[field] = control.errors;
             }
         }
-    }  
+    }
 
     SelectedDepartamento(y) {
 
@@ -109,16 +112,23 @@ export class ZonaElectoralComponent implements OnInit {
     }
 
     EnviarInfo() {
-        var objZonaElectoral: E_ZonaElectoral = new E_ZonaElectoral()        
-        objZonaElectoral.Nombre = this.form.value.Nombre          
-        objZonaElectoral.Activo = this.form.value.checkedActivo
+        var objZonaElectoral: E_ZonaElectoral = new E_ZonaElectoral()
+        objZonaElectoral.Nombre = this.form.value.Nombre
+        objZonaElectoral.Estado = this.form.value.checkedActivo
         objZonaElectoral.FechaCreacion = new Date();
         objZonaElectoral.Id_Municipio = this.form.value.Municipios
-                       
-        this.AdminServices.crearZonaElectoral(objZonaElectoral).subscribe((x: boolean) => { this.SucceSave = x })
+
+        this.AdminServices.crearZonaElectoral(objZonaElectoral).subscribe((x: boolean) => {
+            this.SucceSave = x
+            if (x) {
+                this.CleanForm()
+            }
+        })
 
     }
-
+    CleanForm() {
+        this.form.setValue({ Nombre: "", checkedActivo: false, Departamentos: 0, Municipios: 0 })
+    }
 
 }
 

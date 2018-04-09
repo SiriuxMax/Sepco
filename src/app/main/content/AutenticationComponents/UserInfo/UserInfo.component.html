@@ -1,8 +1,10 @@
 <div id="register-form" *fuseIfOnDom [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+    <div class="title" style="font-weight: bolder">DATOS DE CUENTA</div>
+
     <div class="logo">
-        <img [src]="image">
+        <img *ngIf="image!= null" [src]="image">
+        <img *ngIf="image== null" src="../../../../../assets/images/avatars/profile.jpg">
     </div>
-    <div class="title">DATOS DE CUENTA</div>
 
     <div name="registerForm" class="fullwidth">
         <mat-form-field class="fullwidth">

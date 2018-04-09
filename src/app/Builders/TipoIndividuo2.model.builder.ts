@@ -8,13 +8,13 @@ export class TipoIndividuo2Builder {
     public Nombre: string
     public Activo: boolean
     public FechaCreacion: Date   
-    public Id_TipoIndividuo1: number 
+    public Id_tipoindividuo1: number 
     buildFromObject(x: any): TipoIndividuo2Builder {
         if (x.Id != undefined) { this.Id = x.Id }
         if (x.Nombre != undefined) { this.Nombre = x.Nombre }
         if (x.Activo != undefined) { this.Activo = x.Activo }       
         if (x.FechaCreacion != undefined) { this.FechaCreacion = x.FechaCreacion }
-        if (x.Id_TipoIndividuo1 != undefined) { this.Id_TipoIndividuo1 = x.Id_TipoIndividuo1 }     
+        if (x.Id_tipoindividuo1 != undefined) { this.Id_tipoindividuo1 = x.Id_tipoindividuo1 }     
         
         return this
     }
@@ -24,7 +24,7 @@ export class TipoIndividuo2Builder {
         obj.Nombre = this.Nombre
         obj.Activo = this.Activo        
         obj.FechaCreacion = this.FechaCreacion
-        obj.Id_TipoIndividuo1 = this.Id_TipoIndividuo1        
+        obj.Id_tipoindividuo1 = this.Id_tipoindividuo1        
        
         return obj
     }

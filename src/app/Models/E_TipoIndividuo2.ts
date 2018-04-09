@@ -3,6 +3,6 @@ export class E_TipoIndividuo2 {
     public Nombre: string
     public Activo: boolean
     public FechaCreacion: Date
-    public Id_TipoIndividuo1: number
+    public Id_tipoindividuo1: number
     
 }

@@ -174,7 +174,7 @@ export class FuseRegisterComponent implements OnInit {
         var ImageBaseUrl = AppSettings.Global().API_ImageContent
         var password = btoa(this.registerForm.value.password)
         ClientObj.Nombre = this.registerForm.value.Nombre
-        ClientObj.Correo = this.registerForm.value.email
+        ClientObj.Correo = this.registerForm.value.email.toLowerCase()
         ClientObj.Cedula = this.registerForm.value.Cedula.replace(/\./g, "");
         ClientObj.Telefono = this.registerForm.value.Telefonof
         ClientObj.Celular = this.registerForm.value.Celular

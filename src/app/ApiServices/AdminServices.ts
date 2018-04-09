@@ -69,7 +69,7 @@ export class AdminServices {
     crearIndividuo1(CLient: E_Individuo1): Observable<boolean> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(CLient)
-        return this.Http.post(this.UrlNow + "Admin/crearIndividuo1"
+        return this.Http.post(this.UrlNow + "Individuo/crearIndividuo1"
             , request, httpOptions).map(this.EvalBool)
     }
 

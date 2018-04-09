@@ -3,7 +3,7 @@
     <!-- HEADER -->
     <div class="header mat-accent-bg p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
         <div fxLayout="column" fxLayoutAlign="center start">
-            <div class="h1 mt-16">Creación de Individuo 1</div>
+            <div class="h1 mt-16">Creación de Individuo 2</div>
         </div>
     </div>
     <!-- / HEADER -->
@@ -11,7 +11,7 @@
     <!-- CONTENT -->
     <div class="content p-24">
 
-        <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row">
+        <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="column">
 
             <!-- REACTIVE FORM EXAMPLE -->
 
@@ -20,7 +20,7 @@
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class="toolbar px-24 py-8 headerback">
-                        <div class="h2 mb-24">Datos del Individuo 1</div>
+                        <div class="h2 mb-24">Datos del Individuo 2</div>
                         <div class="icoLike" (click)="ReturnPage($event)">
                             <i class="material-icons">&#xE166;</i>
                         </div>
@@ -35,7 +35,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <input matInput placeholder="Nombre" formControlName="Nombre" required>
                         <mat-error *ngIf="formErrors.Nombre.required">
                             Nombre es requerido
@@ -46,13 +46,13 @@
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <input matInput placeholder="Apellido" formControlName="Apellido" required>
                         <mat-error *ngIf="formErrors.Apellido.required">
                             Apellido es requerido
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <input matInput placeholder="Dirección" formControlName="Direccion" required>
                         <mat-error *ngIf="formErrors.Direccion.required">
                             Dirección es requerido
@@ -62,7 +62,7 @@
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <input matInput placeholder="Email" formControlName="email" required>
                         <mat-error *ngIf="formErrors.email.required">
                             Correo electronico es requerido
@@ -72,7 +72,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <input matInput placeholder="Telefono Fijo" formControlName="Telefonof" [textMask]="{mask: MaskedNumberNoDecimal}">
                     </mat-form-field>
 
@@ -80,25 +80,25 @@
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-                    <mat-form-field  fxFlex="50">
+                    <mat-form-field fxFlex="50">
                         <input matInput placeholder="Telefono Celular" formControlName="Celular" [textMask]="{mask: MaskedNumberNoDecimal}" required>
                         <mat-error *ngIf="formErrors.Celular.required">
                             Celular es requerido
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field  fxFlex="50">
-                        <mat-select placeholder="Tipo Individuo" formControlName="TipoIndividuo1" [(ngModel)]="TipoIndividuo1Seleccionado" required>
-                            <mat-option *ngFor="let Item of ListTipoIndividuo1" [value]="Item.Id">
+                    <mat-form-field fxFlex="50">
+                        <mat-select placeholder="Tipo Individuo" formControlName="TipoIndividuo2" [(ngModel)]="TipoIndividuo2Seleccionado" required>
+                            <mat-option *ngFor="let Item of ListTipoIndividuo2" [value]="Item.Id">
                                 {{ Item.Nombre }}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="formErrors.TipoIndividuo1.required">
-                                Tipo Individuo es requerido
+                        <mat-error *ngIf="formErrors.TipoIndividuo2.required">
+                            Tipo Individuo es requerido
                         </mat-error>
                     </mat-form-field>
 
-                </div>               
+                </div>
 
 
                 <!-- *********************************************************** -->
@@ -113,6 +113,53 @@
                 </div>
 
             </form>
+
+            <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form"
+                [formGroup]="formDinamic">
+
+                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div class="toolbar px-24 py-8 headerback">
+                        <div class="h2 mb-24">Asignación de Perfil</div>
+                        <div class="icoLike" (click)="ReturnPage($event)">
+                            <i class="material-icons">&#xE166;</i>
+                        </div>
+                    </div>
+                </div>
+                <!-- *********************************************************** -->
+                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field fxFlex="100">
+                            <mat-select placeholder="Municipio" formControlName="Municipio" required>
+                                    <mat-option *ngFor="let Item of ListMunicipiosBase" [value]="Item.Id">
+                                        {{ Item.Nombre }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formErrors.TipoIndividuo2.required">
+                                    Tipo Individuo es requerido
+                                </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="50">
+                            <mat-select placeholder="Sector" formControlName="Sector" required>
+                                    <mat-option *ngFor="let Item of ListSector" [value]="Item.Id">
+                                        {{ Item.Nombre }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formErrors.TipoIndividuo2.required">
+                                    Tipo Individuo es requerido
+                                </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="form.invalid">
+                    Enviar Información
+                </button>
+                <div fxLayout="row" *ngIf="SucceSave" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div fxFlex="100" style="color:#19611e">Registro Exitoso!</div>
+                </div>
+
+            </form>
+
 
             <!-- / CONTENT -->
 

@@ -26,8 +26,10 @@
 
             <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <img class="avatar" [src]="PerfilNow">
-                    <span class="username mr-12">{{Nombres}}</span>
+                    <img class="avatar" *ngIf="PerfilNow!= null" [src]="image">
+                    <img class="avatar" *ngIf="PerfilNow== null" src="../../../assets/images/avatars/profile.jpg">
+
+                    <span class="username mr-12">Bienvenido {{Nombres}}</span>
                     <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
                 </div>
             </button>
