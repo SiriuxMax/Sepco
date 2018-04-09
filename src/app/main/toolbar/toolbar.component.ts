@@ -15,6 +15,7 @@ import { UserInfoComponent } from '../content/AutenticationComponents/UserInfo/U
 })
 
 export class FuseToolbarComponent {
+    showFoto: boolean;
     Nombres: string;
     PerfilNow: string
     userStatusOptions: any[];
@@ -32,8 +33,10 @@ export class FuseToolbarComponent {
         private UserService: UserService,
         private dialog: MatDialog
     ) {
+debugger
         this.PerfilNow = this.UserService.GetCurrentCurrentUserNow() != null ?
             this.UserService.GetCurrentCurrentUserNow().Imagen : ""
+        this.showFoto = this.PerfilNow == "" ? false : true
         this.userStatusOptions = [
             {
                 'title': 'Online',

@@ -14,7 +14,7 @@
 
             <div fxLayout="row" fxLayoutAlign="start center" *ngIf="horizontalNav">
                 <div class="logo ml-16">
-                    <img class="logo-icon" src="assets/images/logos/fuse.svg">
+                    <img class="logo-icon" src="assets/images/logos/intro2.jpeg">
                 </div>
             </div>
 
@@ -26,8 +26,8 @@
 
             <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <img class="avatar" *ngIf="PerfilNow!= null" [src]="image">
-                    <img class="avatar" *ngIf="PerfilNow== null" src="../../../assets/images/avatars/profile.jpg">
+                    <img *ngIf="showFoto" class="avatar"  [src]="PerfilNow">
+                    <img *ngIf="!showFoto" class="avatar"  src="../../../assets/images/avatars/profile.jpg">
 
                     <span class="username mr-12">Bienvenido {{Nombres}}</span>
                     <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
