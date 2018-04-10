@@ -55,7 +55,7 @@
                             Municipio es requerido
                         </mat-error>
                     </mat-form-field>
-                    <mat-checkbox class="remember-me" aria-label="Remember Me" formControlName="checkedActivo"  [(ngModel)]="EstadoFormulario">
+                    <mat-checkbox class="remember-me" aria-label="Remember Me"   [(ngModel)]="EstadoFormulario" [ngModelOptions]="{standalone: true}">
                         Activo
                     </mat-checkbox>
                 </div>
@@ -63,8 +63,8 @@
                     <br/>
                 </div>
                 <!-- *********************************************************** -->
-
-                <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="form.invalid || !EstadoFormulario">
+                <div  *ngIf="SaveInProgress">  <mat-spinner style="margin:0 auto;"></mat-spinner></div>
+                <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="form.invalid || !EstadoFormulario  || SaveInProgress">
                     Enviar Información
                 </button>
                 <div fxLayout="row" *ngIf="SucceSave" fxLayoutAlign="start center" fxFlex="1 0 auto">

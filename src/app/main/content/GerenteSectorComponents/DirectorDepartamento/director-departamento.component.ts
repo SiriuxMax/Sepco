@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../../ApiServices/UserService';
 import { E_Usuario } from '../../../../Models/E_Usuario';
 import { E_Cliente } from '../../../../Models/E_Cliente';
+import { E_GerenteSector } from '../../../../Models/E_GerenteSector';
 
 @Component({
     moduleId: module.id,
@@ -23,16 +24,16 @@ import { E_Cliente } from '../../../../Models/E_Cliente';
     styleUrls: ['director-departamento.component.scss']
 })
 export class DirectorDepartamentoComponent implements OnInit {
+    SaveInProgress: boolean;
     PasswordTemp: string;
     UserNameTemp: string;
+    CurrentGerente: E_GerenteSector = new E_GerenteSector()
     DirectorTecnicoSector: string
     SucceSave: boolean;
-    dataURL: any;
     public MaskedNumber: any[]
     MaskedNumberNoDecimal: any[]
     form: FormGroup;
     formErrors: any;
-    noFoto: boolean = true
     DepartamentoSeleccionado: any
     ListDepartamentos: Array<E_Departamentos> = new Array<E_Departamentos>()
     ListSector: Array<E_Sector> = new Array<E_Sector>()
@@ -69,7 +70,7 @@ export class DirectorDepartamentoComponent implements OnInit {
 
     ReturnPage(event: Event) {
         event.preventDefault();
-        this.Router.navigate(['/mainpageadmin'])
+        this.Router.navigate(['/maingerente'])
     }
     ngOnInit() {
         this.MaskedNumber = GenerateMask.numberMask
@@ -78,7 +79,13 @@ export class DirectorDepartamentoComponent implements OnInit {
             .subscribe((x: Array<E_Departamentos>) => {
                 this.ListDepartamentos = x
             })
-
+            
+        var ob: E_GerenteSector = new E_GerenteSector()
+        ob.Correo = this.UserService.GetCurrentCurrentUserNow().UserName
+        
+        this.AdminServices.ListarGerentesSectorxCorreo(ob).subscribe((x: E_GerenteSector) => {
+            this.CurrentGerente = x
+        })
 
         this.form = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
@@ -89,7 +96,7 @@ export class DirectorDepartamentoComponent implements OnInit {
             Apellido: ['', [Validators.required]],
             Direccion: ['', [Validators.required]],
             Departamentos: [undefined, [Validators.required]],
-            Sector: [undefined, [Validators.required]],
+
 
         });
 
@@ -133,6 +140,7 @@ export class DirectorDepartamentoComponent implements OnInit {
 
     EnviarInfo() {
 
+        this.SaveInProgress = true
         var objDirectorDepartamento: E_DirectorDepartamento = new E_DirectorDepartamento()
         objDirectorDepartamento.Cedula = this.form.value.Cedula.replace(/\./g, "");
         objDirectorDepartamento.Nombres = this.form.value.Nombre
@@ -144,9 +152,10 @@ export class DirectorDepartamentoComponent implements OnInit {
         objDirectorDepartamento.Id_Departamento = this.form.value.Departamentos.Id
         objDirectorDepartamento.Estado = true
         objDirectorDepartamento.FechaCreacion = new Date();
-        objDirectorDepartamento.Id_Sector = this.form.value.Sector
         objDirectorDepartamento.CambiarClave = true
         objDirectorDepartamento.CreadoPor = this.UserService.GetCurrentCurrentUserNow().Id;
+        objDirectorDepartamento.Id_Sector = this.CurrentGerente.Id_Sector
+        objDirectorDepartamento.Id_GerenteSector = this.CurrentGerente.Id
 
         var objUsuario: E_Usuario = new E_Usuario()
         var objCliente: E_Cliente = new E_Cliente()
@@ -167,6 +176,7 @@ export class DirectorDepartamentoComponent implements OnInit {
         objCliente.Direccion = objDirectorDepartamento.Direccion
         objCliente.usuario = objUsuario
 
+
         this.AdminServices.crearDirectorDepartamento(objDirectorDepartamento).subscribe((x: boolean) => {
             if (x) {
                 this.UserService.crearCliente(objCliente).subscribe((y: boolean) => {
@@ -176,8 +186,10 @@ export class DirectorDepartamentoComponent implements OnInit {
                         this.SucceSave = x
                         this.clearform()
                     }
+                    this.SaveInProgress = false
                 })
             }
+
         })
 
     }
@@ -192,7 +204,6 @@ export class DirectorDepartamentoComponent implements OnInit {
             Telefonof: '',
             Celular: '',
             Departamentos: 0,
-            Sector: 0
         })
 
     }

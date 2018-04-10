@@ -74,14 +74,7 @@ export const navigationAdmin = [
                 'icon': 'map',
                 'url': '/sector',
             },
-            {
-                'id': 'directordepartamento',
-                'title': 'Director Departamento',
-                'translate': 'NAV.SAMPLE.TITLE',
-                'type': 'item',
-                'icon': 'map',
-                'url': '/directordepartamento',
-            },
+         
             {
                 'id': 'zonaelectoral',
                 'title': 'Zona Electoral',
@@ -137,6 +130,27 @@ export const navigationDirectorDepartamento = [
                 'type': 'item',
                 'icon': 'map',
                 'url': '/individuo1',
+            },
+                     
+            
+        ]
+    }
+];
+
+export const navigatioGerenteSector = [
+    {
+        'id': 'applications',
+        'title': 'Menu',
+        'translate': 'NAV.APPLICATIONS',
+        'type': 'group',
+        'children': [
+            {
+                'id': 'directordepartamento',
+                'title': 'Director Departamento',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/directordepartamento',
             },
                      
             

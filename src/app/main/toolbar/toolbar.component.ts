@@ -37,6 +37,7 @@ export class FuseToolbarComponent {
         this.PerfilNow = this.UserService.GetCurrentCurrentUserNow() != null ?
             this.UserService.GetCurrentCurrentUserNow().Imagen : ""
         this.showFoto = this.PerfilNow == "" ? false : true
+        this.showFoto = this.PerfilNow == null ? false : true
         this.userStatusOptions = [
             {
                 'title': 'Online',

@@ -6,12 +6,13 @@ export class E_DirectorDepartamento {
     public Direccion: string
     public Correo: string
     public Telefono: string
-    public Celular: string   
+    public Celular: string
     public Id_Departamento: number
     public Estado: boolean
     public FechaCreacion: Date
     public Id_Sector: number
+    public Id_GerenteSector: number
     public CambiarClave: boolean
-    public CreadoPor: number     
+    public CreadoPor: number
     constructor() { }
 }

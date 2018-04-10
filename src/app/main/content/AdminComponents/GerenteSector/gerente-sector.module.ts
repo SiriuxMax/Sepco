@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { GerenteSectorComponent } from './gerente-sector.component';
 import { RouterModule, Routes } from '@angular/router';
-import { MatButtonModule, MatFormFieldModule,MatCheckboxModule, MatIconModule, MatInputModule, MatSelectModule, MatStepperModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule,MatCheckboxModule, MatIconModule, MatInputModule, MatSelectModule, MatStepperModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule } from '@angular/material';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { TextMaskModule } from 'angular2-text-mask';
 
@@ -30,6 +30,7 @@ const routes: Routes = [
         MatCheckboxModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatProgressSpinnerModule
     ],
     declarations: [
         GerenteSectorComponent,

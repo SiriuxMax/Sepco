@@ -33,7 +33,6 @@ import { AceptImageModule } from './main/content/AdminComponents/AceptarImagenes
 import { MainPageAdminModule } from './main/content/AdminComponents/MainPageAdmin/MainPageAdmin.module'
 import { ParamSectoresModule } from './main/content/AdminComponents/ParamSectores/ParamSectores.module';
 import { UserInfoModule } from 'app/main/content/AutenticationComponents/UserInfo/UserInfo.module';
-import { DirectorDepartamentoModule } from './main/content/AdminComponents/DirectorDepartamento/director-departamento.module';
 import { SectorModule } from './main/content/AdminComponents/Sector/sector.module';
 
 import { ZonaElectoralModule } from './main/content/AdminComponents/ZonaElectoral/zona-electoral.module';
@@ -45,29 +44,35 @@ import { CambiarClaveModule } from './main/content/AutenticationComponents/cambi
 import { MesaModule } from './main/content/AdminComponents/Mesa/mesa.module';
 import { GerenteSectorModule } from './main/content/AdminComponents/GerenteSector/gerente-sector.module';
 import { PuestoVotacionModule } from 'app/main/content/AdminComponents/PuestoVotacion/puesto-votacion.module';
+import { DirectorDepartamentoModule } from 'app/main/content/GerenteSectorComponents/DirectorDepartamento/director-departamento.module';
+import { MainGerenteModule } from './main/content/GerenteSectorComponents/MainGerente/MainGerente.module';
 
 const appRoutes: Routes = [
+    //Autenticacion
     { path: 'sample', redirectTo: '/sample', pathMatch: 'full' },
     { path: 'register', redirectTo: '/register' },
     { path: 'cambiarClave', redirectTo: '/cambiarClave' },
-
+    //Cliente
     { path: 'Maps', redirectTo: '/Maps', pathMatch: 'full' },
     { path: 'eventcreator', redirectTo: '/eventcreator', pathMatch: 'full' },
     { path: 'eventvisor', redirectTo: '/eventvisor', pathMatch: 'full' },
     { path: 'tipoevento', redirectTo: '/tipoevento', pathMatch: 'full' },
     { path: 'detailevent', redirectTo: '/detailevent', pathMatch: 'full' },
     { path: 'aceptimage', redirectTo: '/aceptimage', pathMatch: 'full' },
-
+    //Administrador
     { path: 'mainpageadmin', redirectTo: '/mainpageadmin', pathMatch: 'full' },
     { path: 'sector', redirectTo: '/sector', pathMatch: 'full' },
     { path: 'zonaelectoral', redirectTo: '/zonaelectoral', pathMatch: 'full' },
-    { path: 'directordepartamento', redirectTo: '/directordepartamento', pathMatch: 'full' },
     { path: 'puestovotacion', redirectTo: '/puestovotacion', pathMatch: 'full' },
     { path: 'mesa', redirectTo: '/mesa', pathMatch: 'full' },
     { path: 'gerentesector', redirectTo: '/gerentesector', pathMatch: 'full' },
+    //Gerente
+    { path: 'maingerente', redirectTo: '/maingerente', pathMatch: 'full' },
+    { path: 'directordepartamento', redirectTo: '/directordepartamento', pathMatch: 'full' },
+    //Director
     { path: 'mainpagedirector', redirectTo: '/mainpagedirector', pathMatch: 'full' },
     { path: 'individuo1', redirectTo: '/individuo1', pathMatch: 'full' },
-
+    //Individuo 1
     { path: 'mainpageindividuo1', redirectTo: '/mainpageindividuo1', pathMatch: 'full' },
     { path: 'individuo2', redirectTo: '/individuo2', pathMatch: 'full' },
 
@@ -111,7 +116,8 @@ const appRoutes: Routes = [
         CambiarClaveModule,
         PuestoVotacionModule,
         MesaModule,
-        GerenteSectorModule
+        GerenteSectorModule,
+        MainGerenteModule
 
     ],
     providers: [

@@ -21,6 +21,7 @@ import { UserService } from 'app/ApiServices/UserService';
 import { DirectorDepartamentoBuilder } from 'app/Builders/DirectorDepartamento.model.builder';
 import { E_Mesa } from '../Models/E_Mesa';
 import { E_GerenteSector } from '../Models/E_GerenteSector';
+import { GerenteSectorBuilder } from '../Builders/GerenteSector.model.builder';
 
 
 @Injectable()
@@ -76,6 +77,24 @@ export class AdminServices {
     }
 
 
+
+    ListarGerentesSectorxCorreo(CLient: E_GerenteSector): Observable<E_GerenteSector> {
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Individuo/ListarGerentesSectorxCorreo"
+            , request, httpOptions).map(this.ExtractGerente)
+    }
+    ExtractGerente(res: any): E_GerenteSector {
+        debugger
+        var x: E_GerenteSector = new E_GerenteSector()
+        res.forEach(element => {
+            x = new GerenteSectorBuilder().buildFromObject(element).Build();
+            return
+        });
+        return x
+    }
+
     ListarDirectorDepto(CLient: E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(CLient)
@@ -95,43 +114,48 @@ export class AdminServices {
     crearGerenteSector(CLient: E_GerenteSector): Observable<boolean> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(CLient)
-        return this.Http.post(this.UrlNow + "Admin/crearGerenteSector"
+        return this.Http.post(this.UrlNow + "Individuo/crearGerenteSector"
             , request, httpOptions).map(this.EvalBool)
     }
 
 
     crearIndividuo2(CLient: E_Individuo2): Observable<boolean> {
-        const httpOptions = this.HeaderBuilder.HeadNow()
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
         var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Admin/crearIndividuo2"
             , request, httpOptions).map(this.EvalBool)
     }
 
     crearSector(CLient: E_Sector): Observable<boolean> {
-        const httpOptions = this.HeaderBuilder.HeadNow()
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
         var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Admin/crearSector"
             , request, httpOptions).map(this.EvalBool)
     }
 
     crearZonaElectoral(CLient: E_ZonaElectoral): Observable<boolean> {
-        const httpOptions = this.HeaderBuilder.HeadNow()
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
         var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Admin/crearZonaElectoral"
             , request, httpOptions).map(this.EvalBool)
     }
 
     crearPuestoVotacion(CLient: E_PuestoVotacion): Observable<boolean> {
-        const httpOptions = this.HeaderBuilder.HeadNow()
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
         var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Admin/crearPuestoVotacion"
             , request, httpOptions).map(this.EvalBool)
     }
 
     crearMesa(CLient: E_Mesa): Observable<boolean> {
-        const httpOptions = this.HeaderBuilder.HeadNow()
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
         var request = JSON.stringify(CLient)
-        return this.Http.post(this.UrlNow + "Admin/crearMesa"
+        return this.Http.post(this.UrlNow + "Admin/crearMesas"
             , request, httpOptions).map(this.EvalBool)
     }
     EvalBool(res: any): boolean {

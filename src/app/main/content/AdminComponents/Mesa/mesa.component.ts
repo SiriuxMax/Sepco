@@ -23,7 +23,8 @@ import { E_PuestoVotacion } from 'app/Models/E_PuestoVotacion';
     styleUrls: ['mesa.component.scss']
 })
 export class MesaComponent implements OnInit {
-    SucceSave: boolean;   
+    SaveInProgress: boolean;
+    SucceSave: boolean;
     dataURL: any;
     public MaskedNumber: any[]
     MaskedNumberNoDecimal: any[]
@@ -42,7 +43,8 @@ export class MesaComponent implements OnInit {
     public ListPuestoVotacionGroup: Array<E_PuestoVotacion> = new Array<E_PuestoVotacion>()
     public Nombre: string;
     public descripcion: string;
-    public checkedActivo:boolean;
+    public checkedActivo: boolean;
+    EstadoFormulario:boolean
     // Horizontal Stepper
     constructor(private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
@@ -52,8 +54,8 @@ export class MesaComponent implements OnInit {
         private Router: Router,
         private UserService: UserService
     ) {
-                
-        this.formErrors = {           
+
+        this.formErrors = {
             Nombre: {},
             Departamentos: {},
             Municipios: {},
@@ -63,36 +65,28 @@ export class MesaComponent implements OnInit {
 
     }
 
-    ReturnPage(event:Event){
+    ReturnPage(event: Event) {
         event.preventDefault();
         this.Router.navigate(['/mainpageadmin'])
-     }
+    }
     ngOnInit() {
         this.MaskedNumber = GenerateMask.numberMask
         this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
         this.ParameterService.listarDepartamentos()
-        .subscribe((x: Array<E_Departamentos>) => {
-            this.ListDepartamentos = x
-        })
+            .subscribe((x: Array<E_Departamentos>) => {
+                this.ListDepartamentos = x
+            })
         this.ParameterService.ListarMunicipios()
-        .subscribe((x: Array<E_Municipios>) => {
-            this.ListMunicipiosBase = x
-        })
-        this.ParameterService.ListarZonaElectoral()
-        .subscribe((x: Array<E_ZonaElectoral>) => {
-            this.ListZonaElectoralBase = x
-        })
-        this.ParameterService.ListarPuestoVotacion()
-        .subscribe((x: Array<E_PuestoVotacion>) => {
-            this.ListPuestoVotacionBase = x
-        })
-       
+            .subscribe((x: Array<E_Municipios>) => {
+                this.ListMunicipiosBase = x
+            })
+
         this.form = this.formBuilder.group({
             Nombre: ['', [Validators.required]],
             Departamentos: [undefined, [Validators.required]],
-            Municipios: [undefined, [Validators.required]]  ,
+            Municipios: [undefined, [Validators.required]],
             ZonaElectoral: [undefined, [Validators.required]],
-            PuestoVotacion: [undefined, [Validators.required]],  
+            PuestoVotacion: [undefined, [Validators.required]],
         });
 
         this.form.valueChanges.subscribe(() => {
@@ -118,7 +112,7 @@ export class MesaComponent implements OnInit {
                 this.formErrors[field] = control.errors;
             }
         }
-    }  
+    }
 
     SelectedDepartamento(y) {
 
@@ -128,27 +122,57 @@ export class MesaComponent implements OnInit {
 
     SelectedMunicipio(y) {
 
-        var depObj = this.ListMunicipiosBase.find(x => x.Id == y.value)
-        this.ListZonaElectoralGroup = this.ListZonaElectoralBase.filter(x => x.Id_Municipio == Number(depObj.Codigo))
-    }
+        var objzona: E_ZonaElectoral = new E_ZonaElectoral()
+        objzona.Id_Municipio = y.value
+        this.ParameterService.listarZonasxMunicipio(objzona)
+            .subscribe((x: Array<E_ZonaElectoral>) => {
+                this.ListZonaElectoralGroup = x
+            })
 
+    }
     SelectedZonaElectoral(y) {
 
-      //  var depObj = this.ListZonaElectoralBase.find(x => x.Id == y.value)
-        this.ListPuestoVotacionGroup = this.ListPuestoVotacionBase.filter(x => x.Id_ZonaElectoral == Number(y.value))
+        //  var depObj = this.ListZonaElectoralBase.find(x => x.Id == y.value)
+
+        var objPuesto: E_PuestoVotacion = new E_PuestoVotacion()
+        objPuesto.Id_ZonaElectoral = y.value
+        this.ParameterService.listarPuestosVotacionxZona(objPuesto).subscribe((x: Array<E_PuestoVotacion>) => {
+            this.ListPuestoVotacionGroup = x
+        })
+
     }
 
+
+
     EnviarInfo() {
-        var objMesa: E_Mesa = new E_Mesa()        
-        objMesa.Nombre = this.form.value.Nombre          
+        var objMesa: E_Mesa = new E_Mesa()
+        objMesa.Nombre = this.form.value.Nombre
         objMesa.Activo = this.checkedActivo
         objMesa.FechaCreacion = new Date();
         objMesa.Id_PuestoVotacion = this.form.value.PuestoVotacion
-                       
-        this.AdminServices.crearMesa(objMesa).subscribe((x: boolean) => { this.SucceSave = x })
+        this.SaveInProgress = true
+        this.AdminServices.crearMesa(objMesa).subscribe((x: boolean) => {
+            if (x) {
+                this.SucceSave = x
+                this.CleanForm()
+            }
+            setTimeout(() => {
+                this.SucceSave = false
+            }, 4000)
+            this.SaveInProgress = false
+        })
 
     }
 
 
+    CleanForm() {
+        this.form.setValue({
+            Nombre: "",
+            Departamentos: 0,
+            Municipios: 0,
+            ZonaElectoral: 0,
+            PuestoVotacion: 0,
+        })
+    }
 }
 

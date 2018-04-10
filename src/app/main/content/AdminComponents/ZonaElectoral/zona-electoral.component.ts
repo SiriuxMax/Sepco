@@ -21,6 +21,7 @@ import { E_Municipios } from 'app/Models/E_Municipios';
     styleUrls: ['zona-electoral.component.scss']
 })
 export class ZonaElectoralComponent implements OnInit {
+    SaveInProgress: boolean;
     EstadoFormulario: boolean = false
     SucceSave: boolean;
     dataURL: any;
@@ -117,17 +118,21 @@ export class ZonaElectoralComponent implements OnInit {
         objZonaElectoral.Estado = this.checkedActivo
         objZonaElectoral.FechaCreacion = new Date();
         objZonaElectoral.Id_Municipio = this.form.value.Municipios
-
+        this.SaveInProgress = true
         this.AdminServices.crearZonaElectoral(objZonaElectoral).subscribe((x: boolean) => {
-            this.SucceSave = x
             if (x) {
+                this.SucceSave = x
                 this.CleanForm()
             }
+            setTimeout(() => {
+                this.SucceSave = false
+            }, 4000)
+            this.SaveInProgress = false
         })
 
     }
     CleanForm() {
-        this.form.setValue({ Nombre: "", checkedActivo: false, Departamentos: 0, Municipios: 0 })
+        this.form.setValue({ Nombre: "", Departamentos: 0, Municipios: 0 })
     }
 
 }

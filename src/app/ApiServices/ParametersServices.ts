@@ -106,9 +106,18 @@ export class ParameterService {
         return this.Http.post(this.UrlNow + "Admin/listarZonasxMunicipio"
             , request, httpOptions).map(this.ExtractZonaElectoral)
     }
-
+    listarPuestosVotacionxZona(obj :E_PuestoVotacion): Observable<Array<E_PuestoVotacion>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify(obj)
+        return this.Http.post(this.UrlNow + "Admin/listarPuestosVotacionxZona"
+            , request, httpOptions).map(this.ExtractPuestoVotacion)
+    }
     
-
+    
 
     ListarPuestoVotacion(): Observable<Array<E_PuestoVotacion>> {
         const httpOptions = {

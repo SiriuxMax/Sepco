@@ -23,6 +23,7 @@ import { E_Cliente } from 'app/Models/E_Cliente';
     styleUrls: ['gerente-sector.component.scss']
 })
 export class GerenteSectorComponent implements OnInit {
+    SaveInProgress: boolean;
     PasswordTemp: string;
     UserNameTemp: string;
     SucceSave: boolean;
@@ -132,22 +133,23 @@ export class GerenteSectorComponent implements OnInit {
     }
 
     EnviarInfo() {
+        
         var objGerenteSector: E_GerenteSector = new E_GerenteSector()
         var objUsuario: E_Usuario = new E_Usuario()
         var objCliente: E_Cliente = new E_Cliente()
         objGerenteSector.Cedula = this.form.value.Cedula.replace(/\./g, "");
-        objGerenteSector.Nombre = this.form.value.Nombre
-        objGerenteSector.Apellido = this.form.value.Apellido
+        objGerenteSector.Nombres = this.form.value.Nombre
+        objGerenteSector.Apellidos= this.form.value.Apellido
         objGerenteSector.Direccion = this.form.value.Direccion
         objGerenteSector.Correo = this.form.value.email.toLowerCase()
         objGerenteSector.Telefono = this.form.value.Telefono
         objGerenteSector.Celular = this.form.value.Celular
         objGerenteSector.Id_Departamento = this.form.value.Departamentos
-        objGerenteSector.Estado = true
+        objGerenteSector.Activo = true
         objGerenteSector.FechaCreacion = new Date();
         objGerenteSector.Id_Sector = this.form.value.Sector
         objGerenteSector.CambiarClave = true
-        objGerenteSector.CreadoPor = this.UserService.GetCurrentCurrentUserNow().Email;
+        objGerenteSector.CreadoPor = this.UserService.GetCurrentCurrentUserNow().Id;
 
         var passTemp = Math.random().toString(36).slice(2).substring(0, 6);
         objUsuario.Passwordd = btoa(passTemp)
@@ -155,29 +157,33 @@ export class GerenteSectorComponent implements OnInit {
         objUsuario.Email = objGerenteSector.Correo
         objUsuario.Estado = true
         objUsuario.Id_Perfil = 7// Correponde a Gerente Sector 
-        objCliente.Nombre = objGerenteSector.Nombre
+        objCliente.Nombre = objGerenteSector.Nombres
         objCliente.Correo = objGerenteSector.Correo
         objCliente.Cedula = objGerenteSector.Cedula
         objCliente.Telefono = objGerenteSector.Telefono
         objCliente.Celular = objGerenteSector.Celular
         objCliente.Id_Departamento = objGerenteSector.Id_Departamento
-        objCliente.Apellido = objGerenteSector.Apellido
+        objCliente.Apellido = objGerenteSector.Apellidos
         objCliente.Estado = true
         objCliente.Direccion = objGerenteSector.Direccion
         objCliente.usuario = objUsuario
 
 
-
+        this.SaveInProgress = true
 
         this.AdminServices.crearGerenteSector(objGerenteSector).subscribe((x: boolean) => {
-            this.UserService.crearCliente(objCliente).subscribe((y: boolean) => {
-                if (y) {
-                    this.UserNameTemp = objUsuario.UserName
-                    this.PasswordTemp = passTemp
-                    this.SucceSave = x
-                    this.clearform()
-                }
-            })
+            if (x) {
+                this.UserService.crearCliente(objCliente).subscribe((y: boolean) => {
+                    if (y) {
+                        this.SucceSave = x
+                        this.UserNameTemp = objUsuario.UserName
+                        this.PasswordTemp = passTemp
+                        this.clearform()
+                    }
+                    this.SaveInProgress = false
+                })
+            }
+
 
         })
 
@@ -188,10 +194,10 @@ export class GerenteSectorComponent implements OnInit {
             Cedula: "",
             Telefonof: "",
             Celular: "",
-            Nombre:"",
-            Apellido:"",
+            Nombre: "",
+            Apellido: "",
             Direccion: "",
-            Departamentos:0,
+            Departamentos: 0,
             Sector: 0,
         })
 

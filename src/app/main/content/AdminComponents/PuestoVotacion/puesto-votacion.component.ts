@@ -22,7 +22,9 @@ import { E_ZonaElectoral } from 'app/Models/E_ZonaElectoral';
     styleUrls: ['puesto-votacion.component.scss']
 })
 export class PuestoVotacionComponent implements OnInit {
-    SucceSave: boolean;   
+    SaveInProgress: boolean;
+    EstadoFormulario: boolean;
+    SucceSave: boolean;
     dataURL: any;
     public MaskedNumber: any[]
     MaskedNumberNoDecimal: any[]
@@ -49,8 +51,8 @@ export class PuestoVotacionComponent implements OnInit {
         private Router: Router,
         private UserService: UserService
     ) {
-                
-        this.formErrors = {           
+
+        this.formErrors = {
             Nombre: {},
             Departamentos: {},
             Municipios: {},
@@ -59,28 +61,28 @@ export class PuestoVotacionComponent implements OnInit {
 
     }
 
-    ReturnPage(event:Event){
+    ReturnPage(event: Event) {
         event.preventDefault();
         this.Router.navigate(['/mainpageadmin'])
-     }
+    }
     ngOnInit() {
         this.MaskedNumber = GenerateMask.numberMask
         this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
         this.ParameterService.listarDepartamentos()
-        .subscribe((x: Array<E_Departamentos>) => {
-            this.ListDepartamentos = x
-        })
+            .subscribe((x: Array<E_Departamentos>) => {
+                this.ListDepartamentos = x
+            })
         this.ParameterService.ListarMunicipios()
-        .subscribe((x: Array<E_Municipios>) => {
-            this.ListMunicipiosBase = x
-        })
- 
-       
+            .subscribe((x: Array<E_Municipios>) => {
+                this.ListMunicipiosBase = x
+            })
+
+
         this.form = this.formBuilder.group({
             Nombre: ['', [Validators.required]],
             Departamentos: [undefined, [Validators.required]],
-            Municipios: [undefined, [Validators.required]]  ,
-            ZonaElectoral: [undefined, [Validators.required]]        
+            Municipios: [undefined, [Validators.required]],
+            ZonaElectoral: [undefined, [Validators.required]]
         });
 
         this.form.valueChanges.subscribe(() => {
@@ -106,7 +108,7 @@ export class PuestoVotacionComponent implements OnInit {
                 this.formErrors[field] = control.errors;
             }
         }
-    }  
+    }
 
     SelectedDepartamento(y) {
 
@@ -115,27 +117,43 @@ export class PuestoVotacionComponent implements OnInit {
     }
 
     SelectedMunicipio(y) {
-        
-        var objzona: E_ZonaElectoral = new E_ZonaElectoral ()
+
+        var objzona: E_ZonaElectoral = new E_ZonaElectoral()
         objzona.Id_Municipio = y.value
         this.ParameterService.listarZonasxMunicipio(objzona)
-        .subscribe((x: Array<E_ZonaElectoral>) => {
-            this.ListZonaElectoralGroup = x
-        })
-      
+            .subscribe((x: Array<E_ZonaElectoral>) => {
+                this.ListZonaElectoralGroup = x
+            })
+
     }
 
     EnviarInfo() {
-        var objPuestoVotacion: E_PuestoVotacion = new E_PuestoVotacion()        
-        objPuestoVotacion.Nombre = this.form.value.Nombre          
-        objPuestoVotacion.Activo = this.form.value.checkedActivo
+        var objPuestoVotacion: E_PuestoVotacion = new E_PuestoVotacion()
+        objPuestoVotacion.Nombre = this.form.value.Nombre
         objPuestoVotacion.FechaCreacion = new Date();
+        objPuestoVotacion.Activo = this.EstadoFormulario
         objPuestoVotacion.Id_ZonaElectoral = this.form.value.ZonaElectoral
-                       
-        this.AdminServices.crearPuestoVotacion(objPuestoVotacion).subscribe((x: boolean) => { this.SucceSave = x })
+        this.SaveInProgress = true
+        this.AdminServices.crearPuestoVotacion(objPuestoVotacion).subscribe((x: boolean) => {
+            if (x) {
+                this.SucceSave = x
+                this.CleanForm()
+            }
+            setTimeout(() => {
+                this.SucceSave = false
+            }, 4000)
+            this.SaveInProgress = false
+        })
 
     }
 
-
+    CleanForm() {
+        this.form.setValue({
+            Nombre: "",
+            Departamentos: 0,
+            Municipios: 0,
+            ZonaElectoral: 0
+        })
+    }
 }
 
