@@ -1,4 +1,5 @@
 import createNumberMask from 'text-mask-addons/dist/createNumberMask'
+import createAutoCorrectedDatePipe from 'text-mask-addons/dist/createAutoCorrectedDatePipe'
 
 export class GenerateMask {
     public static numberMask = createNumberMask({
@@ -6,15 +7,18 @@ export class GenerateMask {
         suffix: '',
         thousandsSeparatorSymbol: '.',
         allowDecimal: false
-        // This will put the dollar sign at the end, with a space.
     })
     public static Nodecimal = createNumberMask({
         prefix: '',
         suffix: '',
         thousandsSeparatorSymbol: '',
         allowDecimal: false
-        // This will put the dollar sign at the end, with a space.
+
     })
+    public static DateMask = createAutoCorrectedDatePipe('mm/dd/yyyy')
+
+
+ 
 }
-// First, you need to create the `numberMask` with your desired configurations
+
 

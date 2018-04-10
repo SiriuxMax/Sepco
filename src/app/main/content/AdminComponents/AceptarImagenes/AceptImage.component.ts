@@ -84,7 +84,7 @@ export class AceptImageComponent implements OnInit {
         ima.Nombre = this.nombrefil == undefined ? null : this.cedula ;
         ima.Cedula = this.cedula == undefined ? null : this.cedula ;
         this.ImageService.imagenesFiltro(ima).subscribe((x) => {
-            debugger;
+            ;
             this.rows = x;
             this.loadingIndicator = false;
         });

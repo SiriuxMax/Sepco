@@ -164,7 +164,7 @@ export class EventCreatorComponent implements OnInit {
         objEvento.Costo = this.form.value.Costo.replace(/\./g, "");
         var ImagenObj: E_Imagen = new E_Imagen()
         var ImageBaseUrl = AppSettings.Global().API_ImageContent
-        debugger
+        
         if (this.dataURL != undefined) {
             var formdata = new FormData();
             //  var blob = PhotoTool.dataURItoBlob(this.dataURL);

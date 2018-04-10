@@ -19,6 +19,8 @@ import { E_ZonaElectoral } from '../Models/E_ZonaElectoral';
 import { E_PuestoVotacion } from '../Models/E_PuestoVotacion';
 import { UserService } from 'app/ApiServices/UserService';
 import { DirectorDepartamentoBuilder } from 'app/Builders/DirectorDepartamento.model.builder';
+import { E_Mesa } from '../Models/E_Mesa';
+import { E_GerenteSector } from '../Models/E_GerenteSector';
 
 
 @Injectable()
@@ -90,7 +92,12 @@ export class AdminServices {
         });
         return x
     }
-
+    crearGerenteSector(CLient: E_GerenteSector): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearGerenteSector"
+            , request, httpOptions).map(this.EvalBool)
+    }
 
 
     crearIndividuo2(CLient: E_Individuo2): Observable<boolean> {
@@ -121,6 +128,12 @@ export class AdminServices {
             , request, httpOptions).map(this.EvalBool)
     }
 
+    crearMesa(CLient: E_Mesa): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearMesa"
+            , request, httpOptions).map(this.EvalBool)
+    }
     EvalBool(res: any): boolean {
         var a: boolean = res
         return a

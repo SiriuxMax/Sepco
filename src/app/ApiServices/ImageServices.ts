@@ -79,7 +79,7 @@ export class ImageService {
     }
 
     imagenesFiltro(CLient: E_Imagen): Observable<Array<E_Imagen>> {
-        debugger;
+        ;
         var IdUser = this.UserService.GetCurrentCurrentUserNow().Id        
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)        
         var request = JSON.stringify(CLient)
@@ -97,7 +97,7 @@ export class ImageService {
     }
 
     aprobarImagen(CLient: E_Imagen): Observable<boolean> {
-        debugger;
+        ;
         var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
         CLient.Aprobada=true;
         CLient.Id_Usuario=IdUser;

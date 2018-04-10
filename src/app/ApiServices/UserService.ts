@@ -24,6 +24,24 @@ export class UserService {
             , request, httpOptions).map(this.ExtractDataUserValid)
     }
 
+    validarEmail(User: E_Usuario): Observable<E_Usuario> {
+        //var IdUser = this.GetCurrentCurrentUserNow().Id
+        ;
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(User)
+        return this.Http.post(this.UrlNow + "Usuario/UsuarioxEmail"
+            , request, httpOptions).map(this.ExtractDataUserValid)
+    }
+
+    cambiarClave(User: E_Usuario): Observable<boolean> {
+        var IdUser = this.GetCurrentCurrentUserNow().Id
+        ;
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+        var request = JSON.stringify(User)
+        return this.Http.post(this.UrlNow + "Usuario/cambiarContrase�a"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
     ClientexId(User: E_Cliente): Observable<E_Cliente> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(User)

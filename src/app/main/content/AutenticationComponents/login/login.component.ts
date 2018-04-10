@@ -77,7 +77,7 @@ export class FuseLoginComponent implements OnInit {
         user.Passwordd = btoa(this.loginForm.value.password)
         this.Loading = true
         this.UserService.Login(user).subscribe((x: E_Usuario) => {
-            debugger
+            
             if (x.error != undefined) {
                 if (x.error.Id == 1 || x.error.Id == 2) {
                     this.errorLogin = true

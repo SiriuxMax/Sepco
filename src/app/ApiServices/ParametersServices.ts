@@ -20,6 +20,8 @@ import { E_TipoIndividuo2 } from '../Models/E_TipoIndividuo2';
 import { TipoIndividuo2Builder } from '../Builders/TipoIndividuo2.model.builder';
 import { E_ZonaElectoral } from '../Models/E_ZonaElectoral';
 import { ZonaElectoralBuilder } from '../Builders/ZonaElectoral.model.builder';
+import { E_PuestoVotacion } from '../Models/E_PuestoVotacion';
+import { PuestoVotacionBuilder } from '../Builders/PuestoVotacion.model.builder';
 
 @Injectable()
 export class ParameterService {
@@ -92,6 +94,31 @@ export class ParameterService {
         var request = JSON.stringify("")
         return this.Http.post(this.UrlNow + "Admin/ListarZonaElectoral"
             , request, httpOptions).map(this.ExtractZonaElectoral)
+    }
+
+    listarZonasxMunicipio(obj :E_ZonaElectoral): Observable<Array<E_ZonaElectoral>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify(obj)
+        return this.Http.post(this.UrlNow + "Admin/listarZonasxMunicipio"
+            , request, httpOptions).map(this.ExtractZonaElectoral)
+    }
+
+    
+
+
+    ListarPuestoVotacion(): Observable<Array<E_PuestoVotacion>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify("")
+        return this.Http.post(this.UrlNow + "Admin/ListarPuestoVotacion"
+            , request, httpOptions).map(this.ExtractPuestoVotacion)
     }
 
     ListarTipoReunion(E_TipoReunion: E_TipoReunion): Observable<Array<E_TipoReunion>> {
@@ -183,6 +210,17 @@ export class ParameterService {
         if (res != null) {
             res.forEach((element) => {
                 x.push(new ZonaElectoralBuilder().buildFromObject(element).Build())
+            });
+
+        }
+        return x
+    }
+    ExtractPuestoVotacion(res: any): Array<E_PuestoVotacion> {
+
+        var x: Array<E_PuestoVotacion> = new Array<E_PuestoVotacion>()
+        if (res != null) {
+            res.forEach((element) => {
+                x.push(new PuestoVotacionBuilder().buildFromObject(element).Build())
             });
 
         }

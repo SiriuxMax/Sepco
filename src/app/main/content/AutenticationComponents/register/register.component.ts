@@ -189,7 +189,7 @@ export class FuseRegisterComponent implements OnInit {
         UserObj.Passwordd = password
         UserObj.Id_Perfil = 1
         UserObj.UserName = ClientObj.Correo
-        debugger
+        
         var file = undefined
         const fileBrowser = this.fileInput.nativeElement;
 

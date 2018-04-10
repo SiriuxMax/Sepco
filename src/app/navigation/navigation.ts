@@ -82,7 +82,41 @@ export const navigationAdmin = [
                 'icon': 'map',
                 'url': '/directordepartamento',
             },
-
+            {
+                'id': 'zonaelectoral',
+                'title': 'Zona Electoral',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/zonaelectoral',
+            },
+            {
+                'id': 'puestovotacion',
+                'title': 'Puesto de Votacion',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/puestovotacion',
+            },
+            {
+                'id': 'mesa',
+                'title': 'Mesas',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/mesa',
+            },
+             {
+                'id': 'gerentesector',
+                'title': 'Gerente de Sector',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/gerentesector',
+            },
+            
+            
+            
             
             
         ]

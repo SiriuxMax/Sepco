@@ -41,10 +41,16 @@ import { Individuo1Module } from 'app/main/content/DirectorDepartamentosComponen
 import { MainPageDirectorModule } from './main/content/DirectorDepartamentosComponents/MainPageDirector/MainPageDirector.module';
 import { MainPageIndividuo1Module } from './main/content/Individuo1Components/MainPageIndividuo1/MainPageIndividuo1.module';
 import { Individuo2Module } from './main/content/Individuo1Components/Individuo2/individuo-2.module';
+import { CambiarClaveModule } from './main/content/AutenticationComponents/cambiar-clave/cambiar-clave.module';
+import { MesaModule } from './main/content/AdminComponents/Mesa/mesa.module';
+import { GerenteSectorModule } from './main/content/AdminComponents/GerenteSector/gerente-sector.module';
+import { PuestoVotacionModule } from 'app/main/content/AdminComponents/PuestoVotacion/puesto-votacion.module';
 
 const appRoutes: Routes = [
     { path: 'sample', redirectTo: '/sample', pathMatch: 'full' },
     { path: 'register', redirectTo: '/register' },
+    { path: 'cambiarClave', redirectTo: '/cambiarClave' },
+
     { path: 'Maps', redirectTo: '/Maps', pathMatch: 'full' },
     { path: 'eventcreator', redirectTo: '/eventcreator', pathMatch: 'full' },
     { path: 'eventvisor', redirectTo: '/eventvisor', pathMatch: 'full' },
@@ -56,13 +62,15 @@ const appRoutes: Routes = [
     { path: 'sector', redirectTo: '/sector', pathMatch: 'full' },
     { path: 'zonaelectoral', redirectTo: '/zonaelectoral', pathMatch: 'full' },
     { path: 'directordepartamento', redirectTo: '/directordepartamento', pathMatch: 'full' },
-     
+    { path: 'puestovotacion', redirectTo: '/puestovotacion', pathMatch: 'full' },
+    { path: 'mesa', redirectTo: '/mesa', pathMatch: 'full' },
+    { path: 'gerentesector', redirectTo: '/gerentesector', pathMatch: 'full' },
     { path: 'mainpagedirector', redirectTo: '/mainpagedirector', pathMatch: 'full' },
     { path: 'individuo1', redirectTo: '/individuo1', pathMatch: 'full' },
 
     { path: 'mainpageindividuo1', redirectTo: '/mainpageindividuo1', pathMatch: 'full' },
     { path: 'individuo2', redirectTo: '/individuo2', pathMatch: 'full' },
-    
+
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: 'login' },
 ];
@@ -99,7 +107,12 @@ const appRoutes: Routes = [
         ZonaElectoralModule,
         Individuo1Module,
         MainPageDirectorModule,
-        MainPageIndividuo1Module
+        MainPageIndividuo1Module,
+        CambiarClaveModule,
+        PuestoVotacionModule,
+        MesaModule,
+        GerenteSectorModule
+
     ],
     providers: [
         UserService

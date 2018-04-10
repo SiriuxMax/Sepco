@@ -74,10 +74,7 @@ export class PuestoVotacionComponent implements OnInit {
         .subscribe((x: Array<E_Municipios>) => {
             this.ListMunicipiosBase = x
         })
-        this.ParameterService.ListarZonaElectoral()
-        .subscribe((x: Array<E_ZonaElectoral>) => {
-            this.ListZonaElectoralBase = x
-        })
+ 
        
         this.form = this.formBuilder.group({
             Nombre: ['', [Validators.required]],
@@ -118,9 +115,14 @@ export class PuestoVotacionComponent implements OnInit {
     }
 
     SelectedMunicipio(y) {
-
-        var depObj = this.ListMunicipiosBase.find(x => x.Id == y.value)
-        this.ListZonaElectoralGroup = this.ListZonaElectoralBase.filter(x => x.Id_Municipio == Number(depObj.Codigo))
+        
+        var objzona: E_ZonaElectoral = new E_ZonaElectoral ()
+        objzona.Id_Municipio = y.value
+        this.ParameterService.listarZonasxMunicipio(objzona)
+        .subscribe((x: Array<E_ZonaElectoral>) => {
+            this.ListZonaElectoralGroup = x
+        })
+      
     }
 
     EnviarInfo() {

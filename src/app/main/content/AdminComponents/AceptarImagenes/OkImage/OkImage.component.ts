@@ -36,7 +36,7 @@ export class OkImageComponent implements OnInit {
     }
 
     aprobar(){
-        debugger;
+        ;
         var x: E_Imagen = new E_Imagen()
         x = this.data;
         x.Aprobada=true;

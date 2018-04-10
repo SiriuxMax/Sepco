@@ -33,7 +33,7 @@ export class FuseToolbarComponent {
         private UserService: UserService,
         private dialog: MatDialog
     ) {
-debugger
+
         this.PerfilNow = this.UserService.GetCurrentCurrentUserNow() != null ?
             this.UserService.GetCurrentCurrentUserNow().Imagen : ""
         this.showFoto = this.PerfilNow == "" ? false : true

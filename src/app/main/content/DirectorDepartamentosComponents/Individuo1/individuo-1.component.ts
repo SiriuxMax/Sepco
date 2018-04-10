@@ -127,7 +127,7 @@ export class Individuo1Component implements OnInit {
     }
 
     EnviarInfo() {
-        debugger
+        
         var objIndividuo1: E_Individuo1 = new E_Individuo1()
         var objUsuario: E_Usuario = new E_Usuario()
         var objCliente: E_Cliente = new E_Cliente()

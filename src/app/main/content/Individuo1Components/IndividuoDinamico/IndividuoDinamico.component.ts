@@ -64,7 +64,7 @@ export class IndividuoDinamicoComponent implements OnInit {
         this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
         this.ParameterService.listarTipoIndividuo2()
             .subscribe((x: Array<E_TipoIndividuo2>) => {
-                debugger
+                
                 var objPerf = this.UserService.GetCurrentCurrentUserNow().Id_Perfil
                 switch (objPerf) {
                     case 4: var objSelection = 1
