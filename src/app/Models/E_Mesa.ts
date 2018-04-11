@@ -3,6 +3,6 @@ export class E_Mesa {
     public Nombre: string
     public Activo: boolean
     public FechaCreacion: Date
-    public Id_PuestoVotacion: number
-    
+    public Id_puestoVotacion: number
+    constructor(){}
 }

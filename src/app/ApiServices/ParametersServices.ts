@@ -22,10 +22,16 @@ import { E_ZonaElectoral } from '../Models/E_ZonaElectoral';
 import { ZonaElectoralBuilder } from '../Builders/ZonaElectoral.model.builder';
 import { E_PuestoVotacion } from '../Models/E_PuestoVotacion';
 import { PuestoVotacionBuilder } from '../Builders/PuestoVotacion.model.builder';
+import { E_Mesa } from '../Models/E_Mesa';
+import { MesaBuilder } from 'app/Builders/Mesa.model.builder';
+import { UserService } from 'app/ApiServices/UserService';
+import { HeaderBuilder } from 'app/Tools/HeaderBuilder';
+import { E_ConfiguracionTipoIndividuo } from '../Models/E_ConfiguracionTipoIndividuo';
+import { ConfiguracionTipoIndividuoBuilder } from '../Builders/ConfiguracionTipoIndividuo.model.builder';
 
 @Injectable()
 export class ParameterService {
-    constructor(private Http: HttpClient) { }
+    constructor(private Http: HttpClient, private UserService: UserService, private HeaderBuilder: HeaderBuilder) { }
     private UrlNow: string = AppSettings.Global().API
     private textarea: HTMLTextAreaElement;
 
@@ -96,7 +102,7 @@ export class ParameterService {
             , request, httpOptions).map(this.ExtractZonaElectoral)
     }
 
-    listarZonasxMunicipio(obj :E_ZonaElectoral): Observable<Array<E_ZonaElectoral>> {
+    listarZonasxMunicipio(obj: E_ZonaElectoral): Observable<Array<E_ZonaElectoral>> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -106,18 +112,30 @@ export class ParameterService {
         return this.Http.post(this.UrlNow + "Admin/listarZonasxMunicipio"
             , request, httpOptions).map(this.ExtractZonaElectoral)
     }
-    listarPuestosVotacionxZona(obj :E_PuestoVotacion): Observable<Array<E_PuestoVotacion>> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-            })
-        };
+    listarMesasxPuesto(obj: E_Mesa): Observable<Array<E_Mesa>> {
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+        var request = JSON.stringify(obj)
+        return this.Http.post(this.UrlNow + "Admin/listarMesasxPuesto"
+            , request, httpOptions).map(this.ExtractMesas)
+    }
+    listarPuestosVotacionxZona(obj: E_PuestoVotacion): Observable<Array<E_PuestoVotacion>> {
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(obj)
         return this.Http.post(this.UrlNow + "Admin/listarPuestosVotacionxZona"
             , request, httpOptions).map(this.ExtractPuestoVotacion)
     }
+
+    ListarConfTipoIndividuo(): Observable<Array<E_ConfiguracionTipoIndividuo>> {
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+        var request = JSON.stringify("")
+        return this.Http.post(this.UrlNow + "Admin/ListarConfTipoIndividuo"
+            , request, httpOptions).map(this.ExtraerConfiguracionIndividuo)
+    }
     
-    
+
 
     ListarPuestoVotacion(): Observable<Array<E_PuestoVotacion>> {
         const httpOptions = {
@@ -142,6 +160,26 @@ export class ParameterService {
     }
 
 
+    ExtraerConfiguracionIndividuo(res: any): Array<E_ConfiguracionTipoIndividuo> {
+        var x: Array<E_ConfiguracionTipoIndividuo> = new Array<E_ConfiguracionTipoIndividuo>()
+        if (res != null) {
+            res.forEach((element) => {
+                x.push(new ConfiguracionTipoIndividuoBuilder().buildFromObject(element).Build())
+            });
+
+        }
+        return x
+    }
+    ExtractMesas(res: any): Array<E_Mesa> {
+        var x: Array<E_Mesa> = new Array<E_Mesa>()
+        if (res != null) {
+            res.forEach((element) => {
+                x.push(new MesaBuilder().buildFromObject(element).Build())
+            });
+
+        }
+        return x
+    }
 
     ExtractTipoReunion(res: any): Array<E_TipoReunion> {
 

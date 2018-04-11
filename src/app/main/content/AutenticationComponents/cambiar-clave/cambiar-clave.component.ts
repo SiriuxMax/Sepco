@@ -25,7 +25,7 @@ export class CambiarClaveComponent {
     public divclaves:boolean;
     public resultado:string;
     public Loading:boolean;
-    constructor(public UserService:UserService,private fuseConfig: FuseConfigService
+    constructor(public UserService:UserService,private fuseConfig: FuseConfigService,private Router:Router
     ) {
         this.fuseConfig.setConfig({
             layout: {
@@ -81,6 +81,9 @@ export class CambiarClaveComponent {
             if (x) {
                 this.Loading=false;
                 this.resultado="Contraseña Actualizada"
+                setTimeout(() => {
+                    this.Router.navigate(["/login/"])
+                }, 2000)
             }else{
                 this.resultado="Ocurrio un error. intente de nuevo";
                 this.Loading=false;

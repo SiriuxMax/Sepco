@@ -7,6 +7,7 @@ import { FuseNavigationService } from '@fuse/components/navigation/navigation.se
 
 import { locale as navigationEnglish } from './navigation/i18n/en';
 import { locale as navigationTurkish } from './navigation/i18n/tr';
+import { Platform } from '@angular/cdk/platform';
 
 @Component({
     selector: 'fuse-root',
@@ -14,25 +15,15 @@ import { locale as navigationTurkish } from './navigation/i18n/tr';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+    FullscreenNow: boolean
     constructor(
         private translate: TranslateService,
         private fuseNavigationService: FuseNavigationService,
         private fuseSplashScreen: FuseSplashScreenService,
-        private fuseTranslationLoader: FuseTranslationLoaderService
+        private fuseTranslationLoader: FuseTranslationLoaderService,
+        private platform: Platform
     ) {
-debugger
-        var i: any = document.getElementById("BodyNow");
 
-        // go full-screen
-        if (i.requestFullscreen) {
-            i.requestFullscreen();
-        } else if (i.webkitRequestFullscreen) {
-            i.webkitRequestFullscreen();
-        } else if (i.mozRequestFullScreen) {
-            i.mozRequestFullScreen();
-        } else if (i.msRequestFullscreen) {
-            i.msRequestFullscreen();
-        }
         // Add languages
         this.translate.addLangs(['es', 'tr']);
 
@@ -44,5 +35,25 @@ debugger
 
         // Use a language
         this.translate.use('en');
+    }
+    showFull() {
+
+        if ((this.platform.ANDROID || this.platform.IOS) && (this.FullscreenNow == false)) {
+            var i: any = document.getElementById("BodyNow");
+
+            // go full-screen
+            if (i.requestFullscreen) {
+                i.requestFullscreen();
+            } else if (i.webkitRequestFullscreen) {
+                i.webkitRequestFullscreen();
+            } else if (i.mozRequestFullScreen) {
+                i.mozRequestFullScreen();
+            } else if (i.msRequestFullscreen) {
+                i.msRequestFullscreen();
+            }
+            this.FullscreenNow = true
+        }
+
+
     }
 }

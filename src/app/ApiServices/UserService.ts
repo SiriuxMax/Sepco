@@ -38,7 +38,7 @@ export class UserService {
         ;
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(User)
-        return this.Http.post(this.UrlNow + "Usuario/cambiarContrase�a"
+        return this.Http.post(this.UrlNow + "Usuario/cambiarContrasena"
             , request, httpOptions).map(this.EvalBool)
     }
 

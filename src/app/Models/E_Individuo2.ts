@@ -1,3 +1,5 @@
+import { E_DetalleIndividuo } from "app/Models/E_DetalleIndividuo";
+
 export class E_Individuo2 {
     public Id: number
     public Cedula: string
@@ -13,6 +15,6 @@ export class E_Individuo2 {
     public Id_TipoEstadoRevision: number
     public Id_TipoIndividuo2: number
     public CambiarClave: boolean
-      
+    public Detalleindividuo:Array<E_DetalleIndividuo> 
     constructor() { }
 }

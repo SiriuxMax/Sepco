@@ -147,9 +147,9 @@ export class MesaComponent implements OnInit {
     EnviarInfo() {
         var objMesa: E_Mesa = new E_Mesa()
         objMesa.Nombre = this.form.value.Nombre
-        objMesa.Activo = this.checkedActivo
+        objMesa.Activo = this.EstadoFormulario
         objMesa.FechaCreacion = new Date();
-        objMesa.Id_PuestoVotacion = this.form.value.PuestoVotacion
+        objMesa.Id_puestoVotacion = this.form.value.PuestoVotacion
         this.SaveInProgress = true
         this.AdminServices.crearMesa(objMesa).subscribe((x: boolean) => {
             if (x) {
