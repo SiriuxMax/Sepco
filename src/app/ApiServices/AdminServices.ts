@@ -21,6 +21,7 @@ import { UserService } from 'app/ApiServices/UserService';
 import { DirectorDepartamentoBuilder } from 'app/Builders/DirectorDepartamento.model.builder';
 import { E_Mesa } from '../Models/E_Mesa';
 import { E_GerenteSector } from '../Models/E_GerenteSector';
+import { Individuo2Builder } from '../Builders/Individuo2.model.builder';
 import { GerenteSectorBuilder } from '../Builders/GerenteSector.model.builder';
 
 
@@ -77,6 +78,12 @@ export class AdminServices {
     }
 
 
+    ListarDirectorDepto(CLient: E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/ListarDirectorDepto"
+            , request, httpOptions).map(this.ExtractListDirector)
+    }
 
     ListarGerentesSectorxCorreo(CLient: E_GerenteSector): Observable<E_GerenteSector> {
         var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
@@ -84,6 +91,12 @@ export class AdminServices {
         var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Individuo/ListarGerentesSectorxCorreo"
             , request, httpOptions).map(this.ExtractGerente)
+    }
+        ListarDirectorDeptoxGerente(CLient: E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/ListarDirectorDeptoxGerente"
+            , request, httpOptions).map(this.ExtractListDirector)
     }
     ExtractGerente(res: any): E_GerenteSector {
         debugger
@@ -94,14 +107,30 @@ export class AdminServices {
         });
         return x
     }
-
-    ListarDirectorDepto(CLient: E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
+       ListarIndividuos2Pendientes(): Observable<Array<E_Individuo2>> {
+        debugger;
         const httpOptions = this.HeaderBuilder.HeadNow()
-        var request = JSON.stringify(CLient)
-        return this.Http.post(this.UrlNow + "Admin/ListarDirectorDepto"
-            , request, httpOptions).map(this.ExtractListDirector)
+        //var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Individuo/ListarIndividuos2Pendientes"
+            , "", httpOptions).map(this.ExtractListIndividuo2)
     }
 
+ listarGerentesxsector(obin:E_GerenteSector): Observable<Array<E_GerenteSector>> {
+        debugger;
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(obin)
+        return this.Http.post(this.UrlNow + "Individuo/ListarGerentesSectorxSector"
+            , request, httpOptions).map(this.ExtractGerenteSector)
+    }
+
+    ExtractGerenteSector(res: any): Array<E_GerenteSector> {
+
+        var x: Array<E_GerenteSector> = new Array<E_GerenteSector>()
+        res.forEach(element => {
+            x.push(new GerenteSectorBuilder().buildFromObject(element).Build())
+        });
+        return x
+    }
 
     ExtractListDirector(res: any): Array<E_DirectorDepartamento> {
 
@@ -111,6 +140,16 @@ export class AdminServices {
         });
         return x
     }
+
+    ExtractListIndividuo2(res: any): Array<E_Individuo2> {
+
+        var x: Array<E_Individuo2> = new Array<E_Individuo2>()
+        res.forEach(element => {
+            x.push(new Individuo2Builder().buildFromObject(element).Build())
+        });
+        return x
+    }
+
     crearGerenteSector(CLient: E_GerenteSector): Observable<boolean> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(CLient)

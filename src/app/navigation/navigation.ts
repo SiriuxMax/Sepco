@@ -38,6 +38,14 @@ export const navigationClient = [
                 'type': 'item',
                 'icon': 'map',
                 'url': '/Maps',
+            },
+            {
+                'id': 'tot',
+                'title': 'Totales',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/totales',
             }
         ]
     }

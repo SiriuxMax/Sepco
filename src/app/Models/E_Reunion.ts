@@ -5,6 +5,8 @@ export class E_Reunion {
     public Id_Departamento: number
     public Id_Municipio: number
     public Id_TipoReunion: number
+    public Id_gerentesector: number
+    public Id_directorDepto: number
     public CantidadPersonas: number
     public Estado: boolean
     public FechaCreacion: Date
@@ -12,6 +14,7 @@ export class E_Reunion {
     public NombreDepartamento: string
     public Id_Usuario: number
     public NombreCliente: string
+    public NombrexAnonimo: string
     public ApellidoCliente: string
     public Id_Sector: number
     public Costo: number

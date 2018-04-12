@@ -28,7 +28,9 @@ import { UserService } from 'app/ApiServices/UserService';
 import { HeaderBuilder } from 'app/Tools/HeaderBuilder';
 import { E_ConfiguracionTipoIndividuo } from '../Models/E_ConfiguracionTipoIndividuo';
 import { ConfiguracionTipoIndividuoBuilder } from '../Builders/ConfiguracionTipoIndividuo.model.builder';
-
+import { E_TipoAntecedente } from '../Models/E_TipoAntecedente';
+import { TipoAntecedenteBuilder } from '../Builders/TipoAntecedente.model.builder';
+import { E_TipoEstadoRevision } from '../Models/E_TipoEstadoRevision';
 @Injectable()
 export class ParameterService {
     constructor(private Http: HttpClient, private UserService: UserService, private HeaderBuilder: HeaderBuilder) { }
@@ -77,6 +79,17 @@ export class ParameterService {
         var request = JSON.stringify("")
         return this.Http.post(this.UrlNow + "Individuo/ListarTipoIndividuo2"
             , request, httpOptions).map(this.ExtractTipoIndividuo2)
+    }
+
+    listarTipoAntecedente(): Observable<Array<E_TipoAntecedente>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify("")
+        return this.Http.post(this.UrlNow + "Admin/listarTipoAntecedente"
+            , request, httpOptions).map(this.ExtractTipoAntecedente)
     }
 
 
@@ -180,6 +193,31 @@ export class ParameterService {
         }
         return x
     }
+    listarTipoEstadoRevision(): Observable<Array<E_TipoEstadoRevision>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify(E_TipoReunion)
+        return this.Http.post(this.UrlNow + "Admin/ListarTipoEstadoRevision"
+            , "", httpOptions).map(this.ExtractTipoEstadoRevision)
+    }
+
+    ExtractTipoEstadoRevision(res: any): Array<E_TipoEstadoRevision> {
+
+        var x: Array<E_TipoEstadoRevision> = new Array<E_TipoEstadoRevision>()
+        if (res != null) {
+
+            res.forEach((element) => {
+                var y: E_TipoEstadoRevision = new E_TipoEstadoRevision()
+                y = element
+                x.push(y)
+            });
+
+        }
+        return x
+    }
 
     ExtractTipoReunion(res: any): Array<E_TipoReunion> {
 
@@ -235,6 +273,17 @@ export class ParameterService {
         if (res != null) {
             res.forEach((element) => {
                 x.push(new TipoIndividuo1Builder().buildFromObject(element).Build())
+            });
+
+        }
+        return x
+    }
+    ExtractTipoAntecedente(res: any): Array<E_TipoAntecedente> {
+
+        var x: Array<E_TipoAntecedente> = new Array<E_TipoAntecedente>()
+        if (res != null) {
+            res.forEach((element) => {
+                x.push(new TipoAntecedenteBuilder().buildFromObject(element).Build())
             });
 
         }

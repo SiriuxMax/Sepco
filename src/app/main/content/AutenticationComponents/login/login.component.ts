@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { UserService } from 'app/ApiServices/UserService';
 import { E_Usuario } from 'app/Models/E_Usuario';
 import { PhotoTool } from 'app/Tools/PhotoTool';
+import { AppSettings } from '../../../../app.settings';
+//import { AppSettings } from '../../../../models/AppSettings.model';
 
 
 @Component({
@@ -21,6 +23,7 @@ export class FuseLoginComponent implements OnInit {
     @ViewChild("jojo") jojo: ElementRef
     loginForm: FormGroup;
     loginFormErrors: any;
+    public jey:string;
 
     constructor(
         private fuseConfig: FuseConfigService,
@@ -39,6 +42,40 @@ export class FuseLoginComponent implements OnInit {
             email: {},
             password: {}
         };
+        
+        if(AppSettings.Global().TipoAplicacion==1){
+            this.jey="none";
+            var user: E_Usuario = new E_Usuario();
+            user.UserName = "arg@gmail.com"
+            user.Passwordd = btoa("123123")
+            this.Loading = true
+            this.UserService.Login(user).subscribe((x: E_Usuario) => {
+                
+                if (x.error != undefined) {
+                    if (x.error.Id == 1 || x.error.Id == 2) {
+                        this.errorLogin = true
+                        this.Loading = false
+                        return
+                    }
+                }
+                this.Loading = false
+                if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 1) {
+                    this.Router.navigate(["/Maps/"])
+                } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 2) {
+                    this.Router.navigate(["/mainpageadmin/"])
+                } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 3) {
+                    this.Router.navigate(["/mainpagedirector/"])
+                } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 4) {
+                    this.Router.navigate(["/mainpageindividuo1/"])
+                }
+
+
+            })
+        }else{
+            
+        }
+
+        
     }
 
     ngOnInit() {

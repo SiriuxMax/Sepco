@@ -21,6 +21,7 @@ import { E_PuestoVotacion } from 'app/Models/E_PuestoVotacion';
 import { E_Mesa } from '../../../../Models/E_Mesa';
 import { E_ConfiguracionTipoIndividuo } from '../../../../Models/E_ConfiguracionTipoIndividuo';
 import { E_DetalleIndividuo } from 'app/Models/E_DetalleIndividuo';
+import { DialogComponent } from '../../DialogComponents/Dialog.component';
 
 @Component({
     moduleId: module.id,
@@ -29,6 +30,13 @@ import { E_DetalleIndividuo } from 'app/Models/E_DetalleIndividuo';
     styleUrls: ['individuo-2.component.scss']
 })
 export class Individuo2Component implements OnInit {
+    showError: boolean;
+    errorMesage: string;
+    countMesas: number = 0;
+    countDepartamento: number = 0
+    countZonaElectoral: number = 0
+    countPuestoVotacion: number = 0
+    countMunicipio: number = 0
     DepartamentoConfig: boolean
     MunicipioConfig: boolean
     ZonaElectoralConfig: boolean
@@ -39,7 +47,7 @@ export class Individuo2Component implements OnInit {
     showZonaElectoral: boolean;
     showMunicipio: boolean;
     showDepartamento: boolean;
-    public Detalleindividuo: Array<E_DetalleIndividuo>
+    public Detalleindividuo: Array<E_DetalleIndividuo> = new Array<E_DetalleIndividuo>();
     ListMunicipiosGroup: E_Municipios[];
     ListConfiguration: E_ConfiguracionTipoIndividuo[];
     ListMesas: E_Mesa[];
@@ -69,7 +77,8 @@ export class Individuo2Component implements OnInit {
         private dialog: MatDialog,
         private AdminServices: AdminServices,
         private Router: Router,
-        private UserService: UserService
+        private UserService: UserService,
+        private Matdialog: MatDialog
     ) { }
 
 
@@ -83,21 +92,26 @@ export class Individuo2Component implements OnInit {
     }
 
     EnviarInfo() {
+        this.showError = false
         var objIndividuo2: E_Individuo2 = new E_Individuo2()
         objIndividuo2.Cedula = this.form.value.Cedula
-        objIndividuo2.Nombre = this.form.value.Nombre
-        objIndividuo2.Apellido = this.form.value.Apellido
+        objIndividuo2.Nombres = this.form.value.Nombre
+        objIndividuo2.Apellidos = this.form.value.Apellido
         objIndividuo2.Direccion = this.form.value.Direccion
         objIndividuo2.Correo = this.form.value.Correo
         objIndividuo2.Telefono = this.form.value.Telefono
         objIndividuo2.Celular = this.form.value.Celular
-        objIndividuo2.Estado = true
+        objIndividuo2.Activo = true
         objIndividuo2.FechaCreacion = new Date();
-        objIndividuo2.Id_Individuo1 = this.UserService.GetCurrentCurrentUserNow().Id
-        objIndividuo2.Id_TipoEstadoRevision = 1 //Pendiente revision por SAC
-        objIndividuo2.Id_TipoIndividuo2 = this.form.value.TipoIndividuo2
+        objIndividuo2.Id_individuo1 = this.UserService.GetCurrentCurrentUserNow().Id
+        objIndividuo2.Id_tipoestadorevision = 1 //Pendiente revision por SAC
+        objIndividuo2.Id_tipoindividuo2 = this.form.value.TipoIndividuo2
         objIndividuo2.CambiarClave = true
-
+        objIndividuo2.Detalleindividuo = this.Detalleindividuo
+        if (this.Detalleindividuo.length == 0) {
+            this.showError = true
+            this.errorMesage = "Debe Haber al menos una asignacion"
+        }
         //   this.AdminServices.crearIndividuo2(objIndividuo2).subscribe((x: boolean) => { this.SucceSave = x })
 
     }
@@ -134,41 +148,55 @@ export class Individuo2Component implements OnInit {
     }
 
     AgregarItem(x: number) {
-        alert(x)
+        var dialog = this.Matdialog.open(DialogComponent, {
+        })
+
+        dialog.afterClosed().subscribe((x) => { })
         var objDetalle: E_DetalleIndividuo = new E_DetalleIndividuo()
         switch (x) {
             case 2:
                 objDetalle.Id_Municipio = this.formDinamic.value.Municipio
+                if (!this.Detalleindividuo.some((x) => x.Id_Municipio == this.formDinamic.value.Municipio)) {
+                    this.Detalleindividuo.push(objDetalle)
+                    this.countMunicipio += 1
+                }
                 break;
             case 3:
                 objDetalle.Id_ZonaElectoral = this.formDinamic.value.ZonaElectoral
+                if (!this.Detalleindividuo.some((x) => x.Id_ZonaElectoral == this.formDinamic.value.ZonaElectoral)) {
+                    this.Detalleindividuo.push(objDetalle)
+                    this.countZonaElectoral += 1
+                }
                 break;
             case 4:
                 objDetalle.Id_PuestoVotacion = this.formDinamic.value.PuestoVotacion
+                if (!this.Detalleindividuo.some((x) => x.Id_PuestoVotacion == this.formDinamic.value.PuestoVotacion)) {
+                    this.Detalleindividuo.push(objDetalle)
+                    this.countPuestoVotacion += 1
+
+                }
                 break;
             case 5:
                 objDetalle.Id_Mesa = this.formDinamic.value.Mesa.Id
+                if (!this.Detalleindividuo.some((x) => x.Id_Mesa == this.formDinamic.value.Mesa.Id)) {
+                    this.Detalleindividuo.push(objDetalle)
+                    this.countMesas += 1
+                }
                 break;
             default:
                 break;
         }
 
-        this.Detalleindividuo.push(objDetalle)
-        console.log(this.Detalleindividuo)
+
+
     }
     onFormValuesChanged() {
-
         for (const field in this.formErrors) {
             if (!this.formErrors.hasOwnProperty(field)) {
                 continue;
             }
-
-            // Clear previous errors
             this.formErrors[field] = {};
-
-            // Get the control
             const control = this.form.get(field);
-
             if (control && control.dirty && !control.valid) {
                 this.formErrors[field] = control.errors;
             }
@@ -206,7 +234,7 @@ export class Individuo2Component implements OnInit {
             this.DepartamentoConfig = false // por validar
             var TotalFalso = false
             GroupConfig.forEach(element => {
-                
+
                 flagActual = element.Activo
                 valorVisibilidad = true
                 if (flagAnterior == true && flagActual == false) {

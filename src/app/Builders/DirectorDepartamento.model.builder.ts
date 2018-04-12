@@ -18,6 +18,7 @@ export class DirectorDepartamentoBuilder {
     public Id_Sector: number
     public CambiarClave: boolean
     public CreadoPor: number    
+    public Id_GerenteSector: number    
     constructor() { }
     buildFromObject(x: any): DirectorDepartamentoBuilder {
         if (x.Id != undefined) { this.Id = x.Id }
@@ -34,7 +35,7 @@ export class DirectorDepartamentoBuilder {
         if (x.FechaCreacion != undefined) { this.FechaCreacion = x.FechaCreacion }
         if (x.CambiarClave != undefined) { this.CambiarClave = x.CambiarClave }
         if (x.CreadoPor != undefined) { this.CreadoPor = x.CreadoPor }
-
+        if (x.Id_GerenteSector != undefined) { this.Id_GerenteSector = x.Id_GerenteSector }
        
         return this
     }
@@ -54,6 +55,7 @@ export class DirectorDepartamentoBuilder {
         obj.FechaCreacion = this.FechaCreacion
         obj.CambiarClave = this.CambiarClave
         obj.CreadoPor = this.CreadoPor
+        obj.Id_GerenteSector = this.Id_GerenteSector
         return obj
     }
 

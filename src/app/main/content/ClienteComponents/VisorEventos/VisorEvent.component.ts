@@ -40,7 +40,11 @@ export class VisorEventComponent implements OnInit {
     ObtenerReuniones() {
         var ObjReu: E_Reunion = new E_Reunion()
         ObjReu.Id_Departamento = this.DatoDepto
-        this.ReunionService.ReunionesxDepto(ObjReu).subscribe((x) => {
+        this.ReunionService.ReunionesxDepto(ObjReu).subscribe((x:Array<E_Reunion>) => {
+             x.forEach(element => {
+                 debugger;
+                 element.NombreCliente=element.NombrexAnonimo
+             });           
             this.rows = x;
             this.loadingIndicator = false;
         }

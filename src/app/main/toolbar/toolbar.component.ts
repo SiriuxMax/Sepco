@@ -7,6 +7,7 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { UserService } from '../../ApiServices/UserService';
 import { MatDialog } from '@angular/material';
 import { UserInfoComponent } from '../content/AutenticationComponents/UserInfo/UserInfo.component';
+import { AppSettings } from '../../app.settings';
 
 @Component({
     selector: 'fuse-toolbar',
@@ -83,10 +84,14 @@ export class FuseToolbarComponent {
 
         router.events.subscribe(
             (event) => {
-
+                this.PerfilNow = this.UserService.GetCurrentCurrentUserNow() != null ?
+                    this.UserService.GetCurrentCurrentUserNow().Imagen : ""
+                this.showFoto = this.PerfilNow == "" ? false : true
+                this.showFoto = this.PerfilNow == null ? false : true
                 if (this.UserService.GetCurrentCurrentUserNow() != null) {
-                    this.PerfilNow = this.UserService.GetCurrentCurrentUserNow().Imagen
-                    this.Nombres = this.UserService.GetCurrentCurrentUserNow().UserName
+                    //   this.PerfilNow = this.UserService.GetCurrentCurrentUserNow().Imagen
+                    this.Nombres =
+                        AppSettings.Global().TipoAplicacion == 1 ? "" : this.UserService.GetCurrentCurrentUserNow().UserName
                 }
 
 

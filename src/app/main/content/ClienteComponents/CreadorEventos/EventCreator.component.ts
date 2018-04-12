@@ -19,6 +19,7 @@ import { ParameterService } from 'app/ApiServices/ParametersServices';
 import { E_Sector } from '../../../../Models/E_Sector';
 import { E_DirectorDepartamento } from '../../../../Models/E_DirectorDepartamento';
 import { AdminServices } from 'app/ApiServices/AdminServices';
+import { E_GerenteSector } from '../../../../Models/E_GerenteSector';
 
 @Component({
     selector: 'EventCreator',
@@ -36,8 +37,13 @@ export class EventCreatorComponent implements OnInit {
     formErrors: any;
     noFoto: boolean = true
     DepartamentoSeleccionado: any
+    sectorseleccionado: any
+    gerenteseleccionado: any
+    departaseleccionado: any
     TipoEventoSeleccionado: any
     ListSector: Array<E_Sector> = new Array<E_Sector>()
+    ListGerSec: Array<E_GerenteSector> = new Array<E_GerenteSector>()
+    listDirectDep: Array<E_DirectorDepartamento> = new Array<E_DirectorDepartamento>()
     ListDepartamentos: Array<E_Departamentos> = new Array<E_Departamentos>()
     ListTipoEvento: Array<E_TipoReunion> = new Array<E_TipoReunion>()
     // Horizontal Stepper
@@ -69,7 +75,9 @@ export class EventCreatorComponent implements OnInit {
             TipoEvento: {},
             Sector: {},
             Personas: {},
-            Costo: {}
+            Costo: {},
+            gerenteSector: {},
+            directorDep: {}
         };
 
     }
@@ -84,13 +92,35 @@ export class EventCreatorComponent implements OnInit {
             .subscribe((x: Array<E_Sector>) => {
                 this.ListSector = x
             })
-        this.AdminServices.ListarDirectorDepto(objDir)
-            .subscribe((x: Array<E_DirectorDepartamento>) => {
-                if (x.length > 0) {
-                    this.DirectorTecnicoSector = x[0].Nombres + ' ' + x[0].Apellidos
-                }
+        // this.AdminServices.ListarDirectorDepto(objDir)
+        //     .subscribe((x: Array<E_DirectorDepartamento>) => {
+        //         if (x.length > 0) {
+        //             this.DirectorTecnicoSector = x[0].Nombres + ' ' + x[0].Apellidos
+        //         }
 
-            })
+        //     })
+    }
+
+    SelectedSector(y) {       
+        
+        var objDir: E_GerenteSector = new E_GerenteSector()
+        objDir.Id_Sector = y.value.Id       
+        this.AdminServices.listarGerentesxsector(objDir)
+            .subscribe((x: Array<E_GerenteSector>) => {
+              
+                this.ListGerSec = x
+            })      
+    }
+
+    SelectedGerenteSect(y) {   
+        debugger;    
+        var objDir: E_DirectorDepartamento = new E_DirectorDepartamento()
+        objDir.Id_GerenteSector= y.value.Id        
+        this.AdminServices.ListarDirectorDeptoxGerente(objDir)
+            .subscribe((x: Array<E_DirectorDepartamento>) => {
+                debugger;
+                this.listDirectDep = x
+            })      
     }
 
     ngOnInit() {
@@ -106,6 +136,8 @@ export class EventCreatorComponent implements OnInit {
             TipoEvento: [undefined, Validators.required],
             Personas: ['', Validators.required],
             Costo: ['', Validators.required],
+            gerenteSector: [undefined, Validators.required],
+            directorDep: [undefined, Validators.required],
         });
 
         this.form.valueChanges.subscribe(() => {
@@ -155,13 +187,17 @@ export class EventCreatorComponent implements OnInit {
 
         var objEvento: E_Reunion = new E_Reunion()
         objEvento.Titulo = this.form.value.Nombre
+        objEvento.Estado=true;
         objEvento.Descripcion = this.form.value.Descripcion
         objEvento.Id_Departamento = this.form.value.Departamentos.Id
         objEvento.NombreDepartamento = this.form.value.Departamentos.Nombre
         objEvento.CantidadPersonas = this.form.value.Personas
         objEvento.Id_TipoReunion = this.form.value.TipoEvento
         objEvento.Id_Sector = this.form.value.Sector.Id
+        objEvento.Id_directorDepto = this.form.value.directorDep.Id
+        objEvento.Id_gerentesector = this.form.value.gerenteSector.Id
         objEvento.Costo = this.form.value.Costo.replace(/\./g, "");
+        objEvento.NombrexAnonimo = this.DirectorTecnicoSector;
         var ImagenObj: E_Imagen = new E_Imagen()
         var ImageBaseUrl = AppSettings.Global().API_ImageContent
         

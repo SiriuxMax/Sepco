@@ -15,7 +15,7 @@
 
             <!-- REACTIVE FORM EXAMPLE -->
 
-            <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form"
+            <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 " fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form"
                 [formGroup]="form">
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -101,76 +101,92 @@
 
                 </div>
             </form>
-
-            <form class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form"
-                [formGroup]="formDinamic">
-
-                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+<!--  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class="toolbar px-24 py-8 headerback">
                         <div class="h2 mb-24">Asignación de Perfil</div>
                     </div>
-                </div>
+                </div> *ngIf="!form.invalid"  -->
+            <form   class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start"
+                fxFlex="1 0 auto" name="form" [formGroup]="formDinamic">
+
+              
+                <div *ngIf="showError" style="color:brown">{{errorMesage}}</div>
                 <!-- *********************************************************** -->
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field fxFlex="90" *ngIf="showDepartamento">
+                    <mat-form-field fxFlex="80" *ngIf="showDepartamento">
                         <mat-select placeholder="Departamento" formControlName="Departamento" (change)="SelectedDepartamento($event)">
                             <mat-option *ngFor="let Item of ListDepartamentos" [value]="Item">
                                 {{ Item.Nombre }}
                             </mat-option>
                         </mat-select>
-         
+
                     </mat-form-field>
-                    <div fxFlex="8" class="icoLike" (click)="AgregarItem(1)"  *ngIf="showDepartamento && DepartamentoConfig">
+                    <div fxFlex="8" class="icoLike" (click)="AgregarItem(1)" *ngIf="showDepartamento && DepartamentoConfig">
                         <i class="material-icons icoClassNow">&#xE145;</i>
                     </div>
-                    <mat-form-field fxFlex="90"  *ngIf="showMunicipio">
+                    <div fxFlex="9" class="icoLike" *ngIf="showDepartamento && DepartamentoConfig">
+                        <i class="indicator">{{countDepartamento }}</i>
+                    </div>
+                    <mat-form-field fxFlex="80" *ngIf="showMunicipio">
                         <mat-select placeholder="Municipio" formControlName="Municipio" (change)="SelectedMunicipio($event)">
                             <mat-option *ngFor="let Item of ListMunicipiosGroup" [value]="Item.Id">
                                 {{ Item.Nombre }}
                             </mat-option>
                         </mat-select>
-                 
+
                     </mat-form-field>
                     <div fxFlex="8" class="icoLike" (click)="AgregarItem(2)" *ngIf="showMunicipio  && MunicipioConfig">
                         <i class="material-icons icoClassNow">&#xE145;</i>
                     </div>
-                    <mat-form-field fxFlex="90"  *ngIf="showZonaElectoral">
+                    <div fxFlex="9" class="icoLike" *ngIf="showMunicipio  && MunicipioConfig">
+                        <i class="indicator">{{countMunicipio }}</i>
+                    </div>
+                    <mat-form-field fxFlex="80" *ngIf="showZonaElectoral">
                         <mat-select placeholder="Zona Electoral" formControlName="ZonaElectoral" (change)="SelectedZonaElectoral($event)">
                             <mat-option *ngFor="let Item of ListZonaElectoralGroup" [value]="Item.Id">
                                 {{ Item.Nombre }}
                             </mat-option>
                         </mat-select>
-                  
+
                     </mat-form-field>
-                    <div fxFlex="8" class="icoLike" (click)="AgregarItem(3)"  *ngIf="showZonaElectoral  && ZonaElectoralConfig">
+                    <div fxFlex="8" class="icoLike" (click)="AgregarItem(3)" *ngIf="showZonaElectoral  && ZonaElectoralConfig">
                         <i class="material-icons icoClassNow">&#xE145;</i>
                     </div>
-                    <mat-form-field fxFlex="90"  *ngIf="showPuestoVotacion">
+                    <div fxFlex="9" class="icoLike" *ngIf="showZonaElectoral  && ZonaElectoralConfig">
+                        <i class="indicator">{{countZonaElectoral}}</i>
+                    </div>
+                    <mat-form-field fxFlex="80" *ngIf="showPuestoVotacion">
                         <mat-select placeholder="Puesto de Votación" formControlName="PuestoVotacion" (change)="SelectedPuestoVotacion($event)">
                             <mat-option *ngFor="let Item of ListPuestoVotacionGroup" [value]="Item.Id">
                                 {{ Item.Nombre }}
                             </mat-option>
                         </mat-select>
-                   
+
                     </mat-form-field>
                     <div fxFlex="8" class="icoLike" (click)="AgregarItem(4)" *ngIf="showPuestoVotacion  && PuestoVotacionConfig">
                         <i class="material-icons icoClassNow">&#xE145;</i>
                     </div>
-                    <mat-form-field fxFlex="90" *ngIf="showMesa">
-                        <mat-select placeholder="Mesas" formControlName="Mesa" >
+                    <div fxFlex="9" class="icoLike" *ngIf="showPuestoVotacion  && PuestoVotacionConfig">
+                        <i class="indicator">{{countPuestoVotacion}}</i>
+                    </div>
+                    <mat-form-field fxFlex="80" *ngIf="showMesa">
+                        <mat-select placeholder="Mesas" formControlName="Mesa">
                             <mat-option *ngFor="let Item of ListMesas" [value]="Item">
                                 {{ Item.Nombre }}
                             </mat-option>
                         </mat-select>
-                      
-                    </mat-form-field >
+
+                    </mat-form-field>
                     <div fxFlex="8" class="icoLike" (click)="AgregarItem(5)" *ngIf="showMesa  && MesaConfig">
                         <i class="material-icons icoClassNow">&#xE145;</i>
+                    </div>
+                    <div fxFlex="9" class="icoLike" *ngIf="showMesa  && MesaConfig">
+                        <i class="indicator">{{countMesas}}</i>
                     </div>
 
                 </div>
 
-                <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="formDinamic.invalid">
+                <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
                     Enviar Información
                 </button>
                 <div fxLayout="row" *ngIf="SucceSave" fxLayoutAlign="start center" fxFlex="1 0 auto">

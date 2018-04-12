@@ -34,6 +34,10 @@ import { MainPageAdminModule } from './main/content/AdminComponents/MainPageAdmi
 import { ParamSectoresModule } from './main/content/AdminComponents/ParamSectores/ParamSectores.module';
 import { UserInfoModule } from 'app/main/content/AutenticationComponents/UserInfo/UserInfo.module';
 import { SectorModule } from './main/content/AdminComponents/Sector/sector.module';
+import { TotalesModule } from './main/content/AutenticationComponents/totales/totales.module';
+
+import { SacIndividuo2Module } from './main/content/AdminComponents/sac-individuo2/sac-individuo2.module';
+import { AdminIndividuo2Module } from './main/content/AdminComponents/sac-individuo2/admin-individuo2/admin-individuo2.module';
 
 import { ZonaElectoralModule } from './main/content/AdminComponents/ZonaElectoral/zona-electoral.module';
 import { Individuo1Module } from 'app/main/content/DirectorDepartamentosComponents/Individuo1/individuo-1.module';
@@ -46,6 +50,7 @@ import { GerenteSectorModule } from './main/content/AdminComponents/GerenteSecto
 import { PuestoVotacionModule } from 'app/main/content/AdminComponents/PuestoVotacion/puesto-votacion.module';
 import { DirectorDepartamentoModule } from 'app/main/content/GerenteSectorComponents/DirectorDepartamento/director-departamento.module';
 import { MainGerenteModule } from './main/content/GerenteSectorComponents/MainGerente/MainGerente.module';
+import { DialogComponent } from 'app/main/content/DialogComponents/Dialog.component';
 
 const appRoutes: Routes = [
     //Autenticacion
@@ -59,9 +64,12 @@ const appRoutes: Routes = [
     { path: 'tipoevento', redirectTo: '/tipoevento', pathMatch: 'full' },
     { path: 'detailevent', redirectTo: '/detailevent', pathMatch: 'full' },
     { path: 'aceptimage', redirectTo: '/aceptimage', pathMatch: 'full' },
-    //Administrador
+    { path: 'totales', redirectTo: '/totales', pathMatch: 'full' },
+
     { path: 'mainpageadmin', redirectTo: '/mainpageadmin', pathMatch: 'full' },
     { path: 'sector', redirectTo: '/sector', pathMatch: 'full' },
+    { path: 'SacIndividuo2', redirectTo: '/SacIndividuo2', pathMatch: 'full' },
+    { path: 'AdminIndividuo2', redirectTo: '/AdminIndividuo2', pathMatch: 'full' },
     { path: 'zonaelectoral', redirectTo: '/zonaelectoral', pathMatch: 'full' },
     { path: 'puestovotacion', redirectTo: '/puestovotacion', pathMatch: 'full' },
     { path: 'mesa', redirectTo: '/mesa', pathMatch: 'full' },
@@ -117,6 +125,9 @@ const appRoutes: Routes = [
         PuestoVotacionModule,
         MesaModule,
         GerenteSectorModule,
+        SacIndividuo2Module,
+        AdminIndividuo2Module,
+        TotalesModule,      
         MainGerenteModule
 
     ],
@@ -130,7 +141,10 @@ const appRoutes: Routes = [
         , AdminServices],
     bootstrap: [
         AppComponent
+    ],entryComponents: [
+        DialogComponent
     ]
+    
 })
 export class AppModule {
 }

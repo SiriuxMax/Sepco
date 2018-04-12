@@ -10,6 +10,8 @@ export class ReunionBuilder {
     public Id_Departamento: number
     public Id_Municipio: number
     public Id_TipoReunion: number
+    public Id_gerentesector: number
+    public Id_directorDepto: number
     public CantidadPersonas: number
     public Estado: boolean
     public FechaCreacion: Date
@@ -20,6 +22,7 @@ export class ReunionBuilder {
     public ApellidoCliente: string
     public Id_Sector: number
     public Costo: number
+    public NombrexAnonimo: string
     constructor() { }
     buildFromObject(x: any): ReunionBuilder {
         if (x.Id != undefined) { this.Id = x.Id }
@@ -33,11 +36,14 @@ export class ReunionBuilder {
         if (x.Id_Departamento != undefined) { this.Id_Departamento = x.Id_Departamento }
         if (x.Id_Municipio != undefined) { this.Id_Municipio = x.Id_Municipio }
         if (x.Id_TipoReunion != undefined) { this.Id_TipoReunion = x.Id_TipoReunion }
+        if (x.Id_gerentesector != undefined) { this.Id_gerentesector = x.Id_gerentesector }
+        if (x.Id_directorDepto != undefined) { this.Id_directorDepto = x.Id_directorDepto }
         if (x.CantidadPersonas != undefined) { this.CantidadPersonas = x.CantidadPersonas }
         if (x.Estado != undefined) { this.Estado = x.Estado }
         if (x.FechaCreacion != undefined) { this.FechaCreacion = x.FechaCreacion }
         if (x.total != undefined) { this.total = x.total }
         if (x.NombreDepartamento != undefined) { this.NombreDepartamento = x.NombreDepartamento }
+        if (x.NombrexAnonimo != undefined) { this.NombrexAnonimo = x.NombrexAnonimo }
 
         if (x.NombreCliente != undefined) { this.NombreCliente = x.NombreCliente + ' ' + x.ApellidoCliente }
 
@@ -60,6 +66,10 @@ export class ReunionBuilder {
         obj.Id_Departamento = this.Id_Departamento
         obj.Id_Municipio = this.Id_Municipio
         obj.Id_TipoReunion = this.Id_TipoReunion
+
+        obj.Id_gerentesector = this.Id_gerentesector
+        obj.Id_directorDepto = this.Id_directorDepto
+
         obj.CantidadPersonas = this.CantidadPersonas
         obj.Estado = this.Estado
         obj.FechaCreacion = this.FechaCreacion
@@ -67,6 +77,7 @@ export class ReunionBuilder {
         obj.NombreDepartamento = this.NombreDepartamento
         obj.Id_Sector = this.Id_Sector
         obj.Costo = this.Costo
+        obj.NombrexAnonimo = this.NombrexAnonimo
         return obj
     }
 

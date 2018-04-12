@@ -62,7 +62,8 @@
                     </mat-form-field>
 
                     <mat-form-field fxFlex="50">
-                        <mat-select placeholder="Sector" formControlName="Sector" required>
+                        <mat-select placeholder="Sector" formControlName="Sector" [(ngModel)]="sectorseleccionado" (change)="SelectedSector($event)"
+                         required>
                             <mat-option *ngFor="let Item of ListSector" [value]="Item">
                                 {{ Item.Nombre }}
                             </mat-option>
@@ -73,10 +74,32 @@
                     </mat-form-field>
 
                     <mat-form-field fxFlex="100">
-                        <input matInput placeholder="Director Departamento Encargado" [(ngModel)]="DirectorTecnicoSector" [ngModelOptions]="{standalone: true}"
-                            disabled>
-
+                        <mat-select placeholder="Gerente Sector" formControlName="gerenteSector" [(ngModel)]="gerenteseleccionado" (change)="SelectedGerenteSect($event)"
+                         required>
+                            <mat-option *ngFor="let Item of ListGerSec" [value]="Item">
+                                {{ Item.Nombres }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="formErrors.Sector.required">
+                            Sector es requerido
+                        </mat-error>
                     </mat-form-field>
+
+                    <mat-form-field fxFlex="100">
+                        <mat-select placeholder="Director Departamento" formControlName="directorDep"  required>
+                            <mat-option *ngFor="let Item of listDirectDep" [value]="Item">
+                                {{ Item.Nombres }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="formErrors.Sector.required">
+                            Sector es requerido
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="100">
+                        <input matInput placeholder="Nombre del creador del evento" [(ngModel)]="DirectorTecnicoSector" [ngModelOptions]="{standalone: true}" >
+                    </mat-form-field> 
+
                     <mat-form-field fxFlex="100">
                         <mat-select placeholder="Tipo Evento" formControlName="TipoEvento" [(ngModel)]="TipoEventoSeleccionado" required>
                             <mat-option *ngFor="let Item of ListTipoEvento" [value]="Item.Id">
@@ -102,7 +125,7 @@
                     </mat-form-field>
 
                     <mat-form-field fxFlex="50">
-                        <input matInput placeholder="Costo" formControlName="Costo" [textMask]="{mask: MaskPrice}" required>
+                        <input matInput placeholder="Costo" formControlName="Costo" [textMask]="{mask: MaskPrice}" >
                         <mat-error *ngIf="formErrors.Costo.required">
                             Costo requerido
                         </mat-error>

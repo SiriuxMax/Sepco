@@ -11,36 +11,38 @@
             <div class="title">Ingresa con tu Cuenta</div>
 
             <form name="loginForm" [formGroup]="loginForm" novalidate>
+                <div [ngStyle]="{'display':jey}">
+                    <mat-form-field>
+                        <input matInput placeholder="Email" formControlName="email">
+                        <mat-error *ngIf="loginFormErrors.email.required">
+                            Correo electronico es requerido
+                        </mat-error>
+                        <mat-error *ngIf="!loginFormErrors.email.required && loginFormErrors.email.email">
+                            Por favor ingrese un correo electronico valido
+                        </mat-error>
+                    </mat-form-field>
 
-                <mat-form-field>
-                    <input matInput placeholder="Email" formControlName="email">
-                    <mat-error *ngIf="loginFormErrors.email.required">
-                        Correo electronico es requerido
-                    </mat-error>
-                    <mat-error *ngIf="!loginFormErrors.email.required && loginFormErrors.email.email">
-                        Por favor ingrese un correo electronico valido
-                    </mat-error>
-                </mat-form-field>
+                    <mat-form-field>
+                        <input matInput type="password" placeholder="Contraseña" formControlName="password">
+                        <mat-error *ngIf="loginFormErrors.password.required">
+                            Contraseña es requerida
+                        </mat-error>
+                    </mat-form-field>
 
-                <mat-form-field>
-                    <input matInput type="password" placeholder="Contraseña" formControlName="password">
-                    <mat-error *ngIf="loginFormErrors.password.required">
-                        Contraseña es requerida
-                    </mat-error>
-                </mat-form-field>
+                    <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
+                        <mat-checkbox class="remember-me" aria-label="Remember Me">
+                            Recordarme
+                        </mat-checkbox>
 
-                <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center">
-                    <mat-checkbox class="remember-me" aria-label="Remember Me">
-                        Recordarme
-                    </mat-checkbox>
+                        <a class="forgot-password" [routerLink]="'/cambiarClave'"  >
+                            Olvidaste tu contraseña?
+                        </a>
+                        <a class="forgot-password " style="display:none"   #jojo>
 
-                    <a class="forgot-password" [routerLink]="'/cambiarClave'"  >
-                        Olvidaste tu contraseña?
-                    </a>
-                    <a class="forgot-password " style="display:none"   #jojo>
-
-                    </a>
+                        </a>
+                    </div>
                 </div>
+                
 
 
 
@@ -50,13 +52,17 @@
             <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN" [disabled]="loginForm.invalid" (click)="loginNow()">
                 INGRESAR
             </button>
-            <div *ngIf="errorLogin">
-                <span style="color: #d43c31;">Contraseña incorrecta o cuenta es inexistente</span>
+
+            <div [ngStyle]="{'display':jey}">
+                <div *ngIf="errorLogin">
+                    <span style="color: #d43c31;">Contraseña incorrecta o cuenta es inexistente</span>
+                </div>
+                <div class="register" fxLayout="column" fxLayoutAlign="center center">
+                    <span class="text">No tienes Cuenta?</span>
+                    <a class="link" [routerLink]="'/register'">Crear una cuenta</a>
+                </div>
             </div>
-            <div class="register" fxLayout="column" fxLayoutAlign="center center">
-                <span class="text">No tienes Cuenta?</span>
-                <a class="link" [routerLink]="'/register'">Crear una cuenta</a>
-            </div>
+           
 
         </div>
 

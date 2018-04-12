@@ -2,6 +2,8 @@ import { E_Error } from "../Models/E_Error";
 import { E_Usuario } from "../Models/E_Usuario";
 import { E_GerenteSector } from "../Models/E_GerenteSector";
 import { UsuarioBuilder } from "./Usuario.model.builder";
+import { E_DirectorDepartamento } from "../Models/E_DirectorDepartamento";
+
 
 export class GerenteSectorBuilder {
     public Id: number
