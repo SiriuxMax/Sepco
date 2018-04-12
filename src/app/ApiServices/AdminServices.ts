@@ -29,7 +29,7 @@ import { GerenteSectorBuilder } from '../Builders/GerenteSector.model.builder';
 export class AdminServices {
     constructor(private Http: HttpClient, private HeaderBuilder: HeaderBuilder, private UserService: UserService) { }
     private UrlNow: string = AppSettings.Global().API
-    private textarea: HTMLTextAreaElement;
+
 
     private setOptions() {
         const httpOptions = {
@@ -92,7 +92,7 @@ export class AdminServices {
         return this.Http.post(this.UrlNow + "Individuo/ListarGerentesSectorxCorreo"
             , request, httpOptions).map(this.ExtractGerente)
     }
-        ListarDirectorDeptoxGerente(CLient: E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
+    ListarDirectorDeptoxGerente(CLient: E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Admin/ListarDirectorDeptoxGerente"
@@ -107,7 +107,7 @@ export class AdminServices {
         });
         return x
     }
-       ListarIndividuos2Pendientes(): Observable<Array<E_Individuo2>> {
+    ListarIndividuos2Pendientes(): Observable<Array<E_Individuo2>> {
         debugger;
         const httpOptions = this.HeaderBuilder.HeadNow()
         //var request = JSON.stringify(CLient)
@@ -115,7 +115,7 @@ export class AdminServices {
             , "", httpOptions).map(this.ExtractListIndividuo2)
     }
 
- listarGerentesxsector(obin:E_GerenteSector): Observable<Array<E_GerenteSector>> {
+    listarGerentesxsector(obin: E_GerenteSector): Observable<Array<E_GerenteSector>> {
         debugger;
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(obin)
@@ -158,14 +158,7 @@ export class AdminServices {
     }
 
 
-    crearIndividuo2(CLient: E_Individuo2): Observable<boolean> {
-        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
-        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
-        var request = JSON.stringify(CLient)
-        return this.Http.post(this.UrlNow + "Admin/crearIndividuo2"
-            , request, httpOptions).map(this.EvalBool)
-    }
-
+  
     crearSector(CLient: E_Sector): Observable<boolean> {
         var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
         const httpOptions = this.HeaderBuilder.HeadNow(User.Id)

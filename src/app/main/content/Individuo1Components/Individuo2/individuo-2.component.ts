@@ -22,6 +22,8 @@ import { E_Mesa } from '../../../../Models/E_Mesa';
 import { E_ConfiguracionTipoIndividuo } from '../../../../Models/E_ConfiguracionTipoIndividuo';
 import { E_DetalleIndividuo } from 'app/Models/E_DetalleIndividuo';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { IndividuoServices } from '../../../../ApiServices/IndividuoServices';
+import { E_Individuo1 } from '../../../../Models/E_Individuo1';
 
 @Component({
     moduleId: module.id,
@@ -30,6 +32,9 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
     styleUrls: ['individuo-2.component.scss']
 })
 export class Individuo2Component implements OnInit {
+    SaveInProgress: boolean;
+    ShowErrorSave: boolean;
+    ShowSuccess: boolean;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     showError: boolean;
     errorMesage: string;
@@ -71,6 +76,7 @@ export class Individuo2Component implements OnInit {
     public Nombre: string;
     public descripcion: string;
     public checked;
+    individuoGuardador: E_Individuo1 = new E_Individuo1()
     // Horizontal Stepper
     constructor(private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
@@ -79,7 +85,8 @@ export class Individuo2Component implements OnInit {
         private AdminServices: AdminServices,
         private Router: Router,
         private UserService: UserService,
-        private Matdialog: MatDialog
+        private Matdialog: MatDialog,
+        private IndividuoServices: IndividuoServices
     ) { }
 
 
@@ -94,26 +101,56 @@ export class Individuo2Component implements OnInit {
 
     EnviarInfo() {
         this.showError = false
-        var objIndividuo2: E_Individuo2 = new E_Individuo2()
-        objIndividuo2.Cedula = this.form.value.Cedula
-        objIndividuo2.Nombres = this.form.value.Nombre
-        objIndividuo2.Apellidos = this.form.value.Apellido
-        objIndividuo2.Direccion = this.form.value.Direccion
-        objIndividuo2.Correo = this.form.value.Correo
-        objIndividuo2.Telefono = this.form.value.Telefono
-        objIndividuo2.Celular = this.form.value.Celular
-        objIndividuo2.Activo = true
-        objIndividuo2.FechaCreacion = new Date();
-        objIndividuo2.Id_individuo1 = this.UserService.GetCurrentCurrentUserNow().Id
-        objIndividuo2.Id_tipoestadorevision = 1 //Pendiente revision por SAC
-        objIndividuo2.Id_tipoindividuo2 = this.form.value.TipoIndividuo2
-        objIndividuo2.CambiarClave = true
-        objIndividuo2.Detalleindividuo = this.Detalleindividuo
         if (this.Detalleindividuo.length == 0) {
             this.showError = true
             this.errorMesage = "Debe Haber al menos una asignacion"
+            return
         }
+        this.confirmDialogRef = this.Matdialog.open(FuseConfirmDialogComponent, {
+        })
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Estas seguro de realizar esta acción?';
+
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.GuardadoAsegurado()
+            }
+            this.confirmDialogRef = null;
+        });
+
         //   this.AdminServices.crearIndividuo2(objIndividuo2).subscribe((x: boolean) => { this.SucceSave = x })
+
+    }
+    GuardadoAsegurado() {
+
+        this.SaveInProgress = true
+        this.ShowErrorSave = false
+        this.ShowSuccess = false
+        var objIndividuo2: E_Individuo2 = new E_Individuo2()
+        objIndividuo2.Cedula = this.form.value.Cedula.replace(/\./g, "");
+        objIndividuo2.Nombres = this.form.value.Nombre
+        objIndividuo2.Apellidos = this.form.value.Apellido
+        objIndividuo2.Direccion = this.form.value.Direccion
+        objIndividuo2.Correo = this.form.value.email.toLowerCase()
+        objIndividuo2.Telefono = this.form.value.Telefonof
+        objIndividuo2.Celular = this.form.value.Celular
+        objIndividuo2.Activo = true
+        objIndividuo2.FechaCreacion = new Date();
+        objIndividuo2.Id_individuo1 = this.individuoGuardador.Id
+        objIndividuo2.Id_tipoestadorevision = 1 //Pendiente revision por SAC
+        objIndividuo2.Id_tipoindividuo2 = this.form.value.TipoIndividuo2.Id
+        objIndividuo2.CambiarClave = true
+        objIndividuo2.Detalleindividuo = this.Detalleindividuo
+        this.IndividuoServices.crearIndividuo2(objIndividuo2).subscribe((x: boolean) => {
+            if (x) {
+                this.ShowSuccess = true
+                this.Clearforms()
+                this.clearDetail()
+            }
+            else {
+                this.ShowErrorSave = true
+            }
+            this.SaveInProgress = false
+        })
 
     }
 
@@ -149,39 +186,46 @@ export class Individuo2Component implements OnInit {
     }
 
     AgregarItem(x: number) {
-       this.confirmDialogRef = this.Matdialog.open(FuseConfirmDialogComponent, {
-        })
 
-        this.confirmDialogRef.afterClosed().subscribe((x) => { })
         var objDetalle: E_DetalleIndividuo = new E_DetalleIndividuo()
         switch (x) {
             case 2:
-                objDetalle.Id_Municipio = this.formDinamic.value.Municipio
-                if (!this.Detalleindividuo.some((x) => x.Id_Municipio == this.formDinamic.value.Municipio)) {
-                    this.Detalleindividuo.push(objDetalle)
-                    this.countMunicipio += 1
+                if (this.formDinamic.value.Municipio != undefined) {
+                    objDetalle.Id_Municipio = this.formDinamic.value.Municipio
+                    if (!this.Detalleindividuo.some((x) => x.Id_Municipio == this.formDinamic.value.Municipio)) {
+                        this.Detalleindividuo.push(objDetalle)
+                        this.countMunicipio += 1
+                    }
                 }
+
                 break;
             case 3:
-                objDetalle.Id_ZonaElectoral = this.formDinamic.value.ZonaElectoral
-                if (!this.Detalleindividuo.some((x) => x.Id_ZonaElectoral == this.formDinamic.value.ZonaElectoral)) {
-                    this.Detalleindividuo.push(objDetalle)
-                    this.countZonaElectoral += 1
+                if (this.formDinamic.value.ZonaElectoral != undefined) {
+                    objDetalle.Id_ZonaElectoral = this.formDinamic.value.ZonaElectoral
+                    if (!this.Detalleindividuo.some((x) => x.Id_ZonaElectoral == this.formDinamic.value.ZonaElectoral)) {
+                        this.Detalleindividuo.push(objDetalle)
+                        this.countZonaElectoral += 1
+                    }
                 }
+
                 break;
             case 4:
-                objDetalle.Id_PuestoVotacion = this.formDinamic.value.PuestoVotacion
-                if (!this.Detalleindividuo.some((x) => x.Id_PuestoVotacion == this.formDinamic.value.PuestoVotacion)) {
-                    this.Detalleindividuo.push(objDetalle)
-                    this.countPuestoVotacion += 1
+                if (this.formDinamic.value.PuestoVotacion != undefined) {
+                    objDetalle.Id_PuestoVotacion = this.formDinamic.value.PuestoVotacion
+                    if (!this.Detalleindividuo.some((x) => x.Id_PuestoVotacion == this.formDinamic.value.PuestoVotacion)) {
+                        this.Detalleindividuo.push(objDetalle)
+                        this.countPuestoVotacion += 1
 
+                    }
                 }
                 break;
             case 5:
-                objDetalle.Id_Mesa = this.formDinamic.value.Mesa.Id
-                if (!this.Detalleindividuo.some((x) => x.Id_Mesa == this.formDinamic.value.Mesa.Id)) {
-                    this.Detalleindividuo.push(objDetalle)
-                    this.countMesas += 1
+                if (this.formDinamic.value.Mesa.Id != undefined) {
+                    objDetalle.Id_Mesa = this.formDinamic.value.Mesa.Id
+                    if (!this.Detalleindividuo.some((x) => x.Id_Mesa == this.formDinamic.value.Mesa.Id)) {
+                        this.Detalleindividuo.push(objDetalle)
+                        this.countMesas += 1
+                    }
                 }
                 break;
             default:
@@ -224,6 +268,7 @@ export class Individuo2Component implements OnInit {
     }
 
     CargarPerfil(VarTipo: any) {
+        this.clearDetail()
 
 
         var GroupConfig = this.ListConfiguration.filter((x) => x.Id_tipoindividuo2 == VarTipo.value.Id)
@@ -327,6 +372,9 @@ export class Individuo2Component implements OnInit {
                         })*/
             })
 
+        this.individuoGuardador.correo = this.UserService.GetCurrentCurrentUserNow().UserName
+        this.IndividuoServices.Individuo1xCorreo(this.individuoGuardador)
+            .subscribe((x: E_Individuo1) => { this.individuoGuardador = x })
         this.ParameterService.ListarConfTipoIndividuo()
             .subscribe((x: Array<E_ConfiguracionTipoIndividuo>) => {
                 this.ListConfiguration = x
@@ -385,6 +433,27 @@ export class Individuo2Component implements OnInit {
             Departamento: [undefined, options],
             Mesa: [undefined, options],
         });
+    }
+    clearDetail() {
+        this.Detalleindividuo = new Array<E_DetalleIndividuo>()
+        this.countMesas = 0
+        this.countPuestoVotacion = 0
+        this.countZonaElectoral = 0
+        this.countMunicipio = 0
+        this.countDepartamento = 0
+    }
+
+    Clearforms() {
+        this.form.setValue({
+            email: '',
+            Cedula: '',
+            Telefonof: '',
+            Celular: '',
+            Nombre: '',
+            Apellido: '',
+            Direccion: '',
+            TipoIndividuo2: 0
+        })
     }
 }
 

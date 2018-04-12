@@ -16,11 +16,14 @@ export class UsuarioBuilder {
     public Imagen: string
     buildFromObject(x: any): UsuarioBuilder {
         if (x.Id != undefined) { this.Id = x.Id }
-        if (x.UserName != undefined) { this.UserName = x.UserName }
+        if (x.UserName != undefined) {
+            this.UserName = x.UserName
+            this.Email = x.UserName
+        }
         if (x.Passwordd != undefined) { this.Passwordd = x.Passwordd }
         if (x.Salt != undefined) { this.Salt = x.Salt }
         if (x.Hash != undefined) { this.Hash = x.Hash }
-        if (x.Email != undefined) { this.Email = x.Email }
+
         if (x.Id_Cliente != undefined) { this.Id_Cliente = x.Id_Cliente }
         if (x.Id_Perfil != undefined) { this.Id_Perfil = x.Id_Perfil }
         if (x.Estado != undefined) { this.Estado = x.Estado }

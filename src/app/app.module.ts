@@ -50,6 +50,7 @@ import { GerenteSectorModule } from './main/content/AdminComponents/GerenteSecto
 import { PuestoVotacionModule } from 'app/main/content/AdminComponents/PuestoVotacion/puesto-votacion.module';
 import { DirectorDepartamentoModule } from 'app/main/content/GerenteSectorComponents/DirectorDepartamento/director-departamento.module';
 import { MainGerenteModule } from './main/content/GerenteSectorComponents/MainGerente/MainGerente.module';
+import { IndividuoServices } from 'app/ApiServices/IndividuoServices';
 
 const appRoutes: Routes = [
     //Autenticacion
@@ -126,7 +127,7 @@ const appRoutes: Routes = [
         GerenteSectorModule,
         SacIndividuo2Module,
         AdminIndividuo2Module,
-        TotalesModule,      
+        TotalesModule,
         MainGerenteModule
 
     ],
@@ -137,13 +138,14 @@ const appRoutes: Routes = [
         , HeaderBuilder
         , NavigationInfoService
         , ReunionService
-        , AdminServices],
+        , AdminServices
+        , IndividuoServices],
     bootstrap: [
         AppComponent
-    ],entryComponents: [
-        
+    ], entryComponents: [
+
     ]
-    
+
 })
 export class AppModule {
 }

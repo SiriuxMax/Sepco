@@ -5,11 +5,16 @@
         <div fxLayout="column" fxLayoutAlign="center start">
             <div class="h1 mt-16">Creación de Individuo 2</div>
         </div>
+        <img width="128" style="height: 28vw;
+      
+        width: 100vw;
+            
+        max-width: 800px;" src="assets/images/logos/intro2.svg">
     </div>
     <!-- / HEADER -->
 
     <!-- CONTENT -->
-    <div class="content p-24">
+    <div class="content p-24 mat-white-bg">
 
         <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="column">
 
@@ -100,12 +105,19 @@
                     </mat-form-field>
 
                 </div>
+              
+                <div fxLayout="row" *ngIf="ShowSuccess" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div fxFlex="100" style="color:#19611e">Registro Exitoso!</div>
+                </div>
+                <div fxLayout="row" *ngIf="ShowErrorSave" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div fxFlex="100" style="color:brown">Error al guardar!</div>
+                </div>
             </form>
 <!--  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class="toolbar px-24 py-8 headerback">
                         <div class="h2 mb-24">Asignación de Perfil</div>
                     </div>
-                </div> *ngIf="!form.invalid"  -->
+                </div>   -->
             <form   class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start"
                 fxFlex="1 0 auto" name="form" [formGroup]="formDinamic">
 
@@ -185,13 +197,11 @@
                     </div>
 
                 </div>
-
-                <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
+                <div  *ngIf="SaveInProgress">  <mat-spinner style="margin:0 auto;"></mat-spinner></div>
+                <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT"  [disabled]="form.invalid">
                     Enviar Información
                 </button>
-                <div fxLayout="row" *ngIf="SucceSave" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div fxFlex="100" style="color:#19611e">Registro Exitoso!</div>
-                </div>
+      
 
             </form>
 

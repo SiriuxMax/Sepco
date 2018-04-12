@@ -15,6 +15,7 @@ if ( environment.production )
 
 StartupService.loadParametry()
   .then(() => {
+      
     platformBrowserDynamic().bootstrapModule(AppModule);
   });
 

@@ -137,22 +137,22 @@ export class Individuo1Component implements OnInit {
         objIndividuo1.Nombre = this.form.value.Nombre
         objIndividuo1.Apellido = this.form.value.Apellido
         objIndividuo1.Direccion = this.form.value.Direccion
-        objIndividuo1.Correo = this.form.value.email.toLowerCase()
+        objIndividuo1.correo = this.form.value.email.toLowerCase()
         objIndividuo1.Telefono = this.form.value.Telefono
         objIndividuo1.Celular = this.form.value.Celular
-        objIndividuo1.Estado = true
+        objIndividuo1.Activo = true
         objIndividuo1.FechaCreacion = new Date();
-        objIndividuo1.Id_DirectorDepto = this.IdDirectorDepto
+        objIndividuo1.Id_Departamento = this.ClienteInfo.Id_Departamento
         objIndividuo1.Id_tipoindividuo = this.form.value.TipoIndividuo1
-        objIndividuo1.Id_TipoEstadoRevision = 1 //Pendiente revision por SAC
-        objIndividuo1.CambiarClave = true
+        objIndividuo1.Id_DirectorDepto = this.IdDirectorDepto
+        objIndividuo1.Id_tipoestadorevision = 1 //Pendiente revision por SAC
+        objIndividuo1.cambiarclave = true
         objIndividuo1.Id_Departamento = this.ClienteInfo.Id_Departamento
         objIndividuo1.usuariosac = new E_UsuarioSACxIndividuo1()
-
         var passTemp = Math.random().toString(36).slice(2).substring(0, 6);
         objUsuario.Passwordd = btoa(passTemp)
-        objUsuario.UserName = objIndividuo1.Correo
-        objUsuario.Email = objIndividuo1.Correo
+        objUsuario.UserName = objIndividuo1.correo
+        objUsuario.Email = objIndividuo1.correo
         objUsuario.Estado = true
         switch (this.form.value.TipoIndividuo1) {
             case 1:
@@ -169,7 +169,7 @@ export class Individuo1Component implements OnInit {
                 break;
         }
         objCliente.Nombre = objIndividuo1.Nombre
-        objCliente.Correo = objIndividuo1.Correo
+        objCliente.Correo = objIndividuo1.correo
         objCliente.Cedula = objIndividuo1.Cedula
         objCliente.Telefono = objIndividuo1.Telefono
         objCliente.Celular = objIndividuo1.Celular
