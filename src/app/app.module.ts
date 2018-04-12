@@ -50,7 +50,6 @@ import { GerenteSectorModule } from './main/content/AdminComponents/GerenteSecto
 import { PuestoVotacionModule } from 'app/main/content/AdminComponents/PuestoVotacion/puesto-votacion.module';
 import { DirectorDepartamentoModule } from 'app/main/content/GerenteSectorComponents/DirectorDepartamento/director-departamento.module';
 import { MainGerenteModule } from './main/content/GerenteSectorComponents/MainGerente/MainGerente.module';
-import { DialogComponent } from 'app/main/content/DialogComponents/Dialog.component';
 
 const appRoutes: Routes = [
     //Autenticacion
@@ -142,7 +141,7 @@ const appRoutes: Routes = [
     bootstrap: [
         AppComponent
     ],entryComponents: [
-        DialogComponent
+        
     ]
     
 })

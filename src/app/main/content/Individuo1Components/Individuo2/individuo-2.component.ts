@@ -5,7 +5,7 @@ import { E_TipoIndividuo2 } from 'app/Models/E_TipoIndividuo2';
 import { E_Individuo2 } from 'app/Models/E_Individuo2';
 import { GenerateMask } from 'app/Tools/MaskedLibrary';
 import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { PhotoTool } from 'app/Tools/PhotoTool';
 import { E_Reunion } from 'app/Models/E_Reunion';
 import { E_Imagen } from 'app/Models/E_Imagen';
@@ -21,7 +21,7 @@ import { E_PuestoVotacion } from 'app/Models/E_PuestoVotacion';
 import { E_Mesa } from '../../../../Models/E_Mesa';
 import { E_ConfiguracionTipoIndividuo } from '../../../../Models/E_ConfiguracionTipoIndividuo';
 import { E_DetalleIndividuo } from 'app/Models/E_DetalleIndividuo';
-import { DialogComponent } from '../../DialogComponents/Dialog.component';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
     moduleId: module.id,
@@ -30,6 +30,7 @@ import { DialogComponent } from '../../DialogComponents/Dialog.component';
     styleUrls: ['individuo-2.component.scss']
 })
 export class Individuo2Component implements OnInit {
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     showError: boolean;
     errorMesage: string;
     countMesas: number = 0;
@@ -148,10 +149,10 @@ export class Individuo2Component implements OnInit {
     }
 
     AgregarItem(x: number) {
-        var dialog = this.Matdialog.open(DialogComponent, {
+       this.confirmDialogRef = this.Matdialog.open(FuseConfirmDialogComponent, {
         })
 
-        dialog.afterClosed().subscribe((x) => { })
+        this.confirmDialogRef.afterClosed().subscribe((x) => { })
         var objDetalle: E_DetalleIndividuo = new E_DetalleIndividuo()
         switch (x) {
             case 2:

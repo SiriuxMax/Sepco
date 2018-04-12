@@ -5,8 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule, MatFormFieldModule, MatCheckboxModule, MatIconModule, MatInputModule, MatSelectModule, MatStepperModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { TextMaskModule } from 'angular2-text-mask';
-import { DialogModule } from 'app/main/content/DialogComponents/Dialog.module';
-import { DialogComponent } from '../../DialogComponents/Dialog.component';
+import { FuseConfirmDialogModule } from '@fuse/components';
 
 
 const routes: Routes = [
@@ -32,7 +31,7 @@ const routes: Routes = [
         MatCheckboxModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        DialogModule,
+        FuseConfirmDialogModule,
     ],
     declarations: [
         Individuo2Component,
