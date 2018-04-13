@@ -24,6 +24,9 @@ import { E_DetalleIndividuo } from 'app/Models/E_DetalleIndividuo';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { IndividuoServices } from '../../../../ApiServices/IndividuoServices';
 import { E_Individuo1 } from '../../../../Models/E_Individuo1';
+import { E_Usuario } from '../../../../Models/E_Usuario';
+import { Perfiles, TipoPersona2 } from '../../../../Enums/Enumerations';
+import { ProfileConfig } from '../../../../Tools/ProfileConfig';
 
 @Component({
     moduleId: module.id,
@@ -32,6 +35,8 @@ import { E_Individuo1 } from '../../../../Models/E_Individuo1';
     styleUrls: ['individuo-2.component.scss']
 })
 export class Individuo2Component implements OnInit {
+    PasswordTemp: string;
+    UserNameTemp: string;
     SaveInProgress: boolean;
     ShowErrorSave: boolean;
     ShowSuccess: boolean;
@@ -71,7 +76,7 @@ export class Individuo2Component implements OnInit {
     form: FormGroup;
     formErrors: any;
     noFoto: boolean = true
-    TipoIndividuo2Seleccionado: any
+    TipoIndividuo2Seleccionado: E_TipoIndividuo2
     ListTipoIndividuo2: Array<E_TipoIndividuo2> = new Array<E_TipoIndividuo2>()
     public Nombre: string;
     public descripcion: string;
@@ -140,16 +145,44 @@ export class Individuo2Component implements OnInit {
         objIndividuo2.Id_tipoindividuo2 = this.form.value.TipoIndividuo2.Id
         objIndividuo2.CambiarClave = true
         objIndividuo2.Detalleindividuo = this.Detalleindividuo
+
+
+        var objUsuario: E_Usuario = new E_Usuario()
+        var objCliente: E_Cliente = new E_Cliente()
+        var passTemp = Math.random().toString(36).slice(2).substring(0, 6);
+        objUsuario.Passwordd = btoa(passTemp)
+        objUsuario.UserName = objIndividuo2.Correo
+        objUsuario.Email = objIndividuo2.Correo
+        objUsuario.Estado = true
+        objUsuario.Id_Perfil = ProfileConfig.ExtractProfilexTipo2(this.TipoIndividuo2Seleccionado.Id) // Correponde perfiles para tipo2
+        objCliente.Nombre = objIndividuo2.Nombres
+        objCliente.Correo = objIndividuo2.Correo
+        objCliente.Cedula = objIndividuo2.Cedula
+        objCliente.Telefono = objIndividuo2.Telefono
+        objCliente.Celular = objIndividuo2.Celular
+        objCliente.Id_Departamento = this.individuoGuardador.Id_Departamento
+        objCliente.Apellido = objIndividuo2.Apellidos
+        objCliente.Estado = true
+        objCliente.Direccion = objIndividuo2.Direccion
+        objCliente.usuario = objUsuario
+
         this.IndividuoServices.crearIndividuo2(objIndividuo2).subscribe((x: boolean) => {
             if (x) {
-                this.ShowSuccess = true
-                this.Clearforms()
-                this.clearDetail()
+                this.UserService.crearCliente(objCliente).subscribe((y: boolean) => {
+                    if (y) {
+                        this.UserNameTemp = objUsuario.UserName
+                        this.PasswordTemp = passTemp
+                        this.ShowSuccess = true
+                        this.Clearforms()
+                        this.clearDetail()
+                    }
+                    this.SaveInProgress = false
+                })
             }
             else {
                 this.ShowErrorSave = true
             }
-            this.SaveInProgress = false
+
         })
 
     }
@@ -333,11 +366,11 @@ export class Individuo2Component implements OnInit {
             .subscribe((x: Array<E_TipoIndividuo2>) => {
                 var objPerf = this.UserService.GetCurrentCurrentUserNow().Id_Perfil
                 switch (objPerf) {
-                    case 4: var objSelection = 1
+                    case Perfiles.CoodinadorElectoral: var objSelection = 1 // Coodinardor Electoral
                         break;
-                    case 5: var objSelection = 2
+                    case Perfiles.ITAuditoria: var objSelection = 2 // IT y Auditoria                    
                         break;
-                    case 6: var objSelection = 3
+                    case Perfiles.TransporteLogistica: var objSelection = 3 //Transporte y Logistica
                         break;
                     default:
                         break;

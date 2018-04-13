@@ -34,8 +34,8 @@ import { MainPageAdminModule } from './main/content/AdminComponents/MainPageAdmi
 import { ParamSectoresModule } from './main/content/AdminComponents/ParamSectores/ParamSectores.module';
 import { UserInfoModule } from 'app/main/content/AutenticationComponents/UserInfo/UserInfo.module';
 import { SectorModule } from './main/content/AdminComponents/Sector/sector.module';
-import { TotalesModule } from './main/content/AutenticationComponents/totales/totales.module';
-
+import { ListarMetasModule } from './main/content/listar-metasDir/listar-metas.module';
+import { ListarMetasGerModule } from './main/content/listar-metas-ger/listar-metas-ger.module';
 import { SacIndividuo2Module } from './main/content/AdminComponents/sac-individuo2/sac-individuo2.module';
 import { AdminIndividuo2Module } from './main/content/AdminComponents/sac-individuo2/admin-individuo2/admin-individuo2.module';
 
@@ -51,6 +51,9 @@ import { PuestoVotacionModule } from 'app/main/content/AdminComponents/PuestoVot
 import { DirectorDepartamentoModule } from 'app/main/content/GerenteSectorComponents/DirectorDepartamento/director-departamento.module';
 import { MainGerenteModule } from './main/content/GerenteSectorComponents/MainGerente/MainGerente.module';
 import { IndividuoServices } from 'app/ApiServices/IndividuoServices';
+import { TotalesModule } from 'app/main/content/ClienteComponents/totales/totales.module';
+import { ListarVehiculosxDirModule } from './main/content/listar-vehiculosx-dir/listar-vehiculosx-dir.module';
+
 
 const appRoutes: Routes = [
     //Autenticacion
@@ -65,7 +68,8 @@ const appRoutes: Routes = [
     { path: 'detailevent', redirectTo: '/detailevent', pathMatch: 'full' },
     { path: 'aceptimage', redirectTo: '/aceptimage', pathMatch: 'full' },
     { path: 'totales', redirectTo: '/totales', pathMatch: 'full' },
-
+    { path: 'ListarMetas', redirectTo: '/ListarMetas', pathMatch: 'full' },
+//Admin
     { path: 'mainpageadmin', redirectTo: '/mainpageadmin', pathMatch: 'full' },
     { path: 'sector', redirectTo: '/sector', pathMatch: 'full' },
     { path: 'SacIndividuo2', redirectTo: '/SacIndividuo2', pathMatch: 'full' },
@@ -74,6 +78,7 @@ const appRoutes: Routes = [
     { path: 'puestovotacion', redirectTo: '/puestovotacion', pathMatch: 'full' },
     { path: 'mesa', redirectTo: '/mesa', pathMatch: 'full' },
     { path: 'gerentesector', redirectTo: '/gerentesector', pathMatch: 'full' },
+    { path: 'ListarVehiculosxDir', redirectTo: '/ListarVehiculosxDir', pathMatch: 'full' },
     //Gerente
     { path: 'maingerente', redirectTo: '/maingerente', pathMatch: 'full' },
     { path: 'directordepartamento', redirectTo: '/directordepartamento', pathMatch: 'full' },
@@ -83,6 +88,8 @@ const appRoutes: Routes = [
     //Individuo 1
     { path: 'mainpageindividuo1', redirectTo: '/mainpageindividuo1', pathMatch: 'full' },
     { path: 'individuo2', redirectTo: '/individuo2', pathMatch: 'full' },
+
+    { path: 'ListarMetasGer', redirectTo: '/ListarMetasGer', pathMatch: 'full' },
 
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: 'login' },
@@ -127,8 +134,11 @@ const appRoutes: Routes = [
         GerenteSectorModule,
         SacIndividuo2Module,
         AdminIndividuo2Module,
-        TotalesModule,
-        MainGerenteModule
+        TotalesModule,      
+        MainGerenteModule,
+        ListarMetasModule,
+        ListarMetasGerModule,
+        ListarVehiculosxDirModule
 
     ],
     providers: [

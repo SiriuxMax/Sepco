@@ -10,6 +10,7 @@ import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 import { ReunionService } from '../../../../../ApiServices/ReunionService';
 import { E_Reunion } from '../../../../../Models/E_Reunion';
+import { Platform } from '@angular/cdk/platform';
 
 @Component({
     selector: 'Map-content',
@@ -17,14 +18,23 @@ import { E_Reunion } from '../../../../../Models/E_Reunion';
     styleUrls: ['./Map-content.component.scss']
 })
 export class MapContentComponent implements OnInit {
+    ReunionInfo: E_Reunion[];
     public filteredStates2$: Observable<Array<E_Departamentos[]>>;
     stateCtrl: FormControl = new FormControl();
     CounterReunion: Array<E_Reunion> = new Array<E_Reunion>()
     ListDepartamentos: E_Departamentos[];
     Fields: Array<FieldObj> = MapFields.Fields()
+    MobileApp :boolean = false
     constructor(public dialog: MatDialog,
         private ParameterService: ParameterService,
-        private ReunionService: ReunionService) {
+        private ReunionService: ReunionService,
+    private platform:Platform) {
+
+            if (this.platform.ANDROID || this.platform.IOS)
+            {
+                this.MobileApp =true
+            }
+
         this.ParameterService.listarDepartamentos()
             .subscribe((x: Array<E_Departamentos>) => {
 
@@ -52,7 +62,13 @@ export class MapContentComponent implements OnInit {
         this.DepartamentoSeleccionado(idfiels, true)
 
     }
-
+    BogotaSelect(y: number) {
+        var depto = this.ListDepartamentos.find(x => x.Codigo == y.toString())
+        var NumeroEventos = this.ReunionInfo.find(x => x.Id_Departamento == Number(depto.Codigo)) != undefined ?
+            this.ReunionInfo.find(x => x.Id_Departamento == Number(depto.Codigo)).total : 0
+        var data = { NumeroEventos: NumeroEventos, Nombre: depto.Nombre, CodigoDepto: depto.Codigo, IdDepto: depto.Id }
+        this.openDialog(data)
+    }
     filterStatesComplex(val: any): any[] {
 
         var TextX = typeof val == "object" ? val.Nombre : val
@@ -74,6 +90,7 @@ export class MapContentComponent implements OnInit {
                 obj.NumeroReuniones = x.find(x => x.Id_Departamento == obj.idBd).total
             }
         })
+        this.ReunionInfo = x
     }
     handleMouseMove(event) {
 

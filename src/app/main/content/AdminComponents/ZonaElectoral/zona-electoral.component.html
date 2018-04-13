@@ -5,11 +5,16 @@
         <div fxLayout="column" fxLayoutAlign="center start">
             <div class="h1 mt-16">Creación de Zona Electoral</div>
         </div>
+        <img width="128" style="height: 28vw;
+        
+        width: 100vw;
+                
+        max-width: 800px;" src="assets/images/logos/intro2.svg">
     </div>
     <!-- / HEADER -->
 
     <!-- CONTENT -->
-    <div class="content p-24">
+    <div class="content p-24 mat-white-bg">
 
         <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row">
 
@@ -21,8 +26,11 @@
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class="toolbar px-24 py-8 headerback">
                         <div class="h2 mb-24">Datos de la Zona Electoral</div>
-                        <div class="icoLike" (click)="ReturnPage($event)">
-                            <i class="material-icons">&#xE166;</i>
+                        <div fxLayout="column">
+                            <div class="icoLike" (click)="ReturnPage($event)">
+                                <i class="material-icons">&#xE166;</i>
+                            </div>
+                            <span style="color:#c84c43">Volver</span>
                         </div>
                     </div>
                 </div>

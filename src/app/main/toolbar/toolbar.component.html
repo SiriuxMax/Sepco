@@ -24,13 +24,14 @@
 
         <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
 
-            <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+            <button mat-button class="user-button">
+                <!-- [matMenuTriggerFor]="userMenu"-->
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <img *ngIf="showFoto" class="avatar"  [src]="PerfilNow">
+                    <!--       <img *ngIf="showFoto" class="avatar"  [src]="PerfilNow">
                     <img *ngIf="!showFoto" class="avatar"  src="assets/images/avatars/profile.jpg">
-
-                    <span class="username mr-12">Bienvenido {{Nombres}}</span>
-                    <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
+-->
+                    <span class="username mr-12" style="    FONT-SIZE: 25PX;">#MejorVargasLleras</span>
+                    <!--  <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>-->
                 </div>
             </button>
 

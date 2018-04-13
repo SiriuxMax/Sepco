@@ -3,24 +3,33 @@
     <!-- HEADER -->
 
 
-    <div class="header mat-accent-bg p-24 h-160" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+    <div class="header mat-accent-bg p-24 h-160" 
+    fxLayout="row" fxLayoutAlign="start center">
         <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
             <div class="h2 mt-16">Listado de Eventos</div>
             <div class="h2 ">{{DatoDepto?.Nombre | uppercase }}</div>
         </div>
+        <img width="128" style="height: 28vw;
+        
+        width: 100vw;
+                
+        max-width: 800px;" src="assets/images/logos/intro2.svg">
     </div>
 
-    <div class=" px-24 py-8 headerback">
+    <div class=" px-24 py-8 headerback mat-white-bg">
         <div class="h2 mb-24">Datos del evento</div>
-        <div class="icoLike" (click)="ReturnPage($event)">
-            <i class="material-icons">&#xE166;</i>
+        <div fxLayout="column">
+            <div class="icoLike" (click)="ReturnPage($event)">
+                <i class="material-icons">&#xE166;</i>
+            </div>
+            <span style="color:#c84c43">Volver</span>
         </div>
     </div>
 
     <!-- / HEADER -->
 
     <!-- CONTENT -->
-    <div class="content p-24">
+    <div class="content p-24 mat-white-bg">
 
 
         <ngx-datatable [selected]="selected" [selectionType]="'single'" (select)="selectedEvent($event)" class="material" [rows]="rows"
@@ -32,9 +41,10 @@
             <ngx-datatable-column name="Titulo" prop="Titulo"></ngx-datatable-column>
 
             <ngx-datatable-column name="Descripcion" prop="Descripcion"></ngx-datatable-column>
-
             <ngx-datatable-column name="Creador por" prop="NombreCliente"></ngx-datatable-column>
+            <ngx-datatable-column name="Asistentes" prop="CantidadPersonas"></ngx-datatable-column>
             <ngx-datatable-column name="Fecha Creacion" prop="FechaCreacion"></ngx-datatable-column>
+            
         </ngx-datatable>
 
     </div>

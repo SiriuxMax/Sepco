@@ -1,4 +1,6 @@
 import { E_DetalleIndividuo } from "app/Models/E_DetalleIndividuo";
+import { E_TipoAntecedente } from "./E_TipoAntecedente";
+import { E_antecedentesxindividuo2 } from "./E_antecedentesxindividuo2";
 
 export class E_Individuo2 {
     public Id: number
@@ -18,5 +20,7 @@ export class E_Individuo2 {
     public CambiarClave: boolean
     public Detalleindividuo:Array<E_DetalleIndividuo> 
     public observacionsac: string
+    public antecedendes:Array<E_antecedentesxindividuo2>
+    
     constructor() { }
 }

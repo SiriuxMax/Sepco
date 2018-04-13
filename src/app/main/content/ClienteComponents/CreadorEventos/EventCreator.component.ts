@@ -83,7 +83,7 @@ export class EventCreatorComponent implements OnInit {
     }
 
     SelectedDepartamento(y) {
-        this.DirectorTecnicoSector = "Sin Asignación"
+       
         var objDir: E_DirectorDepartamento = new E_DirectorDepartamento()
         objDir.Id_Departamento = y.value.Id
         var objSector: E_Sector = new E_Sector()
@@ -132,12 +132,12 @@ export class EventCreatorComponent implements OnInit {
             Nombre: ['', Validators.required],
             Descripcion: ['', Validators.required],
             Departamentos: [undefined, Validators.required],
-            Sector: [undefined, Validators.required],
+            Sector: [undefined],
             TipoEvento: [undefined, Validators.required],
             Personas: ['', Validators.required],
-            Costo: ['', Validators.required],
-            gerenteSector: [undefined, Validators.required],
-            directorDep: [undefined, Validators.required],
+            Costo: [''],
+            gerenteSector: [undefined],
+            directorDep: [undefined],
         });
 
         this.form.valueChanges.subscribe(() => {
@@ -193,10 +193,10 @@ export class EventCreatorComponent implements OnInit {
         objEvento.NombreDepartamento = this.form.value.Departamentos.Nombre
         objEvento.CantidadPersonas = this.form.value.Personas
         objEvento.Id_TipoReunion = this.form.value.TipoEvento
-        objEvento.Id_Sector = this.form.value.Sector.Id
-        objEvento.Id_directorDepto = this.form.value.directorDep.Id
-        objEvento.Id_gerentesector = this.form.value.gerenteSector.Id
-        objEvento.Costo = this.form.value.Costo.replace(/\./g, "");
+      //  objEvento.Id_Sector = this.form.value.Sector.Id
+      ///  objEvento.Id_directorDepto = this.form.value.directorDep.Id
+      //  objEvento.Id_gerentesector = this.form.value.gerenteSector.Id
+    //    objEvento.Costo = this.form.value.Costo.replace(/\./g, "");
         objEvento.NombrexAnonimo = this.DirectorTecnicoSector;
         var ImagenObj: E_Imagen = new E_Imagen()
         var ImageBaseUrl = AppSettings.Global().API_ImageContent

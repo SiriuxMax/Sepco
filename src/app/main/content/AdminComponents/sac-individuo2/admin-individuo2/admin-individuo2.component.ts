@@ -18,6 +18,8 @@ import { E_Cliente } from 'app/Models/E_Cliente';
 import { E_Sector } from '../../../../../Models/E_Sector';
 import { E_TipoAntecedente } from '../../../../../Models/E_TipoAntecedente';
 import { E_TipoEstadoRevision } from '../../../../../Models/E_TipoEstadoRevision';
+import { id } from '@swimlane/ngx-datatable/release/utils';
+import { E_antecedentesxindividuo2 } from '../../../../../Models/E_antecedentesxindividuo2';
 
 @Component({
     moduleId: module.id,
@@ -27,7 +29,10 @@ import { E_TipoEstadoRevision } from '../../../../../Models/E_TipoEstadoRevision
 })
 export class AdminIndividuo2Component implements OnInit {
     ListSector: E_Sector[];
+    idindividuo:number;
     formDinamic: FormGroup;
+    public resultado:string;
+    indi:E_Individuo2;
     ListMunicipiosBase: E_Municipios[];
     listTipoAntecedente: E_TipoAntecedente[];
     listTipoRevision: E_TipoEstadoRevision[];
@@ -82,48 +87,71 @@ export class AdminIndividuo2Component implements OnInit {
             Departamento:[undefined]
 
         });
-
-        debugger;
+       
 
         this.xx =this.navigation.dataIndividuo2;
         console.log(this.xx);
 
-        this.form.setValue({            
-            email: this.xx.Correo,
-            Cedula: this.xx.Cedula,
-            Telefonof: this.xx.Telefono,
-            Nombre: this.xx.Nombres,
-            Apellido: this.xx.Apellidos,
-            Celular: this.xx.Celular,
-            TipoIndividuo2: this.xx.Id_tipoindividuo2,
-            Direccion: this.xx.Direccion,
-            Departamento:this.xx.Id_departamento
+        this.AdminServices.Individuo2xCorreo(this.xx).subscribe((x) => {         
+            this.xx = x
+
+            this.form.setValue({            
+                email: this.xx.Correo,
+                Cedula: this.xx.Cedula,
+                Telefonof: this.xx.Telefono,
+                Nombre: this.xx.Nombres,
+                Apellido: this.xx.Apellidos,
+                Celular: this.xx.Celular,
+                TipoIndividuo2: this.xx.Id_tipoindividuo2,
+                Direccion: this.xx.Direccion,
+                Departamento:this.xx.Id_departamento
+            })
+            
+            this.observaciones = this.xx.observacionsac
+            this.tiporevisionselec = this.xx.Id_tipoestadorevision
+            this.idindividuo= this.xx.Id;
+           this.cargador(this.xx);
         })
+
+       
     }
 
     ReturnPage(event: Event) {
         event.preventDefault();
         this.Router.navigate(['/mainpageindividuo1'])
     }
-    ngOnInit() {
 
-        this.ParameterService.listarTipoAntecedente().subscribe((x) => {
-           
-            this.listTipoAntecedente = x
-        })
+    cargador(para:E_Individuo2){
+
+            this.ParameterService.listarTipoAntecedente().subscribe((x) => {
+                debugger;
+                this.listTipoAntecedente = x
+                var ante: E_TipoAntecedente;
+                                
+                this.listTipoAntecedente.forEach(function (part, index, Source) {
+                    debugger;
+                    
+                    Source[index].valuee =
+
+                    ((para.antecedendes.find((z) => z.Id_tipoantecedentes == Source[index].Id))!= undefined)?para.antecedendes.find((z) => z.Id_tipoantecedentes == Source[index].Id).AntecendetesOk:false;
+                });
+               
+            })
+        
+        
 
         this.ParameterService.listarTipoEstadoRevision().subscribe((x) => {
         
             this.listTipoRevision = x
         })
 
-        this.MaskedNumber = GenerateMask.numberMask
-        this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
+        //this.MaskedNumber = GenerateMask.numberMask
+        //this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
         this.ParameterService.listarTipoIndividuo2()
             .subscribe((x: Array<E_TipoIndividuo2>) => {
                
-                this.ListTipoIndividuo2 = x.filter((y) => y.Id == this.xx.Id_tipoindividuo2)
-                this.TipoIndividuo2Seleccionado = this.xx.Id_tipoindividuo2
+                this.ListTipoIndividuo2 = x.filter((y) => y.Id ==para.Id_tipoindividuo2)
+                this.TipoIndividuo2Seleccionado = para.Id_tipoindividuo2
 
             })
 
@@ -138,16 +166,10 @@ export class AdminIndividuo2Component implements OnInit {
             this.onFormValuesChanged();
         });
 
-        // var IdClienteDirector =  0// this.UserService.GetCurrentCurrentUserNow().Id_Cliente
-        // var ObjClientDirector = new E_Cliente()
-        // ObjClientDirector.Id = IdClienteDirector
-        // this.UserService.ClientexId(ObjClientDirector)
-        //     .subscribe((x: E_Cliente) => {
-                
-        //     })
+       
        
         var ObjSector: E_Sector = new E_Sector()
-        ObjSector.Id_Departamento = this.xx.Id_departamento
+        ObjSector.Id_Departamento = para.Id_departamento
         this.ParameterService.ListarSector(ObjSector).subscribe((x) => {
         
             this.ListSector = x
@@ -158,6 +180,11 @@ export class AdminIndividuo2Component implements OnInit {
             this.ListDepartamentos = x
             this.departaseleccionado=5
         })
+    }
+    ngOnInit() {
+
+        this.MaskedNumber = GenerateMask.numberMask
+        this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
 
 
     }
@@ -184,25 +211,39 @@ export class AdminIndividuo2Component implements OnInit {
     EnviarInfo() {
         debugger;
         var lista = this.listTipoAntecedente
-        var objIndividuo2: E_Individuo2 = new E_Individuo2()
-        objIndividuo2.Cedula = this.form.value.Cedula
-        objIndividuo2.Nombres = this.form.value.Nombre
-        objIndividuo2.Apellidos = this.form.value.Apellido
-        objIndividuo2.Direccion = this.form.value.Direccion
-        objIndividuo2.Correo = this.form.value.Correo
-        objIndividuo2.Telefono = this.form.value.Telefono
-        objIndividuo2.Celular = this.form.value.Celular
-        objIndividuo2.Activo = true
-        objIndividuo2.FechaCreacion = new Date();
-        objIndividuo2.Id_individuo1 = this.UserService.GetCurrentCurrentUserNow().Id
-        objIndividuo2.Id_tipoestadorevision = 1 //Pendiente revision por SAC
-        objIndividuo2.Id_tipoindividuo2 = this.form.value.TipoIndividuo2
-        objIndividuo2.CambiarClave = true        
+        var cantidad:number;
+       
+
+        if(this.tiporevisionselec==undefined){
+            this.resultado="Por favor ingrese una descripcion en el campo Observacion";
+            return;
+        }
+                        
         
-
-
-
-        //   this.AdminServices.crearIndividuo2(objIndividuo2).subscribe((x: boolean) => { this.SucceSave = x })
+        var objIndividuo2: E_Individuo2 = new E_Individuo2()
+        objIndividuo2.Id=this.idindividuo;
+        objIndividuo2.Direccion = this.form.value.Direccion
+        objIndividuo2.Correo = this.form.value.email
+        objIndividuo2.Telefono = this.form.value.Telefonof
+        objIndividuo2.Celular = this.form.value.Celular
+        objIndividuo2.observacionsac = this.observaciones;
+        objIndividuo2.Id_tipoestadorevision= this.tiporevisionselec;
+        var ante: E_antecedentesxindividuo2 = new E_antecedentesxindividuo2();
+        objIndividuo2.antecedendes = new Array<E_antecedentesxindividuo2>();
+        this.listTipoAntecedente.forEach(element => {
+            ante = new E_antecedentesxindividuo2();
+            ante.Id_individuo2=objIndividuo2.Id;
+            ante.AntecendetesOk = (element.valuee==undefined)? false : true;
+            ante.FechaAprobado = new Date();
+            ante.Id_tipoantecedentes = element.Id;
+            objIndividuo2.antecedendes.push(ante);
+        });
+            
+        this.AdminServices.modificarIndividuo2(objIndividuo2).subscribe((x: boolean) => { 
+            debugger;
+            this.SucceSave = x;
+            this.resultado="Exito al modificar!";
+        })
 
     }
 

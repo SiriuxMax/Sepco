@@ -46,7 +46,7 @@ export class TotalesComponent implements OnInit {
         private Router: Router,
         private dialog: MatDialog,
         private Reunionesservice: ReunionService) {
-debugger;
+
         if (this.NavigationData.storage == undefined) {}// this.Router.navigate(["/Maps"]) }
      //   this.DatoDepto = this.NavigationData.storage.IdDepto
 
@@ -56,15 +56,15 @@ debugger;
 
     ReturnPage(event:Event){
         event.preventDefault();
-        this.Router.navigate(['/mainpageadmin'])
+        this.Router.navigate(['/Maps'])
      }
     ObtenerReuniones() {
         
         var ObjReu: E_Imagen = new E_Imagen()
         //ObjReu.Id_Departamento = this.DatoDepto
         this.Reunionesservice.ContarReuniones().subscribe((x) => {
-            debugger;
-            this.rows = x.slice(0,5);
+            
+            this.rows = x//.slice(0,5);
             this.loadingIndicator = false;
         }
 

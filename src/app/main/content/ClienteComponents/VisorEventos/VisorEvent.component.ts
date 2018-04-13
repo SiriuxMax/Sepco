@@ -42,7 +42,7 @@ export class VisorEventComponent implements OnInit {
         ObjReu.Id_Departamento = this.DatoDepto
         this.ReunionService.ReunionesxDepto(ObjReu).subscribe((x:Array<E_Reunion>) => {
              x.forEach(element => {
-                 debugger;
+                 ;
                  element.NombreCliente=element.NombrexAnonimo
              });           
             this.rows = x;

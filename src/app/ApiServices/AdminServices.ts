@@ -23,6 +23,10 @@ import { E_Mesa } from '../Models/E_Mesa';
 import { E_GerenteSector } from '../Models/E_GerenteSector';
 import { Individuo2Builder } from '../Builders/Individuo2.model.builder';
 import { GerenteSectorBuilder } from '../Builders/GerenteSector.model.builder';
+import { E_Metas } from '../Models/E_Metas';
+import { MetasBuilder } from '../Builders/Metas.model.builder';
+import { E_Vehiculo } from '../Models/E_Vehiculo';
+import { VehiculoBuilder } from '../Builders/Vehiculo.model.builder';
 
 
 @Injectable()
@@ -46,6 +50,64 @@ export class AdminServices {
         };
         return this.Http.post(this.UrlNow + "Imagen/UploadJsonFile"
             , file, this.setOptions()).map((x) => { return true })
+    }
+
+    listarMetasActivasxDirector(metas:E_Metas): Observable<Array<E_Metas>> {
+        debugger;
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(metas)
+        return this.Http.post(this.UrlNow + "Admin/listarMetasxDirexFechasxActiva"
+            , request, httpOptions).map(this.ExtractMetas)
+    }
+
+    listarMetasxDirector(metas:E_Metas): Observable<Array<E_Metas>> {
+        debugger;
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(metas)
+        return this.Http.post(this.UrlNow + "Admin/listarMetasxDir"
+            , request, httpOptions).map(this.ExtractMetas)
+    }
+
+    listarMetasxGerente(metas:E_Metas): Observable<Array<E_Metas>> {
+        debugger;
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(metas)
+        return this.Http.post(this.UrlNow + "Admin/listarMetasxGer"
+            , request, httpOptions).map(this.ExtractMetas)
+    }
+
+    listarVehiculoxDir(metas:E_Vehiculo): Observable<Array<E_Vehiculo>> {
+        debugger;
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(metas)
+        return this.Http.post(this.UrlNow + "Admin/listarVehiculoxDir"
+            , request, httpOptions).map(this.ExtractVehiculoss)
+    }
+
+    listarVehiculoxIndi(metas:E_Vehiculo): Observable<Array<E_Vehiculo>> {
+        debugger;
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(metas)
+        return this.Http.post(this.UrlNow + "Admin/listarVehiculoxIndi"
+            , request, httpOptions).map(this.ExtractVehiculoss)
+    }
+
+    ExtractVehiculoss(res: any): Array<E_Vehiculo> {
+
+        var x: Array<E_Vehiculo> = new Array<E_Vehiculo>()
+        res.forEach(element => {
+            x.push(new VehiculoBuilder().buildFromObject(element).Build())
+        });
+        return x
+    }
+
+    ExtractMetas(res: any): Array<E_Metas> {
+
+        var x: Array<E_Metas> = new Array<E_Metas>()
+        res.forEach(element => {
+            x.push(new MetasBuilder().buildFromObject(element).Build())
+        });
+        return x
     }
 
     RegistrarImagen(obImg: E_Imagen): Observable<number> {
@@ -77,6 +139,12 @@ export class AdminServices {
             , request, httpOptions).map(this.EvalBool)
     }
 
+    modificarIndividuo2(CLient: E_Individuo2): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Individuo/updateIndividuo2"
+            , request, httpOptions).map(this.EvalBool)
+    }
 
     ListarDirectorDepto(CLient: E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
         const httpOptions = this.HeaderBuilder.HeadNow()
@@ -108,7 +176,7 @@ export class AdminServices {
         return x
     }
     ListarIndividuos2Pendientes(): Observable<Array<E_Individuo2>> {
-        debugger;
+      
         const httpOptions = this.HeaderBuilder.HeadNow()
         //var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Individuo/ListarIndividuos2Pendientes"
@@ -116,11 +184,53 @@ export class AdminServices {
     }
 
     listarGerentesxsector(obin: E_GerenteSector): Observable<Array<E_GerenteSector>> {
-        debugger;
+     
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(obin)
         return this.Http.post(this.UrlNow + "Individuo/ListarGerentesSectorxSector"
             , request, httpOptions).map(this.ExtractGerenteSector)
+    }
+
+    Individuo2xCorreo(obin:E_Individuo2): Observable<E_Individuo2> {       
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(obin)
+        return this.Http.post(this.UrlNow + "Individuo/Individuo2xCorreo"
+            , request, httpOptions).map(this.ExtractIndividuo2)
+    }
+
+    directorxCorreo(obin:E_DirectorDepartamento): Observable<E_DirectorDepartamento> {       
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(obin)
+        return this.Http.post(this.UrlNow + "Admin/DirectorxCorreo"
+            , request, httpOptions).map(this.ExtractDirector)
+    }
+
+    gerentexCorreo(obin:E_GerenteSector): Observable<E_GerenteSector> {       
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(obin)
+        return this.Http.post(this.UrlNow + "Individuo/GerentexCorreo"
+            , request, httpOptions).map(this.ExtractGerente2)
+    }
+
+    ExtractGerente2(res: any): E_GerenteSector {
+        debugger
+        var x: E_GerenteSector = new E_GerenteSector()
+        if (res != null) { x = new GerenteSectorBuilder().buildFromObject(res).Build() }
+        return x
+    }
+
+    ExtractDirector(res: any): E_DirectorDepartamento {
+        debugger
+        var x: E_DirectorDepartamento = new E_DirectorDepartamento()
+        if (res != null) { x = new DirectorDepartamentoBuilder().buildFromObject(res).Build() }
+        return x
+    }
+
+    ExtractIndividuo2(res: any): E_Individuo2 {
+        debugger
+        var x: E_Individuo2 = new E_Individuo2()
+        if (res != null) { x = new Individuo2Builder().buildFromObject(res).Build() }
+        return x
     }
 
     ExtractGerenteSector(res: any): Array<E_GerenteSector> {

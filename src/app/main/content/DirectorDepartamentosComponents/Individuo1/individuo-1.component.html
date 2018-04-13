@@ -22,8 +22,11 @@
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class="toolbar px-24 py-8 headerback">
                         <div class="h2 mb-24">Datos del Individuo 1</div>
-                        <div class="icoLike" (click)="ReturnPage($event)">
-                            <i class="material-icons">&#xE166;</i>
+                        <div fxLayout="column">
+                            <div class="icoLike" (click)="ReturnPage($event)">
+                                <i class="material-icons">&#xE166;</i>
+                            </div>
+                            <span style="color:#c84c43">Volver</span>
                         </div>
                     </div>
                 </div>

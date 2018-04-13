@@ -1,5 +1,5 @@
 .icoClassNow{
-    background: #2094c8;
+    background: #c84c43;
     color: white;
     border-radius: 12px;
 }
@@ -28,7 +28,7 @@ form {
     }
 }
 
-.icoLike
+.icoLike1
 {
     width: 40px;
     height: 40px;
@@ -46,4 +46,15 @@ form {
     padding-right: 11px;
     margin: 0 auto;
     font-size: 20px;
+}
+.icoLike
+{
+    width: 40px;
+    height: 40px;
+    background: #c84c43;
+    font-size: 31px;
+    padding-left: 9px;
+    border-radius: 22px;
+    cursor: pointer;
+    color: white;
 }

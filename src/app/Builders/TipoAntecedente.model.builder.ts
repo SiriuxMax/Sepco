@@ -7,11 +7,13 @@ export class TipoAntecedenteBuilder {
     public Nombre: string
     public Activo: boolean
     public FechaCreacion: Date    
+    public valuee: boolean;    
     buildFromObject(x: any): TipoAntecedenteBuilder {
         if (x.Id != undefined) { this.Id = x.Id }
         if (x.Nombre != undefined) { this.Nombre = x.Nombre }
         if (x.Activo != undefined) { this.Activo = x.Activo }       
         if (x.FechaCreacion != undefined) { this.FechaCreacion = x.FechaCreacion }
+        if (x.valuee != undefined) { this.valuee = x.valuee }else{this.valuee = false}
         
         return this
     }
@@ -21,7 +23,7 @@ export class TipoAntecedenteBuilder {
         obj.Nombre = this.Nombre
         obj.Activo = this.Activo        
         obj.FechaCreacion = this.FechaCreacion
-       
+        obj.valuee = this.valuee
         return obj
     }
 

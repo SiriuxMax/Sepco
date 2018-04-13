@@ -21,8 +21,11 @@
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class="toolbar px-24 py-8 headerback">
                         <div class="h2 mb-24">Datos del Individuo 2</div>
-                        <div class="icoLike" (click)="ReturnPage($event)">
-                            <i class="material-icons">&#xE166;</i>
+                        <div fxLayout="column">
+                            <div class="icoLike" (click)="ReturnPage($event)">
+                                <i class="material-icons">&#xE166;</i>
+                            </div>
+                            <span style="color:#c84c43">Volver</span>
                         </div>
                     </div>
                 </div>
@@ -118,15 +121,16 @@
             </form>
 
            
-            <div class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" style="width: 77%;max-width: 600px !important;">                
-                <div>      
-                    <mat-checkbox *ngFor="let Item of listTipoAntecedente" [(ngModel)]="Item.valuee">
+            <div class="mat-white-bg mat-elevation-z4 p-24 mr-24 mb-24" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" style="width: 82%;max-width: 650px !important;">                
+                <div> 
+                    <div class="h2 mb-24">Tipo de Antecedentes</div>     
+                    <mat-checkbox *ngFor="let Item of listTipoAntecedente" [(ngModel)]="Item.valuee" style="margin-right: 10px;">
                         {{Item.Nombre}}
                     </mat-checkbox>       
       
                 </div>
                 <mat-form-field class="example-full-width">
-                    <textarea matInput placeholder="Leave a comment" [(ngModel)]="observaciones"></textarea>
+                    <textarea matInput placeholder="Deje un comentario Si existen inconsistencias." [(ngModel)]="observaciones"></textarea>
                   </mat-form-field>
 
                 <mat-form-field fxFlex="50">
@@ -142,8 +146,16 @@
                 <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" >
                     Enviar Información
                 </button>
-            </div>
 
+                <div>
+                    <h3><p><b>{{resultado}}</b></p></h3>
+                </div>
+                    
+               
+
+            </div>
+            
+            
             <!-- / CONTENT -->
 
         </div>

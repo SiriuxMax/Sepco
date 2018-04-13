@@ -5,12 +5,17 @@
         <div fxLayout="column" fxLayoutAlign="center start">
             <div class="h1 mt-16"></div>
         </div>
+        <img width="128" style="height: 28vw;
+        
+        width: 100vw;
+                
+        max-width: 800px;" src="assets/images/logos/intro2.svg">
     </div>
 
     <!-- / HEADER -->
 
     <!-- CONTENT -->
-    <div class="content p-24">
+    <div class="content p-24 mat-white-bg">
 
         <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row">
 
@@ -22,9 +27,12 @@
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class="toolbar px-24 py-8 headerback">
-                        <div class="h2 mb-24">Datos del evento</div>
-                        <div class="icoLike" (click)="ReturnPage($event)">
-                            <i class="material-icons">&#xE166;</i>
+                        <div class="h2 mb-24">Datos de la Actividad</div>
+                        <div fxLayout="column">
+                            <div class="icoLike" (click)="ReturnPage($event)">
+                                <i class="material-icons">&#xE166;</i>
+                            </div>
+                            <span style="color:#c84c43">Volver</span>
                         </div>
                     </div>
                 </div>
@@ -39,7 +47,7 @@
                     </mat-form-field>
 
                     <mat-form-field fxFlex="100">
-                        <input matInput placeholder="Descripcion" formControlName="Descripcion" required>
+                        <input matInput placeholder="Breve Descripción" formControlName="Descripcion" required>
                         <mat-error *ngIf="formErrors.Descripcion.required">
                             Descripcion es requerida
                         </mat-error>
@@ -48,8 +56,8 @@
                 </div>
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
-                    <mat-form-field fxFlex="50">
+        
+                    <mat-form-field fxFlex="100">
                         <mat-select placeholder="Departamentos" formControlName="Departamentos" [(ngModel)]="DepartamentoSeleccionado" (change)="SelectedDepartamento($event)"
                             required>
                             <mat-option *ngFor="let Item of ListDepartamentos" [value]="Item">
@@ -60,7 +68,7 @@
                             Departamento es requerido
                         </mat-error>
                     </mat-form-field>
-
+            <!-- 
                     <mat-form-field fxFlex="50">
                         <mat-select placeholder="Sector" formControlName="Sector" [(ngModel)]="sectorseleccionado" (change)="SelectedSector($event)"
                          required>
@@ -95,10 +103,10 @@
                             Sector es requerido
                         </mat-error>
                     </mat-form-field>
-
+                -->
                     <mat-form-field fxFlex="100">
-                        <input matInput placeholder="Nombre del creador del evento" [(ngModel)]="DirectorTecnicoSector" [ngModelOptions]="{standalone: true}" >
-                    </mat-form-field> 
+                        <input matInput placeholder="Nombre del creador del evento" [(ngModel)]="DirectorTecnicoSector" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
 
                     <mat-form-field fxFlex="100">
                         <mat-select placeholder="Tipo Evento" formControlName="TipoEvento" [(ngModel)]="TipoEventoSeleccionado" required>
@@ -117,20 +125,21 @@
 
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-                    <mat-form-field fxFlex="50">
-                        <input matInput placeholder="Personas estimadas" formControlName="Personas" [textMask]="{mask: MaskedNumberNoDecimal}" required>
+                    <mat-form-field fxFlex="100">
+                        <input matInput placeholder="Asistentes estimadas" formControlName="Personas" [textMask]="{mask: MaskedNumberNoDecimal}"
+                            required>
                         <mat-error *ngIf="formErrors.Personas.required">
                             Numero de personas requerido
                         </mat-error>
                     </mat-form-field>
-
+                    <!-- 
                     <mat-form-field fxFlex="50">
                         <input matInput placeholder="Costo" formControlName="Costo" [textMask]="{mask: MaskPrice}" >
                         <mat-error *ngIf="formErrors.Costo.required">
                             Costo requerido
                         </mat-error>
                     </mat-form-field>
-
+                -->
 
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">

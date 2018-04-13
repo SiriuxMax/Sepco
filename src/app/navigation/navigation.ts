@@ -41,7 +41,7 @@ export const navigationClient = [
             },
             {
                 'id': 'tot',
-                'title': 'Totales',
+                'title': 'Total Actividades',
                 'translate': 'NAV.SAMPLE.TITLE',
                 'type': 'item',
                 'icon': 'map',
@@ -115,6 +115,14 @@ export const navigationAdmin = [
                 'icon': 'map',
                 'url': '/gerentesector',
             },
+            {
+                'id': 'Salir',
+                'title': 'Salir',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'input',
+                'url': '/login',
+            },
             
             
             
@@ -139,7 +147,16 @@ export const navigationDirectorDepartamento = [
                 'icon': 'map',
                 'url': '/individuo1',
             },
-                     
+                 
+            
+            {
+                'id': 'Salir',
+                'title': 'Salir',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'input',
+                'url': '/login',
+            },
             
         ]
     }
@@ -162,6 +179,17 @@ export const navigatioGerenteSector = [
             },
                      
             
+
+
+
+            {
+                'id': 'Salir',
+                'title': 'Salir',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'input',
+                'url': '/login',
+            },
         ]
     }
 ];
@@ -183,6 +211,14 @@ export const navigationIndividuo1 = [
             },
                      
             
+            {
+                'id': 'Salir',
+                'title': 'Salir',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'input',
+                'url': '/login',
+            },
         ]
     }
 ];

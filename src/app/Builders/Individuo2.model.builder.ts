@@ -2,6 +2,8 @@ import { E_Error } from "../Models/E_Error";
 import { E_Usuario } from "../Models/E_Usuario";
 import { E_Individuo2 } from "../Models/E_Individuo2";
 import { UsuarioBuilder } from "./Usuario.model.builder";
+import { E_antecedentesxindividuo2 } from "../Models/E_antecedentesxindividuo2";
+import { antecedentesxindividuo2builder } from "./antecedentesxindividuo2.model.builder";
 
 export class Individuo2Builder {
     public Id: number
@@ -20,6 +22,7 @@ export class Individuo2Builder {
     public FechaCreacion: Date
     public observacionsac: string
     public CambiarClave: boolean
+    public antecedendes:Array<E_antecedentesxindividuo2> =  new Array<E_antecedentesxindividuo2>();
      
     constructor() { }
     buildFromObject(x: any): Individuo2Builder {
@@ -39,6 +42,13 @@ export class Individuo2Builder {
         if (x.FechaCreacion != undefined) { this.FechaCreacion = x.FechaCreacion }
         if (x.CambiarClave != undefined) { this.CambiarClave = x.CambiarClave }
         if (x.observacionsac != undefined) { this.observacionsac = x.observacionsac }
+        if (x.antecedendes != undefined) { 
+
+            x.antecedendes.forEach(element => {
+                this.antecedendes.push(new antecedentesxindividuo2builder().buildFromObject(element).Build()  )                
+            });           
+            
+        }
 
        
         return this
@@ -61,6 +71,7 @@ export class Individuo2Builder {
         obj.FechaCreacion = this.FechaCreacion
         obj.CambiarClave = this.CambiarClave
         obj.observacionsac = this.observacionsac
+        obj.antecedendes = this.antecedendes
         return obj
     }
 

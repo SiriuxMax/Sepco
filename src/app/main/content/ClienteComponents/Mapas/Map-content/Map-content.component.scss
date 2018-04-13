@@ -1,6 +1,6 @@
 .land:hover
 {
-     fill: red;
+     fill: #b71c1c;
                         fill-opacity: 1;
                         stroke: white;
                         cursor: pointer;
@@ -16,11 +16,16 @@
     max-width: 2000px;
     width: 100%;
 }
-
+.AditionalDeps
+{
+  position: absolute;
+    right: 0;
+    top: 30%;
+}
 .tooltiptext {
     display: none;
     width: 120px;
-    background-color: #2094c8;
+    background-color: #c84c43;
     color: #fff;
     text-align: center;
     border-radius: 6px;
@@ -44,3 +49,19 @@
   .tooltiptext1.active {
     display: initial;
   }
+  .AditionalDeps{
+    display: flex;
+    flex-direction: column;
+  }
+  .mobilebuttons{
+    font-size: 10px;
+    margin-bottom: 17px;
+    margin: 4px;
+  }
+.mobileContainer{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
