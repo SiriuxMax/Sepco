@@ -56,9 +56,16 @@ export class EventCreatorComponent implements OnInit {
         private AdminServices: AdminServices
     ) {
 
+
+
         this.ParameterService.listarDepartamentos()
             .subscribe((x: Array<E_Departamentos>) => {
                 this.ListDepartamentos = x
+                if (this.NavigationData.storage != undefined && x.length > 0) {
+                    this.DepartamentoSeleccionado = x.find((x) => x.Id == this.NavigationData.storage.IdDepto)
+                }
+
+
             })
 
 
@@ -83,7 +90,7 @@ export class EventCreatorComponent implements OnInit {
     }
 
     SelectedDepartamento(y) {
-       
+
         var objDir: E_DirectorDepartamento = new E_DirectorDepartamento()
         objDir.Id_Departamento = y.value.Id
         var objSector: E_Sector = new E_Sector()
@@ -101,26 +108,26 @@ export class EventCreatorComponent implements OnInit {
         //     })
     }
 
-    SelectedSector(y) {       
-        
+    SelectedSector(y) {
+
         var objDir: E_GerenteSector = new E_GerenteSector()
-        objDir.Id_Sector = y.value.Id       
+        objDir.Id_Sector = y.value.Id
         this.AdminServices.listarGerentesxsector(objDir)
             .subscribe((x: Array<E_GerenteSector>) => {
-              
+
                 this.ListGerSec = x
-            })      
+            })
     }
 
-    SelectedGerenteSect(y) {   
-        debugger;    
+    SelectedGerenteSect(y) {
+        debugger;
         var objDir: E_DirectorDepartamento = new E_DirectorDepartamento()
-        objDir.Id_GerenteSector= y.value.Id        
+        objDir.Id_GerenteSector = y.value.Id
         this.AdminServices.ListarDirectorDeptoxGerente(objDir)
             .subscribe((x: Array<E_DirectorDepartamento>) => {
                 debugger;
                 this.listDirectDep = x
-            })      
+            })
     }
 
     ngOnInit() {
@@ -187,20 +194,20 @@ export class EventCreatorComponent implements OnInit {
 
         var objEvento: E_Reunion = new E_Reunion()
         objEvento.Titulo = this.form.value.Nombre
-        objEvento.Estado=true;
+        objEvento.Estado = true;
         objEvento.Descripcion = this.form.value.Descripcion
         objEvento.Id_Departamento = this.form.value.Departamentos.Id
         objEvento.NombreDepartamento = this.form.value.Departamentos.Nombre
         objEvento.CantidadPersonas = this.form.value.Personas
         objEvento.Id_TipoReunion = this.form.value.TipoEvento
-      //  objEvento.Id_Sector = this.form.value.Sector.Id
-      ///  objEvento.Id_directorDepto = this.form.value.directorDep.Id
-      //  objEvento.Id_gerentesector = this.form.value.gerenteSector.Id
-    //    objEvento.Costo = this.form.value.Costo.replace(/\./g, "");
+        //  objEvento.Id_Sector = this.form.value.Sector.Id
+        ///  objEvento.Id_directorDepto = this.form.value.directorDep.Id
+        //  objEvento.Id_gerentesector = this.form.value.gerenteSector.Id
+        //    objEvento.Costo = this.form.value.Costo.replace(/\./g, "");
         objEvento.NombrexAnonimo = this.DirectorTecnicoSector;
         var ImagenObj: E_Imagen = new E_Imagen()
         var ImageBaseUrl = AppSettings.Global().API_ImageContent
-        
+
         if (this.dataURL != undefined) {
             var formdata = new FormData();
             //  var blob = PhotoTool.dataURItoBlob(this.dataURL);

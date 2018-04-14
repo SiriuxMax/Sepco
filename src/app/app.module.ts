@@ -53,6 +53,7 @@ import { MainGerenteModule } from './main/content/GerenteSectorComponents/MainGe
 import { IndividuoServices } from 'app/ApiServices/IndividuoServices';
 import { TotalesModule } from 'app/main/content/ClienteComponents/totales/totales.module';
 import { ListarVehiculosxDirModule } from './main/content/listar-vehiculosx-dir/listar-vehiculosx-dir.module';
+import { CarrouselModule } from './main/content/ClienteComponents/Mapas/Carrousel/Carrousel.module';
 
 
 const appRoutes: Routes = [
@@ -69,6 +70,7 @@ const appRoutes: Routes = [
     { path: 'aceptimage', redirectTo: '/aceptimage', pathMatch: 'full' },
     { path: 'totales', redirectTo: '/totales', pathMatch: 'full' },
     { path: 'ListarMetas', redirectTo: '/ListarMetas', pathMatch: 'full' },
+    { path: 'Carrousel', redirectTo: '/Carrousel', pathMatch: 'full' },
 //Admin
     { path: 'mainpageadmin', redirectTo: '/mainpageadmin', pathMatch: 'full' },
     { path: 'sector', redirectTo: '/sector', pathMatch: 'full' },
@@ -138,7 +140,8 @@ const appRoutes: Routes = [
         MainGerenteModule,
         ListarMetasModule,
         ListarMetasGerModule,
-        ListarVehiculosxDirModule
+        ListarVehiculosxDirModule,
+        CarrouselModule,
 
     ],
     providers: [

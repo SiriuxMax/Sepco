@@ -60,7 +60,7 @@ export class FuseLoginComponent implements OnInit {
                 }
                 this.Loading = false
                 if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 1) {
-                    this.Router.navigate(["/Maps/"])
+                    this.Router.navigate(["/Carrousel/"])
                 } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 2) {
                     this.Router.navigate(["/mainpageadmin/"])
                 } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 3) {

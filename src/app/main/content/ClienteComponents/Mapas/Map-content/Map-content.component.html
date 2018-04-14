@@ -12,12 +12,21 @@
         </mat-form-field>
     </div>
     <div class="svg-wrapper">
+        <div>
+            <h3>Top:</h3>
+           
+                <mat-chip-list *ngFor="let Item of rows" class="poin">
+                    <mat-chip (click)="abrireventos(Item)" class="poin">{{Item.NombreDepartamento}} Total: {{Item.total}} R.</mat-chip>
+                </mat-chip-list>
+            
+
+        </div>
 
         <span class="tooltiptext" id="tooltip">Tooltip text</span>
         <span class="tooltiptext1" id="tooltip1">Tooltip text</span>
         <div [ngClass]="{'mobileContainer': MobileApp, 'AditionalDeps': !MobileApp }">
-            <button [ngClass]="{'mobilebuttons': MobileApp}" (click)="BogotaSelect(2000)"  mat-raised-button
-                color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
+            <button [ngClass]="{'mobilebuttons': MobileApp}" (click)="BogotaSelect(2000)" mat-raised-button color="accent" class="submit-button"
+                aria-label="CREATE AN ACCOUNT">
                 BOGOTA DC
             </button>
             <button [ngClass]="{'mobilebuttons': MobileApp}" (click)="BogotaSelect(1000)" mat-raised-button color="accent" class="submit-button"

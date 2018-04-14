@@ -5,27 +5,20 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule,
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
-import { MapsGraphicComponent } from './MapsGraphic.component';
 import { FuseDemoModule } from '@fuse/components';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MapContentComponent } from './Map-content/Map-content.component';
-import { MapSidenavComponent } from './Map-sidenav/Map-sidenav.component';
-import { MapDialogComponent } from './Map-Dialog-Options/Map-Dialog-Options.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CorrouselComponent } from 'app/main/content/ClienteComponents/Mapas/Carrousel/Carrousel.component';
 const routes = [
     {
-        path: 'Maps',
-        component: MapsGraphicComponent
+        path: 'Carrousel',
+        component: CorrouselComponent
     }
 ];
 
 @NgModule({
     declarations: [
-        MapsGraphicComponent,
-        MapContentComponent,
-        MapSidenavComponent,
-        MapDialogComponent
-
+        CorrouselComponent
     ],
     imports: [
         RouterModule.forChild(routes),
@@ -44,7 +37,7 @@ const routes = [
         MatChipsModule
 
     ]
-    , entryComponents: [MapDialogComponent]
+    , entryComponents: []
 })
-export class MapsGraphicModule {
+export class CarrouselModule {
 }

@@ -46,7 +46,16 @@ export const navigationClient = [
                 'type': 'item',
                 'icon': 'map',
                 'url': '/totales',
-            }
+            },
+            {
+                'id': 'Carrousel',
+                'title': 'Galeria',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/Carrousel',
+            },
+            
         ]
     }
 ];

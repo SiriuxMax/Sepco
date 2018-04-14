@@ -28,6 +28,10 @@ export class ImageService {
         };
         return httpOptions;
     }
+
+
+    
+
     UploadJsonFile(file): Observable<boolean> {
         const httpOptions = {
             headers: new HttpHeaders({
@@ -69,6 +73,15 @@ export class ImageService {
         var x: E_Imagen = new E_Imagen()
         if (res != null) { x = new ImagenBuilder().buildFromObject(res[0]).Build() }
         return x
+    }
+    
+
+
+    ImagenRandom(): Observable<Array<E_Imagen>> {
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+        return this.Http.post(this.UrlNow + "Imagen/ImagenRandom"
+            , "", httpOptions).map(this.ExtractListImageClient)
     }
 
     ListarImagenesPendientes(): Observable<Array<E_Imagen>> {

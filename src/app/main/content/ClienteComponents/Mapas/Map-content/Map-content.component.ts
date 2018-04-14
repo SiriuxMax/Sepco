@@ -11,6 +11,10 @@ import { map } from 'rxjs/operators/map';
 import { ReunionService } from '../../../../../ApiServices/ReunionService';
 import { E_Reunion } from '../../../../../Models/E_Reunion';
 import { Platform } from '@angular/cdk/platform';
+import { NavigationInfoService } from '../../../../../ApiServices/NavigationInfoService';
+import { Router } from '@angular/router';
+import { ImageService } from '../../../../../ApiServices/ImageServices';
+import { E_Imagen } from '../../../../../Models/E_Imagen';
 
 @Component({
     selector: 'Map-content',
@@ -18,22 +22,27 @@ import { Platform } from '@angular/cdk/platform';
     styleUrls: ['./Map-content.component.scss']
 })
 export class MapContentComponent implements OnInit {
+    imageSources: Array<E_Imagen> = new Array<E_Imagen>()
+    rows = [];
     ReunionInfo: E_Reunion[];
+    slideIndex: number = 0
     public filteredStates2$: Observable<Array<E_Departamentos[]>>;
     stateCtrl: FormControl = new FormControl();
     CounterReunion: Array<E_Reunion> = new Array<E_Reunion>()
     ListDepartamentos: E_Departamentos[];
     Fields: Array<FieldObj> = MapFields.Fields()
-    MobileApp :boolean = false
+    MobileApp: boolean = false
     constructor(public dialog: MatDialog,
         private ParameterService: ParameterService,
         private ReunionService: ReunionService,
-    private platform:Platform) {
+        private ImageService: ImageService,
+        private platform: Platform, private NavigationInfoService: NavigationInfoService, private Router: Router) {
+       
 
-            if (this.platform.ANDROID || this.platform.IOS)
-            {
-                this.MobileApp =true
-            }
+        this.ObtenerReuniones();
+        if (this.platform.ANDROID || this.platform.IOS) {
+            this.MobileApp = true
+        }
 
         this.ParameterService.listarDepartamentos()
             .subscribe((x: Array<E_Departamentos>) => {
@@ -50,6 +59,26 @@ export class MapContentComponent implements OnInit {
                 this.setChangedFields(x)
             }
         )
+    }
+
+    ObtenerReuniones() {
+
+        //ObjReu.Id_Departamento = this.DatoDepto
+        this.ReunionService.ContarReuniones().subscribe((x) => {
+            debugger;
+            if (x != null && x != undefined)
+                this.rows = x.slice(0, 3);
+        }
+
+
+        )
+    }
+
+
+    abrireventos(par: any) {
+        debugger;
+        this.NavigationInfoService.storage = par
+        this.Router.navigate(["/eventvisor"])
     }
 
     displayFn(user?: E_Departamentos): string | undefined {
@@ -83,6 +112,26 @@ export class MapContentComponent implements OnInit {
     ngOnInit(): void {
 
     }
+
+
+
+
+
+    plusDivs(n) {
+        this.showDivs(this.slideIndex += n);
+    }
+
+    showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        if (n > x.length) { this.slideIndex = 1 }
+        if (n < 1) { this.slideIndex = x.length }
+        for (i = 0; i < x.length; i++) {
+            x[i].setAttribute("display", "none")
+        }
+        x[i].setAttribute("display", "block")
+    }
+
 
     setChangedFields(x: Array<E_Reunion>) {
         this.Fields.forEach(function (obj) {

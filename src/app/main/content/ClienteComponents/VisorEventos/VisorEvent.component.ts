@@ -32,7 +32,11 @@ export class VisorEventComponent implements OnInit {
         private dialog: MatDialog) {
 
         if (this.NavigationData.storage == undefined) { this.Router.navigate(["/Maps"]) }
-        this.DatoDepto = this.NavigationData.storage.IdDepto
+        if(this.NavigationData.storage.IdDepto != null && this.NavigationData.storage.IdDepto != undefined){
+            this.DatoDepto = this.NavigationData.storage.IdDepto
+        }else{
+            this.DatoDepto = this.NavigationData.storage.Id_Departamento
+        }
 
 
         // NumeroEventos: NUmero, Nombre: TextX, CodigoDepto: CodigoDepto ,IdDepto:IdDepto
