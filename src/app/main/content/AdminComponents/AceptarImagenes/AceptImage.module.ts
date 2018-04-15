@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatStepperModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatStepperModule, MatDialogModule, MatProgressSpinnerModule } from '@angular/material';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
@@ -10,11 +10,13 @@ import { OkImageComponent } from './OkImage/OkImage.component';
 import { AceptImageComponent } from './AceptImage.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AdminGuard } from 'app/Guards/AdminGuard';
 
 const routes: Routes = [
     {
         path: 'aceptimage',
-        component: AceptImageComponent
+        component: AceptImageComponent,
+        canActivate:[AdminGuard]
     }
 ];
 
@@ -25,7 +27,7 @@ const routes: Routes = [
     ],
     imports: [
         RouterModule.forChild(routes),
-
+        MatProgressSpinnerModule,
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
@@ -38,7 +40,7 @@ const routes: Routes = [
         NgxDatatableModule,
         MatCheckboxModule
 
-    ], entryComponents: [AceptImageComponent,OkImageComponent]
+    ], entryComponents: [AceptImageComponent, OkImageComponent]
 
 })
 export class AceptImageModule {

@@ -5,14 +5,14 @@ import { E_Departamentos } from 'app/Models/E_Departamentos';
 import { E_TipoReunion } from 'app/Models/E_TipoReunion';
 import { GenerateMask } from 'app/Tools/MaskedLibrary';
 import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
-import { MatDialog } from '@angular/material';
 import { PhotoTool } from 'app/Tools/PhotoTool';
 import { E_Reunion } from 'app/Models/E_Reunion';
 import { E_Imagen } from 'app/Models/E_Imagen';
 import { AdminServices } from 'app/ApiServices/AdminServices';
 import { E_Municipios } from 'app/Models/E_Municipios';
 import { Router } from '@angular/router';
-
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 @Component({
     moduleId: module.id,
     selector: 'tipo-evento',
@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
     styleUrls: ['tipo-evento.component.scss']
 })
 export class TipoEventoComponent implements OnInit {
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     SucceSave: boolean;
     ListMunicipio: Array<E_Municipios> = new Array<E_Municipios>()
     ListMunicipiosGroup: Array<E_Municipios> = new Array<E_Municipios>()
@@ -40,8 +41,8 @@ export class TipoEventoComponent implements OnInit {
     constructor(private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
         private NavigationData: NavigationInfoService,
-        private dialog: MatDialog,
         private AdminServices: AdminServices,
+        private Matdialog: MatDialog,
         private Router: Router
     ) {
         this.ParameterService.ListarTipoReunion(new E_TipoReunion())
@@ -57,10 +58,10 @@ export class TipoEventoComponent implements OnInit {
 
     }
 
-    ReturnPage(event:Event){
+    ReturnPage(event: Event) {
         event.preventDefault();
         this.Router.navigate(['/mainpageadmin'])
-     }
+    }
     ngOnInit() {
         this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
 
@@ -103,10 +104,21 @@ export class TipoEventoComponent implements OnInit {
         objEvento.Descripcion = this.form.value.Descripcion
         objEvento.Estado = this.form.value.checked
         objEvento.Fecha = new Date();
-        this.AdminServices.crearTipoReunion(objEvento).subscribe((x: boolean) => {
-             this.SucceSave = x 
-         
-            })
+        this.form.get('checked').setValue(false)
+        this.confirmDialogRef = this.Matdialog.open(FuseConfirmDialogComponent, {})
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Estas seguro de realizar esta acción?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.AdminServices.crearTipoReunion(objEvento).subscribe((x: boolean) => {
+                    this.SucceSave = x
+                })
+            }
+
+            this.confirmDialogRef = null;
+        });
+
+
+
 
     }
 

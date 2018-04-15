@@ -1,6 +1,19 @@
 .example-full-width
 {width: 100%;}
 
+.blanco{
+    color:white;
+   
+}
+
+.gris{
+    color:#f0d8d844;
+   
+}
+
+.gris2{
+    box-shadow: -1px 1px 10px 6px #888888;
+}
 
 .icoLike
 {
@@ -12,6 +25,7 @@
     border-radius: 22px;
     cursor: pointer;
     color: white;
+    margin-left: 20px;
 }
 .headerback{
     justify-content: space-between !important;

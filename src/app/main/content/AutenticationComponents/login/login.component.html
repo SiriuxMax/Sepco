@@ -9,6 +9,7 @@
             </div>
 
             <div class="title">Ingresa con tu Cuenta</div>
+            <div class="title" *ngIf="IsAdmin">Administrador</div>
 
             <form name="loginForm" [formGroup]="loginForm" novalidate>
                 <div [ngStyle]="{'display':jey}">
@@ -57,7 +58,7 @@
                 <div *ngIf="errorLogin">
                     <span style="color: #d43c31;">Contraseña incorrecta o cuenta es inexistente</span>
                 </div>
-                <div class="register" fxLayout="column" fxLayoutAlign="center center">
+                <div *ngIf="!IsAdmin" class="register" fxLayout="column" fxLayoutAlign="center center">
                     <span class="text">No tienes Cuenta?</span>
                     <a class="link" [routerLink]="'/register'">Crear una cuenta</a>
                 </div>

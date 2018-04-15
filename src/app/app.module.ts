@@ -52,8 +52,12 @@ import { DirectorDepartamentoModule } from 'app/main/content/GerenteSectorCompon
 import { MainGerenteModule } from './main/content/GerenteSectorComponents/MainGerente/MainGerente.module';
 import { IndividuoServices } from 'app/ApiServices/IndividuoServices';
 import { TotalesModule } from 'app/main/content/ClienteComponents/totales/totales.module';
+import { CorreoModule } from 'app/main/content/AdminComponents/correo/correo.module';
 import { ListarVehiculosxDirModule } from './main/content/listar-vehiculosx-dir/listar-vehiculosx-dir.module';
 import { CarrouselModule } from './main/content/ClienteComponents/Mapas/Carrousel/Carrousel.module';
+import { Error404Module } from './main/content/AutenticationComponents/404/error-404.module';
+import { ClientGuard } from 'app/Guards/ClientGuard';
+import { AdminGuard } from 'app/Guards/AdminGuard';
 
 
 const appRoutes: Routes = [
@@ -61,6 +65,7 @@ const appRoutes: Routes = [
     { path: 'sample', redirectTo: '/sample', pathMatch: 'full' },
     { path: 'register', redirectTo: '/register' },
     { path: 'cambiarClave', redirectTo: '/cambiarClave' },
+    { path: 'error-404', redirectTo: '/error-404' },
     //Cliente
     { path: 'Maps', redirectTo: '/Maps', pathMatch: 'full' },
     { path: 'eventcreator', redirectTo: '/eventcreator', pathMatch: 'full' },
@@ -71,7 +76,8 @@ const appRoutes: Routes = [
     { path: 'totales', redirectTo: '/totales', pathMatch: 'full' },
     { path: 'ListarMetas', redirectTo: '/ListarMetas', pathMatch: 'full' },
     { path: 'Carrousel', redirectTo: '/Carrousel', pathMatch: 'full' },
-//Admin
+    { path: 'correo', redirectTo: '/correo', pathMatch: 'full' },
+    //Admin
     { path: 'mainpageadmin', redirectTo: '/mainpageadmin', pathMatch: 'full' },
     { path: 'sector', redirectTo: '/sector', pathMatch: 'full' },
     { path: 'SacIndividuo2', redirectTo: '/SacIndividuo2', pathMatch: 'full' },
@@ -136,13 +142,14 @@ const appRoutes: Routes = [
         GerenteSectorModule,
         SacIndividuo2Module,
         AdminIndividuo2Module,
-        TotalesModule,      
+        TotalesModule,
         MainGerenteModule,
         ListarMetasModule,
         ListarMetasGerModule,
         ListarVehiculosxDirModule,
         CarrouselModule,
-
+        CorreoModule,
+        Error404Module,
     ],
     providers: [
         UserService
@@ -152,7 +159,10 @@ const appRoutes: Routes = [
         , NavigationInfoService
         , ReunionService
         , AdminServices
-        , IndividuoServices],
+        , IndividuoServices
+        , ClientGuard
+        , AdminGuard]
+    ,
     bootstrap: [
         AppComponent
     ], entryComponents: [

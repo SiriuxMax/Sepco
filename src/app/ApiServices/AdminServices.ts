@@ -27,6 +27,7 @@ import { E_Metas } from '../Models/E_Metas';
 import { MetasBuilder } from '../Builders/Metas.model.builder';
 import { E_Vehiculo } from '../Models/E_Vehiculo';
 import { VehiculoBuilder } from '../Builders/Vehiculo.model.builder';
+import { E_Like } from '../Models/E_Like';
 
 
 @Injectable()
@@ -59,6 +60,7 @@ export class AdminServices {
         return this.Http.post(this.UrlNow + "Admin/listarMetasxDirexFechasxActiva"
             , request, httpOptions).map(this.ExtractMetas)
     }
+
 
     listarMetasxDirector(metas:E_Metas): Observable<Array<E_Metas>> {
         debugger;
@@ -121,6 +123,13 @@ export class AdminServices {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Admin/crearTipoReunion"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    enviarEmail(CLient: E_Cliente): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/sendCorreo"
             , request, httpOptions).map(this.EvalBool)
     }
 
@@ -268,7 +277,14 @@ export class AdminServices {
     }
 
 
-  
+    crearIndividuo2(CLient: E_Individuo2): Observable<boolean> {
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearIndividuo2"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
     crearSector(CLient: E_Sector): Observable<boolean> {
         var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
         const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
@@ -300,6 +316,25 @@ export class AdminServices {
         return this.Http.post(this.UrlNow + "Admin/crearMesas"
             , request, httpOptions).map(this.EvalBool)
     }
+
+    vehiculoFiltro(CLient: E_Vehiculo): Observable<Array<E_Vehiculo>> {
+        ;
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id        
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)        
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/vehiculoFiltrar"
+            , request, httpOptions).map(this.ExtractVehiculoss)
+    }
+
+
+    crearLike(CLient: E_Like): Observable<boolean> {
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Likes/crearLikes"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
     EvalBool(res: any): boolean {
         var a: boolean = res
         return a

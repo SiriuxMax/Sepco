@@ -14,11 +14,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 // This Module's Components
 import { SacIndividuo2Component } from './sac-individuo2.component';
+import { AdminGuard } from 'app/Guards/AdminGuard';
 
 const routes: Routes = [
     {
         path: 'SacIndividuo2',
-        component: SacIndividuo2Component
+        component: SacIndividuo2Component,
+        canActivate:[AdminGuard]
     }
 ];
 

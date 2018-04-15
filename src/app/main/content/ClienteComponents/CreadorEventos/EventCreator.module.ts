@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatStepperModule, MatDialogModule } from '@angular/material';
+import { FuseConfirmDialogModule } from '@fuse/components';
+import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatStepperModule, MatDialogModule, MatProgressSpinnerModule } from '@angular/material';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { EventCreatorComponent } from './EventCreator.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { fotoDialogComponent } from './fotoDialog/fotoDialog.component';
+import { ClientGuard } from 'app/Guards/ClientGuard';
 
 const routes: Routes = [
     {
         path: 'eventcreator',
-        component: EventCreatorComponent
+        component: EventCreatorComponent,
+        canActivate: [ClientGuard]
     }
 ];
 
@@ -23,7 +26,7 @@ const routes: Routes = [
     ],
     imports: [
         RouterModule.forChild(routes),
-
+        FuseConfirmDialogModule,
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
@@ -33,6 +36,7 @@ const routes: Routes = [
         MatDialogModule,
         FuseSharedModule,
         TextMaskModule,
+        MatProgressSpinnerModule
     ], entryComponents: [fotoDialogComponent]
 
 })

@@ -5,7 +5,7 @@ import { E_Departamentos } from 'app/Models/E_Departamentos';
 import { E_GerenteSector } from 'app/Models/E_GerenteSector';
 import { GenerateMask } from 'app/Tools/MaskedLibrary';
 import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { PhotoTool } from 'app/Tools/PhotoTool';
 import { E_Reunion } from 'app/Models/E_Reunion';
 import { E_Imagen } from 'app/Models/E_Imagen';
@@ -15,6 +15,9 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../../ApiServices/UserService';
 import { E_Usuario } from 'app/Models/E_Usuario';
 import { E_Cliente } from 'app/Models/E_Cliente';
+import { ProfileConfig } from '../../../../Tools/ProfileConfig';
+import { E_Email } from '../../../../Models/E_Email';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
     moduleId: module.id,
@@ -41,14 +44,16 @@ export class GerenteSectorComponent implements OnInit {
     public Nombre: string;
     public descripcion: string;
     public checked;
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     // Horizontal Stepper
     constructor(private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
         private NavigationData: NavigationInfoService,
-        private dialog: MatDialog,
         private AdminServices: AdminServices,
         private Router: Router,
-        private UserService: UserService
+        private UserService: UserService,
+        private Matdialog: MatDialog,
+
     ) {
 
         this.formErrors = {
@@ -132,14 +137,23 @@ export class GerenteSectorComponent implements OnInit {
 
     }
 
+    confirmData() {
+        this.confirmDialogRef = this.Matdialog.open(FuseConfirmDialogComponent, {})
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Estas seguro de realizar esta acción?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) { this.EnviarInfo() }
+            this.confirmDialogRef = null;
+        });
+
+    }
     EnviarInfo() {
-        
+
         var objGerenteSector: E_GerenteSector = new E_GerenteSector()
         var objUsuario: E_Usuario = new E_Usuario()
         var objCliente: E_Cliente = new E_Cliente()
         objGerenteSector.Cedula = this.form.value.Cedula.replace(/\./g, "");
         objGerenteSector.Nombres = this.form.value.Nombre
-        objGerenteSector.Apellidos= this.form.value.Apellido
+        objGerenteSector.Apellidos = this.form.value.Apellido
         objGerenteSector.Direccion = this.form.value.Direccion
         objGerenteSector.Correo = this.form.value.email.toLowerCase()
         objGerenteSector.Telefono = this.form.value.Telefono
@@ -179,6 +193,15 @@ export class GerenteSectorComponent implements OnInit {
                         this.UserNameTemp = objUsuario.UserName
                         this.PasswordTemp = passTemp
                         this.clearform()
+                        var cl: E_Cliente = new E_Cliente();
+                        cl.Correo = objUsuario.UserName;
+                        
+                        cl.EmailObjeto = new E_Email();
+                        cl.EmailObjeto.cuerpo = ProfileConfig.cuerpo(objUsuario.UserName, passTemp)
+                        this.AdminServices.enviarEmail(cl).subscribe((x: boolean) => {
+                            
+                        });
+
                     }
                     this.SaveInProgress = false
                 })
@@ -201,6 +224,64 @@ export class GerenteSectorComponent implements OnInit {
             Sector: 0,
         })
 
+    }
+
+
+    cuerpo(usuario: string, pass: string): string {
+        var cuerpo: string;
+        cuerpo = "<!DOCTYPE html>" +
+            "<html lang=\"es\">" +
+            "<head>" +
+            "<style type=\"text/css\">" +
+            "body{" +
+            "margin:0px;" +
+            "padding:0px;" +
+            "}" +
+
+            ".header{" +
+            "   width: 100%;" +
+            "    height: 150px;" +
+
+            "    color: white;" +
+            "    background-color: #c84c43;" +
+            "}" +
+
+            ".conten{" +
+            "    width: 100%;" +
+
+            "    padding-left:50px;" +
+            "    padding-top:20px;" +
+            "    padding-bottom:50px;" +
+            "    background-color:#f0d8d844;" +
+            "    font-size:20px;" +
+            "}" +
+
+
+            "</style>" +
+            "</head>" +
+
+            "<body>" +
+            "    <div fxLayout=\"column\">" +
+            "    <div class=\"header\">" +
+            "        <div style=\"float:left;width: 149px;\">" +
+            "            <img src=\"http://ec2-52-2-44-19.compute-1.amazonaws.com/VisualizaApi/Content/llerascorreo.png\" width=\"100%\">" +
+            "       </div>" +
+            "        <div style=\"float:right;width: 250px;margin-top:40px;\">" +
+            "           <b><h2>Asignacion de Usuario</h2></b>" +
+            "        </div>" +
+            "    </div>" +
+
+            "<div class=\"conten\">" +
+            "<p>Cordial saludo.</p>" +
+            "<p>Esta es la asignacion de su perfil de usuario en la plataforma.</p>" +
+            "<b><p Style=\"margin-left:30px;\">Nombre Usuario: " + usuario + "</p></b>" +
+            "<b><p Style=\"margin-left:30px;\">Password: " + pass + "</p></b>" +
+            "<p>Gracias por su atencion.</p>" +
+            "</div>" +
+            "</div>" +
+            "</body>" +
+            "</html>";
+        return cuerpo;
     }
 
 }

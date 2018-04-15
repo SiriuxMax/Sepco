@@ -10,5 +10,6 @@ export class E_Comentarios {
     public FechaCreacion: Date
     public nombrecliente:string
     public apellidocliente:string
+    public NombreUsuario:string
     constructor() { }
 }

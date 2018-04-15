@@ -7,11 +7,13 @@ import { TextMaskModule } from 'angular2-text-mask';
 
 // This Module's Components
 import { AdminIndividuo2Component } from './admin-individuo2.component';
+import { AdminGuard } from 'app/Guards/AdminGuard';
 
 const routes: Routes = [
     {
         path: 'AdminIndividuo2',
-        component: AdminIndividuo2Component
+        component: AdminIndividuo2Component,
+        canActivate:[AdminGuard]
     }
 ];
 

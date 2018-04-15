@@ -1,4 +1,4 @@
-import { Component, AfterViewChecked, OnInit, AfterViewInit } from '@angular/core';
+import { Component, AfterViewChecked, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MapDialogComponent } from '../Map-Dialog-Options/Map-Dialog-Options.component';
 import { E_Imagen } from 'app/Models/E_Imagen';
@@ -6,6 +6,7 @@ import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
 import { Router } from '@angular/router';
 import { Platform } from '@angular/cdk/platform';
 import { ImageService } from 'app/ApiServices/ImageServices';
+import { Observable } from 'rxjs/Observable';
 
 
 
@@ -14,8 +15,11 @@ import { ImageService } from 'app/ApiServices/ImageServices';
     templateUrl: './Carrousel.component.html',
     styleUrls: ['./Carrousel.component.scss']
 })
-export class CorrouselComponent implements OnInit {
+export class CorrouselComponent implements OnInit, OnDestroy {
 
+
+    IntervalX: any;
+    suscription: any;
     slideIndexMan: number = 1;
     imageSources: Array<E_Imagen> = new Array<E_Imagen>();
 
@@ -44,16 +48,27 @@ export class CorrouselComponent implements OnInit {
   
                   });*/
             this.showDivs(0)
-            setInterval(() => this.SetAutoPlay(), 4000)
-
-            //     setTimeout(() => {
-            //       this.showDivs(0)
-            // }, 2000)
+            /*     if (this.suscription != undefined) {
+                     this.suscription.unsubscribe()
+                 }
+                 this.suscription = Observable.interval(4000); // Call after 10 second.. Please set your time
+                 this.suscription.subscribe(x => {
+                     this.SetAutoPlay()s
+                 }); */
+            var that = this
+            this.IntervalX = setInterval(function () {
+                that.SetAutoPlay()
+            }, 4000);
 
 
         })
     }
 
+
+    ngOnDestroy(): void {
+        clearInterval(this.IntervalX)
+
+    }
     // First manual slideshow
 
     setImage(n) {

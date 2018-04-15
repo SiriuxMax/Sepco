@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="content p-24">            
-            <ngx-datatable [selected]="selected" [selectionType]="'single'"  class="material" [rows]="rows" 
+            <ngx-datatable [selected]="selected" [selectionType]="'single'"  class="material" [rows]="rows"  (select)="selectedEvent($event)"
                 [loadingIndicator]="loadingIndicator" [columnMode]="'force'" [headerHeight]="48" [footerHeight]="56" [rowHeight]="'auto'"
                 [scrollbarH]="true" [reorderable]="reorderable" [limit]="10">
 

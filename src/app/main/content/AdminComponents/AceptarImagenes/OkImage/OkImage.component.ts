@@ -12,16 +12,17 @@ import { E_Imagen } from '../../../../../Models/E_Imagen';
     styleUrls: ['./OkImage.component.scss']
 })
 export class OkImageComponent implements OnInit {
-    public imagee:string;
-    public resultado:string;
+    SaveInProgress: boolean;
+    public imagee: string;
+    public resultado: string;
     constructor(
         private ImageService: ImageService,
         public dialogRef: MatDialogRef<OkImageComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any, private NavigationInfoService: NavigationInfoService
         , private Router: Router) { }
     ngOnInit(): void {
-        
-        this.imagee= this.data.Ruta;
+
+        this.imagee = this.data.Ruta;
     }
     onNoClick(): void {
 
@@ -30,25 +31,26 @@ export class OkImageComponent implements OnInit {
 
     GotoDetailsNow() {
         this.Router.navigate(["/detailevent"])
-        
+
         this.NavigationInfoService.dataEvento = this.data.selected[0]
         this.dialogRef.close(true);
     }
 
-    aprobar(){
+    aprobar() {
         ;
         var x: E_Imagen = new E_Imagen()
         x = this.data;
-        x.Aprobada=true;
+        x.Aprobada = true;
+        this.SaveInProgress = true
         this.ImageService.aprobarImagen(x).subscribe((x) => {
-            
-            if(x){
-                this.resultado="Imagen aprobada.";
+            this.SaveInProgress = false
+            if (x) {
+                this.resultado = "Imagen aprobada.";
                 setTimeout(() => {
                     this.dialogRef.close(true);
                 }, 1000)
-            }else{
-                this.resultado="Ocurrio un error.";
+            } else {
+                this.resultado = "Ocurrio un error.";
                 setTimeout(() => {
                     this.dialogRef.close(true);
                 }, 1000)

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ParameterService } from 'app/ApiServices/ParametersServices';
 import { GenerateMask } from 'app/Tools/MaskedLibrary';
 import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { PhotoTool } from 'app/Tools/PhotoTool';
 import { E_Reunion } from 'app/Models/E_Reunion';
 import { E_Imagen } from 'app/Models/E_Imagen';
@@ -14,6 +14,7 @@ import { E_PuestoVotacion } from '../../../../Models/E_PuestoVotacion';
 import { E_Departamentos } from 'app/Models/E_Departamentos';
 import { E_Municipios } from 'app/Models/E_Municipios';
 import { E_ZonaElectoral } from 'app/Models/E_ZonaElectoral';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
     moduleId: module.id,
@@ -22,6 +23,8 @@ import { E_ZonaElectoral } from 'app/Models/E_ZonaElectoral';
     styleUrls: ['puesto-votacion.component.scss']
 })
 export class PuestoVotacionComponent implements OnInit {
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+
     SaveInProgress: boolean;
     EstadoFormulario: boolean;
     SucceSave: boolean;
@@ -46,7 +49,7 @@ export class PuestoVotacionComponent implements OnInit {
     constructor(private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
         private NavigationData: NavigationInfoService,
-        private dialog: MatDialog,
+        private Matdialog: MatDialog,
         private AdminServices: AdminServices,
         private Router: Router,
         private UserService: UserService
@@ -128,22 +131,34 @@ export class PuestoVotacionComponent implements OnInit {
     }
 
     EnviarInfo() {
-        var objPuestoVotacion: E_PuestoVotacion = new E_PuestoVotacion()
-        objPuestoVotacion.Nombre = this.form.value.Nombre
-        objPuestoVotacion.FechaCreacion = new Date();
-        objPuestoVotacion.Activo = this.EstadoFormulario
-        objPuestoVotacion.Id_ZonaElectoral = this.form.value.ZonaElectoral
-        this.SaveInProgress = true
-        this.AdminServices.crearPuestoVotacion(objPuestoVotacion).subscribe((x: boolean) => {
-            if (x) {
-                this.SucceSave = x
-                this.CleanForm()
+
+        this.confirmDialogRef = this.Matdialog.open(FuseConfirmDialogComponent, {})
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Estas seguro de realizar esta acción?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+
+
+                var objPuestoVotacion: E_PuestoVotacion = new E_PuestoVotacion()
+                objPuestoVotacion.Nombre = this.form.value.Nombre
+                objPuestoVotacion.FechaCreacion = new Date();
+                objPuestoVotacion.Activo = this.EstadoFormulario
+                objPuestoVotacion.Id_ZonaElectoral = this.form.value.ZonaElectoral
+                this.SaveInProgress = true
+                this.AdminServices.crearPuestoVotacion(objPuestoVotacion).subscribe((x: boolean) => {
+                    if (x) {
+                        this.SucceSave = x
+                        this.CleanForm()
+                    }
+                    setTimeout(() => {
+                        this.SucceSave = false
+                    }, 4000)
+                    this.SaveInProgress = false
+                })
             }
-            setTimeout(() => {
-                this.SucceSave = false
-            }, 4000)
-            this.SaveInProgress = false
-        })
+            this.confirmDialogRef = null;
+        });
+
+
 
     }
 

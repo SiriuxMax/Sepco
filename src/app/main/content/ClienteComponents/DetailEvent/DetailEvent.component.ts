@@ -9,6 +9,8 @@ import { E_Comentarios } from 'app/Models/E_Comentarios';
 import { UserService } from 'app/ApiServices/UserService';
 import { E_Usuario } from 'app/Models/E_Usuario';
 import { Router } from '@angular/router';
+import { E_Like } from '../../../../Models/E_Like';
+import { AdminServices } from '../../../../ApiServices/AdminServices';
 
 @Component({
     selector: 'DetailEvent',
@@ -23,12 +25,14 @@ export class DetailEventComponent implements OnInit {
     ImagenGeneral: E_Imagen = new E_Imagen()
     ListComentarios: Array<E_Comentarios> = new Array<E_Comentarios>()
     registerFormErrors: any;
+    public MobileApp:boolean
     constructor(private NavigationData: NavigationInfoService,
         private ImageService: ImageService,
         private formBuilder: FormBuilder,
         private ReunionService: ReunionService,
         private UserService: UserService,
-        private Router: Router
+        private Router: Router,
+        public Adminservice:AdminServices
     ) {
 
 
@@ -39,23 +43,29 @@ export class DetailEventComponent implements OnInit {
     }
     ngOnInit(): void {
         var ImaObj: E_Imagen = new E_Imagen()
-        
+        this.MobileApp=false;
         if (this.NavigationData.dataEvento == undefined) { this.Router.navigate(['/Maps']) }
-        this.dataEvento = this.NavigationData.dataEvento != undefined ? this.NavigationData.dataEvento : new E_Reunion()
-        ImaObj.Id_Reunion = this.dataEvento.Id
-        this.ImageService.ImagenxReunion(ImaObj).subscribe((x) => {
-            this.ImagenGeneral = x
-            this.imageUrl = x.Ruta
-            var Comentario: E_Comentarios = new E_Comentarios()
-            Comentario.Id_Imagen = x.Id
-            this.ReunionService.ComentariosXImagen(Comentario)
-                .subscribe((x) => { this.ListComentarios = x })
-        })
+        else
+        {
+            this.dataEvento = this.NavigationData.dataEvento != undefined ? this.NavigationData.dataEvento : new E_Reunion()
+            ImaObj.Id_Reunion = this.dataEvento.Id
+            this.ImageService.ImagenxReunion(ImaObj).subscribe((x) => {
+                this.ImagenGeneral = x
+                this.imageUrl = x.Ruta
+                var Comentario: E_Comentarios = new E_Comentarios()
+                Comentario.Id_Imagen = x.Id
+                this.ReunionService.ComentariosXImagen(Comentario)
+                    .subscribe((x) => { this.ListComentarios = x })
+            })
+         
+        }
         this.registerFormErrors = {
-            Comentario: {},
+            Nombre: {},
+            Comentario :{}
         }
         this.registerForm = this.formBuilder.group({
             Comentario: ['', [Validators.required]],
+            Nombre: ['', [Validators.required]],
         })
 
         this.registerForm.valueChanges.subscribe(() => {
@@ -67,19 +77,34 @@ export class DetailEventComponent implements OnInit {
         var Comentario: E_Comentarios = new E_Comentarios()
         var Usuario: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
         Comentario.Descripcion = this.registerForm.value.Comentario
+        Comentario.NombreUsuario = this.registerForm.value.Nombre
         Comentario.Id_Imagen = this.ImagenGeneral.Id
         Comentario.Id_usuario = Usuario.Id
         Comentario.Estado = true
+        this.registerForm.get('Comentario').setValue('');
         this.ReunionService.crearComentario(Comentario).subscribe((x: number) => {
             console.log(x)
             if (x != 0) {
+                
                 this.ReunionService.ComentariosXImagen(Comentario)
                     .subscribe((x) => { this.ListComentarios = x })
             }
         })
     }
 
-
+    crearlike(){
+       
+        var lik: E_Like = new E_Like()
+        lik.Id_usuario = this.UserService.GetCurrentCurrentUserNow().Id
+        lik.FechaCreacion= new Date;
+        lik.Id_Imagen = this.ImagenGeneral.Id
+        this.Adminservice.crearLike(lik).subscribe((x: boolean) => {  
+            debugger;          
+            if (x) { 
+                this.MobileApp=true;               
+            }
+        })
+    }
 
 
     onRegisterFormValuesChanged() {

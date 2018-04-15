@@ -1,5 +1,6 @@
 import { E_Usuario } from "./E_Usuario";
 import { E_Error } from "./E_Error";
+import { E_Email } from "./E_Email";
 
 export class E_Cliente {
     public Id: number
@@ -16,5 +17,6 @@ export class E_Cliente {
     public FechaCreacion: Date
     public usuario: E_Usuario
     public error :E_Error
+    public EmailObjeto:E_Email
     constructor() { }
 }

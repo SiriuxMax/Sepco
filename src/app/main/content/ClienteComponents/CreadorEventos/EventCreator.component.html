@@ -148,13 +148,15 @@
                         <i class="material-icons">&#xE3B0;</i> Capturar
                     </button>
                 </div>
-                <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="form.invalid">
+                <button (click)="ConfirmarEvento()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="form.invalid || SaveInProgress">
                     Enviar Informacion
                 </button>
                 <div fxLayout="row" *ngIf="SucceSave" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div fxFlex="100" style="color:#19611e">Reunión Guardada correctamente</div>
                 </div>
-
+                <div *ngIf="SaveInProgress">
+                    <mat-spinner style="margin:0 auto;"></mat-spinner>
+                </div>
             </form>
 
             <!-- / CONTENT -->

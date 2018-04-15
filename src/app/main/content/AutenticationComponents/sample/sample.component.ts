@@ -18,7 +18,7 @@ export class FuseSampleComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log(this.UserService.GetCurrentCurrentUserNow())
-    PhotoTool.plauvideo()
+//    PhotoTool.plauvideo()
   }
 
 

@@ -5,7 +5,7 @@ import { E_TipoIndividuo2 } from 'app/Models/E_TipoIndividuo2';
 import { E_Individuo2 } from 'app/Models/E_Individuo2';
 import { GenerateMask } from 'app/Tools/MaskedLibrary';
 import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { PhotoTool } from 'app/Tools/PhotoTool';
 import { E_Reunion } from 'app/Models/E_Reunion';
 import { E_Imagen } from 'app/Models/E_Imagen';
@@ -20,6 +20,7 @@ import { E_TipoAntecedente } from '../../../../../Models/E_TipoAntecedente';
 import { E_TipoEstadoRevision } from '../../../../../Models/E_TipoEstadoRevision';
 import { id } from '@swimlane/ngx-datatable/release/utils';
 import { E_antecedentesxindividuo2 } from '../../../../../Models/E_antecedentesxindividuo2';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
     moduleId: module.id,
@@ -29,17 +30,17 @@ import { E_antecedentesxindividuo2 } from '../../../../../Models/E_antecedentesx
 })
 export class AdminIndividuo2Component implements OnInit {
     ListSector: E_Sector[];
-    idindividuo:number;
+    idindividuo: number;
     formDinamic: FormGroup;
-    public resultado:string;
-    indi:E_Individuo2;
+    public resultado: string;
+    indi: E_Individuo2;
     ListMunicipiosBase: E_Municipios[];
     listTipoAntecedente: E_TipoAntecedente[];
     listTipoRevision: E_TipoEstadoRevision[];
     ListDepartamentos: E_Departamentos[];
     SucceSave: boolean;
     dataURL: any;
-    observaciones:any
+    observaciones: any
     public MaskedNumber: any[]
     MaskedNumberNoDecimal: any[]
     form: FormGroup;
@@ -51,17 +52,19 @@ export class AdminIndividuo2Component implements OnInit {
     public Nombre: string;
     public descripcion: string;
     public checked;
-    public xx :E_Individuo2;
-    public departaseleccionado:number;
+    public xx: E_Individuo2;
+    public departaseleccionado: number;
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     // Horizontal Stepper
     constructor(private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
         private NavigationData: NavigationInfoService,
-        private dialog: MatDialog,
         private AdminServices: AdminServices,
         private Router: Router,
         private UserService: UserService,
-        private navigation:NavigationInfoService
+        private navigation: NavigationInfoService,
+
+        private Matdialog: MatDialog,
     ) {
 
         this.formErrors = {
@@ -84,18 +87,18 @@ export class AdminIndividuo2Component implements OnInit {
             Apellido: [''],
             Direccion: ['', [Validators.required]],
             TipoIndividuo2: [undefined],
-            Departamento:[undefined]
+            Departamento: [undefined]
 
         });
-       
 
-        this.xx =this.navigation.dataIndividuo2;
+
+        this.xx = this.navigation.dataIndividuo2;
         console.log(this.xx);
 
-        this.AdminServices.Individuo2xCorreo(this.xx).subscribe((x) => {         
+        this.AdminServices.Individuo2xCorreo(this.xx).subscribe((x) => {
             this.xx = x
 
-            this.form.setValue({            
+            this.form.setValue({
                 email: this.xx.Correo,
                 Cedula: this.xx.Cedula,
                 Telefonof: this.xx.Telefono,
@@ -104,16 +107,16 @@ export class AdminIndividuo2Component implements OnInit {
                 Celular: this.xx.Celular,
                 TipoIndividuo2: this.xx.Id_tipoindividuo2,
                 Direccion: this.xx.Direccion,
-                Departamento:this.xx.Id_departamento
+                Departamento: this.xx.Id_departamento
             })
-            
+
             this.observaciones = this.xx.observacionsac
             this.tiporevisionselec = this.xx.Id_tipoestadorevision
-            this.idindividuo= this.xx.Id;
-           this.cargador(this.xx);
+            this.idindividuo = this.xx.Id;
+            this.cargador(this.xx);
         })
 
-       
+
     }
 
     ReturnPage(event: Event) {
@@ -121,27 +124,27 @@ export class AdminIndividuo2Component implements OnInit {
         this.Router.navigate(['/mainpageindividuo1'])
     }
 
-    cargador(para:E_Individuo2){
+    cargador(para: E_Individuo2) {
 
-            this.ParameterService.listarTipoAntecedente().subscribe((x) => {
+        this.ParameterService.listarTipoAntecedente().subscribe((x) => {
+            debugger;
+            this.listTipoAntecedente = x
+            var ante: E_TipoAntecedente;
+
+            this.listTipoAntecedente.forEach(function (part, index, Source) {
                 debugger;
-                this.listTipoAntecedente = x
-                var ante: E_TipoAntecedente;
-                                
-                this.listTipoAntecedente.forEach(function (part, index, Source) {
-                    debugger;
-                    
-                    Source[index].valuee =
 
-                    ((para.antecedendes.find((z) => z.Id_tipoantecedentes == Source[index].Id))!= undefined)?para.antecedendes.find((z) => z.Id_tipoantecedentes == Source[index].Id).AntecendetesOk:false;
-                });
-               
-            })
-        
-        
+                Source[index].valuee =
+
+                    ((para.antecedendes.find((z) => z.Id_tipoantecedentes == Source[index].Id)) != undefined) ? para.antecedendes.find((z) => z.Id_tipoantecedentes == Source[index].Id).AntecendetesOk : false;
+            });
+
+        })
+
+
 
         this.ParameterService.listarTipoEstadoRevision().subscribe((x) => {
-        
+
             this.listTipoRevision = x
         })
 
@@ -149,36 +152,36 @@ export class AdminIndividuo2Component implements OnInit {
         //this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
         this.ParameterService.listarTipoIndividuo2()
             .subscribe((x: Array<E_TipoIndividuo2>) => {
-               
-                this.ListTipoIndividuo2 = x.filter((y) => y.Id ==para.Id_tipoindividuo2)
+
+                this.ListTipoIndividuo2 = x.filter((y) => y.Id == para.Id_tipoindividuo2)
                 this.TipoIndividuo2Seleccionado = para.Id_tipoindividuo2
 
             })
 
-        
+
         this.formDinamic = this.formBuilder.group({
             Municipio: [undefined, [Validators.required]],
             Nombre: [undefined, [Validators.required]],
-            Sector : [undefined, [Validators.required]],
+            Sector: [undefined, [Validators.required]],
         });
 
         this.form.valueChanges.subscribe(() => {
             this.onFormValuesChanged();
         });
 
-       
-       
+
+
         var ObjSector: E_Sector = new E_Sector()
         ObjSector.Id_Departamento = para.Id_departamento
         this.ParameterService.ListarSector(ObjSector).subscribe((x) => {
-        
+
             this.ListSector = x
         })
 
         this.ParameterService.listarDepartamentos().subscribe((x) => {
             debugger;
             this.ListDepartamentos = x
-            this.departaseleccionado=5
+            this.departaseleccionado = 5
         })
     }
     ngOnInit() {
@@ -208,41 +211,50 @@ export class AdminIndividuo2Component implements OnInit {
         }
     }
 
+    confirmData() {
+        this.confirmDialogRef = this.Matdialog.open(FuseConfirmDialogComponent, {})
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Estas seguro de realizar esta acción?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) { this.EnviarInfo() }
+            this.confirmDialogRef = null;
+        });
+
+    }
     EnviarInfo() {
         debugger;
         var lista = this.listTipoAntecedente
-        var cantidad:number;
-       
+        var cantidad: number;
 
-        if(this.tiporevisionselec==undefined){
-            this.resultado="Por favor ingrese una descripcion en el campo Observacion";
+
+        if (this.tiporevisionselec == undefined) {
+            this.resultado = "Por favor ingrese una descripcion en el campo Observacion";
             return;
         }
-                        
-        
+
+
         var objIndividuo2: E_Individuo2 = new E_Individuo2()
-        objIndividuo2.Id=this.idindividuo;
+        objIndividuo2.Id = this.idindividuo;
         objIndividuo2.Direccion = this.form.value.Direccion
         objIndividuo2.Correo = this.form.value.email
         objIndividuo2.Telefono = this.form.value.Telefonof
         objIndividuo2.Celular = this.form.value.Celular
         objIndividuo2.observacionsac = this.observaciones;
-        objIndividuo2.Id_tipoestadorevision= this.tiporevisionselec;
+        objIndividuo2.Id_tipoestadorevision = this.tiporevisionselec;
         var ante: E_antecedentesxindividuo2 = new E_antecedentesxindividuo2();
         objIndividuo2.antecedendes = new Array<E_antecedentesxindividuo2>();
         this.listTipoAntecedente.forEach(element => {
             ante = new E_antecedentesxindividuo2();
-            ante.Id_individuo2=objIndividuo2.Id;
-            ante.AntecendetesOk = (element.valuee==undefined)? false : true;
+            ante.Id_individuo2 = objIndividuo2.Id;
+            ante.AntecendetesOk = (element.valuee == undefined) ? false : true;
             ante.FechaAprobado = new Date();
             ante.Id_tipoantecedentes = element.Id;
             objIndividuo2.antecedendes.push(ante);
         });
-            
-        this.AdminServices.modificarIndividuo2(objIndividuo2).subscribe((x: boolean) => { 
+
+        this.AdminServices.modificarIndividuo2(objIndividuo2).subscribe((x: boolean) => {
             debugger;
             this.SucceSave = x;
-            this.resultado="Exito al modificar!";
+            this.resultado = "Exito al modificar!";
         })
 
     }

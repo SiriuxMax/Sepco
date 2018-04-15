@@ -5,12 +5,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule, MatFormFieldModule,MatCheckboxModule, MatIconModule, MatInputModule, MatSelectModule, MatStepperModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule } from '@angular/material';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { TextMaskModule } from 'angular2-text-mask';
+import { AdminGuard } from 'app/Guards/AdminGuard';
+import { FuseConfirmDialogModule } from '@fuse/components';
 
 
 const routes: Routes = [
     {
         path: 'mesa',
-        component: MesaComponent
+        component: MesaComponent,
+        canActivate:[AdminGuard]
     }
 ];
 
@@ -30,7 +33,8 @@ const routes: Routes = [
         MatCheckboxModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        FuseConfirmDialogModule
     ],
     declarations: [
         MesaComponent,

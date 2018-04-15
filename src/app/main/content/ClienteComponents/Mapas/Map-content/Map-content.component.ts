@@ -37,7 +37,7 @@ export class MapContentComponent implements OnInit {
         private ReunionService: ReunionService,
         private ImageService: ImageService,
         private platform: Platform, private NavigationInfoService: NavigationInfoService, private Router: Router) {
-       
+
 
         this.ObtenerReuniones();
         if (this.platform.ANDROID || this.platform.IOS) {
@@ -46,26 +46,28 @@ export class MapContentComponent implements OnInit {
 
         this.ParameterService.listarDepartamentos()
             .subscribe((x: Array<E_Departamentos>) => {
-
                 this.ListDepartamentos = x
+                this.ReunionService.ContarReuniones().subscribe(
+                    (x: Array<E_Reunion>) => {
+                      //  var filtered = x.filter((x) => { x.Estado == true })
+                        
+                        this.setChangedFields(x)
+                    }
+                )
             })
         this.filteredStates2$ = this.stateCtrl.valueChanges.pipe(
             startWith(''),
             map(name => this.filterStatesComplex(name))
         )
 
-        this.ReunionService.ContarReuniones().subscribe(
-            (x: Array<E_Reunion>) => {
-                this.setChangedFields(x)
-            }
-        )
+
     }
 
     ObtenerReuniones() {
 
         //ObjReu.Id_Departamento = this.DatoDepto
         this.ReunionService.ContarReuniones().subscribe((x) => {
-            debugger;
+            ;
             if (x != null && x != undefined)
                 this.rows = x.slice(0, 3);
         }
@@ -76,7 +78,7 @@ export class MapContentComponent implements OnInit {
 
 
     abrireventos(par: any) {
-        debugger;
+        ;
         this.NavigationInfoService.storage = par
         this.Router.navigate(["/eventvisor"])
     }
@@ -86,8 +88,9 @@ export class MapContentComponent implements OnInit {
     }
 
     SeleccionarDepto(Y) {
-        console.log(Y.option.value)
-        var idfiels = this.Fields.find(x => x.idBd == Y.option.value.Codigo).id
+
+        console.log(Y.value)
+        var idfiels = this.Fields.find(x => x.idBd == Y.value).id
         this.DepartamentoSeleccionado(idfiels, true)
 
     }
@@ -134,10 +137,18 @@ export class MapContentComponent implements OnInit {
 
 
     setChangedFields(x: Array<E_Reunion>) {
+        var that = this
+        var y = x
         this.Fields.forEach(function (obj) {
-            if (x.some(x => x.Id_Departamento == obj.idBd)) {
-                obj.NumeroReuniones = x.find(x => x.Id_Departamento == obj.idBd).total
+            
+            if (that.ListDepartamentos.some((x) => x.Codigo == obj.idBd.toString())) {
+                var CodigoDepto = that.ListDepartamentos.find((x) => x.Codigo == obj.idBd.toString()).Id
+
+                if (y.some((x) => x.Id_Departamento == CodigoDepto)) {
+                    obj.NumeroReuniones = y.find((x) => x.Id_Departamento == CodigoDepto).total
+                }
             }
+
         })
         this.ReunionInfo = x
     }

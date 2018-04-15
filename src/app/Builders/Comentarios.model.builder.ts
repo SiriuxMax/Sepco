@@ -10,6 +10,7 @@ export class ComentariosBuilder {
     public FechaCreacion: Date
     public nombrecliente: string
     public apellidocliente: string
+    public NombreCliente: string
     constructor() { }
     buildFromObject(x: any): ComentariosBuilder {
         if (x.Id != undefined) { this.Id = x.Id }
@@ -20,6 +21,9 @@ export class ComentariosBuilder {
         if (x.FechaCreacion != undefined) { this.FechaCreacion = x.FechaCreacion }
         if (x.nombrecliente != undefined) { this.nombrecliente = x.nombrecliente }
         if (x.apellidocliente != undefined) { this.apellidocliente = x.apellidocliente }
+
+    
+
 
         return this
     }
@@ -33,6 +37,7 @@ export class ComentariosBuilder {
         obj.FechaCreacion = this.FechaCreacion
         obj.nombrecliente = this.nombrecliente
         obj.apellidocliente = this.apellidocliente
+   
         return obj
     }
 

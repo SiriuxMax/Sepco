@@ -6,7 +6,7 @@
     <div class="header mat-accent-bg p-24 h-160" 
     fxLayout="row" fxLayoutAlign="start center">
         <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
-            <div class="h2 mt-16">Listado de Eventos</div>
+            <div class="h2 mt-16">Listado de Actividad</div>
             <div class="h2 ">{{DatoDepto?.Nombre | uppercase }}</div>
         </div>
         <img width="128" style="height: 28vw;
@@ -16,21 +16,21 @@
         max-width: 800px;" src="assets/images/logos/intro2.svg">
     </div>
 
-    <div class=" px-24 py-8 headerback mat-white-bg">
-        <div class="h2 mb-24">Datos del evento</div>
-        <div fxLayout="column">
-            <div class="icoLike" (click)="ReturnPage($event)">
-                <i class="material-icons">&#xE166;</i>
-            </div>
-            <span style="color:#c84c43">Volver</span>
-        </div>
-    </div>
+  
 
     <!-- / HEADER -->
 
     <!-- CONTENT -->
     <div class="content p-24 mat-white-bg">
-
+        <div class=" px-24 py-8 headerback mat-white-bg">
+            <div class="h2 mb-24">Datos de la Actividad</div>
+            <div fxLayout="column">
+                <div class="icoLike" (click)="ReturnPage($event)">
+                    <i class="material-icons">&#xE166;</i>
+                </div>
+                <span style="color:#c84c43">Volver</span>
+            </div>
+        </div>
 
         <ngx-datatable [selected]="selected" [selectionType]="'single'" (select)="selectedEvent($event)" class="material" [rows]="rows"
             [loadingIndicator]="loadingIndicator" [columnMode]="'force'" [headerHeight]="48" [footerHeight]="56" [rowHeight]="'auto'"
@@ -43,7 +43,11 @@
             <ngx-datatable-column name="Descripcion" prop="Descripcion"></ngx-datatable-column>
             <ngx-datatable-column name="Creador por" prop="NombreCliente"></ngx-datatable-column>
             <ngx-datatable-column name="Asistentes" prop="CantidadPersonas"></ngx-datatable-column>
-            <ngx-datatable-column name="Fecha Creacion" prop="FechaCreacion"></ngx-datatable-column>
+       
+            
+            <ngx-datatable-column name="Fecha Creacion" prop="FechaCreacion">
+                    <ng-template let-value="value" ngx-datatable-cell-ng-template> {{value | date: 'short'}} </ng-template> 
+            </ngx-datatable-column>
             
         </ngx-datatable>
 

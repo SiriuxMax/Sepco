@@ -16,6 +16,8 @@ import { E_Municipios } from 'app/Models/E_Municipios';
 import { E_ZonaElectoral } from 'app/Models/E_ZonaElectoral';
 import { E_PuestoVotacion } from 'app/Models/E_PuestoVotacion';
 
+import { MatDialogRef } from '@angular/material';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 @Component({
     moduleId: module.id,
     selector: 'mesa',
@@ -23,6 +25,7 @@ import { E_PuestoVotacion } from 'app/Models/E_PuestoVotacion';
     styleUrls: ['mesa.component.scss']
 })
 export class MesaComponent implements OnInit {
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     SaveInProgress: boolean;
     SucceSave: boolean;
     dataURL: any;
@@ -44,13 +47,13 @@ export class MesaComponent implements OnInit {
     public Nombre: string;
     public descripcion: string;
     public checkedActivo: boolean;
-    EstadoFormulario:boolean
+    EstadoFormulario: boolean
     // Horizontal Stepper
     constructor(private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
         private NavigationData: NavigationInfoService,
-        private dialog: MatDialog,
         private AdminServices: AdminServices,
+        private Matdialog: MatDialog,
         private Router: Router,
         private UserService: UserService
     ) {
@@ -142,6 +145,15 @@ export class MesaComponent implements OnInit {
 
     }
 
+    ConfirmData() {
+        this.confirmDialogRef = this.Matdialog.open(FuseConfirmDialogComponent, {})
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Estas seguro de realizar esta acción?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) { this.EnviarInfo() }
+            this.confirmDialogRef = null;
+        });
+
+    }
 
 
     EnviarInfo() {

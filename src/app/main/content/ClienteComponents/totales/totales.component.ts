@@ -45,7 +45,7 @@ export class TotalesComponent implements OnInit {
         private ReunionService: ReunionService,
         private Router: Router,
         private dialog: MatDialog,
-        private Reunionesservice: ReunionService) {
+        private Reunionesservice: ReunionService,private NavigationInfoService: NavigationInfoService) {
 
         if (this.NavigationData.storage == undefined) {}// this.Router.navigate(["/Maps"]) }
      //   this.DatoDepto = this.NavigationData.storage.IdDepto
@@ -72,7 +72,12 @@ export class TotalesComponent implements OnInit {
         )
     }
 
-  
+   
+    selectedEvent(x) {
+        debugger;        
+        this.NavigationInfoService.storage = x.selected[0]
+        this.Router.navigate(["/eventvisor"])
+    }
 
     
     ngOnInit() {

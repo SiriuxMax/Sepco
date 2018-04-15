@@ -10,11 +10,13 @@ import { VisorEventComponent } from './VisorEvent.component';
 import { DetailDialogComponent } from './DetailDialog/DetailDialog.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ClientGuard } from 'app/Guards/ClientGuard';
 
 const routes: Routes = [
     {
         path: 'eventvisor',
-        component: VisorEventComponent
+        component: VisorEventComponent,
+        canActivate: [ClientGuard]
     }
 ];
 

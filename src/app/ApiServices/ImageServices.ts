@@ -17,7 +17,7 @@ import { ImagenBuilder } from '../Builders/Imagen.model.builder';
 export class ImageService {
     constructor(private Http: HttpClient, private HeaderBuilder: HeaderBuilder
         , private UserService: UserService) { }
-        private UrlNow: string = AppSettings.Global().API
+    private UrlNow: string = AppSettings.Global().API
     private textarea: HTMLTextAreaElement;
 
     private setOptions() {
@@ -30,7 +30,7 @@ export class ImageService {
     }
 
 
-    
+
 
     UploadJsonFile(file): Observable<boolean> {
         const httpOptions = {
@@ -42,8 +42,8 @@ export class ImageService {
     }
 
     RegistrarImagen(obImg: E_Imagen): Observable<number> {
-        
-        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id 
+
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
         obImg.Id_Usuario = IdUser
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(obImg)
@@ -71,10 +71,12 @@ export class ImageService {
 
     ExtractImageClient(res: any): E_Imagen {
         var x: E_Imagen = new E_Imagen()
-        if (res != null) { x = new ImagenBuilder().buildFromObject(res[0]).Build() }
+        if (res[0] != undefined) {
+            if (res != null) { x = new ImagenBuilder().buildFromObject(res[0]).Build() }
+        }
         return x
     }
-    
+
 
 
     ImagenRandom(): Observable<Array<E_Imagen>> {
@@ -93,28 +95,28 @@ export class ImageService {
 
     imagenesFiltro(CLient: E_Imagen): Observable<Array<E_Imagen>> {
         ;
-        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id        
-        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)        
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Imagen/ImagenFiltrar"
             , request, httpOptions).map(this.ExtractListImageClient)
     }
 
     ExtractListImageClient(res: any): Array<E_Imagen> {
-        
+
         var x: Array<E_Imagen> = new Array<E_Imagen>()
         res.forEach(element => {
             x.push(new ImagenBuilder().buildFromObject(element).Build())
-        });       
+        });
         return x
     }
 
     aprobarImagen(CLient: E_Imagen): Observable<boolean> {
         ;
         var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
-        CLient.Aprobada=true;
-        CLient.Id_Usuario=IdUser;
-        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)        
+        CLient.Aprobada = true;
+        CLient.Id_Usuario = IdUser;
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Imagen/AprobarImagen", request, httpOptions).map(this.EvalBool)
     }

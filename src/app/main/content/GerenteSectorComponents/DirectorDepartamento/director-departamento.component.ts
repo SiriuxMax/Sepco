@@ -16,6 +16,8 @@ import { UserService } from '../../../../ApiServices/UserService';
 import { E_Usuario } from '../../../../Models/E_Usuario';
 import { E_Cliente } from '../../../../Models/E_Cliente';
 import { E_GerenteSector } from '../../../../Models/E_GerenteSector';
+import { ProfileConfig } from '../../../../Tools/ProfileConfig';
+import { E_Email } from '../../../../Models/E_Email';
 
 @Component({
     moduleId: module.id,
@@ -185,6 +187,13 @@ export class DirectorDepartamentoComponent implements OnInit {
                         this.PasswordTemp = passTemp
                         this.SucceSave = x
                         this.clearform()
+                        var cl : E_Cliente=new E_Cliente();
+                        cl.Correo =objUsuario.UserName;                       
+                        cl.EmailObjeto= new E_Email();
+                        cl.EmailObjeto.cuerpo=ProfileConfig.cuerpo(objUsuario.UserName,passTemp)
+                        this.AdminServices.enviarEmail(cl).subscribe((x: boolean) => {
+                            debugger;
+                        });
                     }
                     this.SaveInProgress = false
                 })

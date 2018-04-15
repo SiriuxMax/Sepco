@@ -8,11 +8,13 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 // This Module's Components
 import { TotalesComponent } from './totales.component';
+import { ClientGuard } from 'app/Guards/ClientGuard';
 
 const routes: Routes = [
     {
         path: 'totales',
-        component: TotalesComponent
+        component: TotalesComponent,
+        canActivate: [ClientGuard]
     }
 ];
 

@@ -3,7 +3,7 @@
     <!-- HEADER -->
     <div class="header mat-accent-bg p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
         <div fxLayout="column" fxLayoutAlign="center start">
-            <div class="h1 mt-16">Creación de Tipo Evento</div>
+            <div class="h1 mt-16">Creación de Tipo Actividad</div>
         </div>
         <img width="128" style="height: 28vw;
       
@@ -27,7 +27,7 @@
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class="toolbar px-24 py-8 headerback">
-                        <div class="h2 mb-24">Datos del tipo evento</div>
+                        <div class="h2 mb-24">Datos del tipo Actividad</div>
                         <div fxLayout="column">
                             <div class="icoLike" (click)="ReturnPage($event)">
                                 <i class="material-icons">&#xE166;</i>
@@ -38,9 +38,9 @@
 
 
                     <mat-form-field fxFlex="100">
-                        <input matInput placeholder="Nombre del Tipo Evento" formControlName="Nombre" required [ngModel]="Nombre">
+                        <input matInput placeholder="Nombre del Tipo Actividad" formControlName="Nombre" required [ngModel]="Nombre">
                         <mat-error *ngIf="formErrors.Nombre.required">
-                            Nombre Tipo evento es requerido
+                            Nombre Tipo Actividad es requerido
                         </mat-error>
                     </mat-form-field>
 
@@ -65,7 +65,7 @@
                 </div>
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <button (click)="EnviarInfo()" [disabled]="form.invalid" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
+                    <button (click)="EnviarInfo()" [disabled]="form.invalid || !checked" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT">
                         Enviar Informacion
                     </button>
                 </div>

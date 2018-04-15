@@ -7,11 +7,13 @@ import { FuseSharedModule } from '@fuse/shared.module';
 
 import { TextMaskModule } from 'angular2-text-mask';
 import { DetailEventComponent } from './DetailEvent.component';
+import { ClientGuard } from 'app/Guards/ClientGuard';
 
 const routes: Routes = [
     {
         path: 'detailevent',
-        component: DetailEventComponent
+        component: DetailEventComponent,
+        canActivate: [ClientGuard]
     }
 ];
 

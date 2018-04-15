@@ -10,6 +10,7 @@ import { DetailDialogComponent } from './DetailDialog/DetailDialog.component';
 import { Router } from '@angular/router';
 import { E_Reunion } from 'app/Models/E_Reunion';
 import { ReunionService } from 'app/ApiServices/ReunionService';
+import { ImageService } from 'app/ApiServices/ImageServices';
 
 
 
@@ -29,14 +30,19 @@ export class VisorEventComponent implements OnInit {
     constructor(private NavigationData: NavigationInfoService,
         private ReunionService: ReunionService,
         private Router: Router,
-        private dialog: MatDialog) {
+        private dialog: MatDialog,
+        private ImageService: ImageService, ) {
 
         if (this.NavigationData.storage == undefined) { this.Router.navigate(["/Maps"]) }
-        if(this.NavigationData.storage.IdDepto != null && this.NavigationData.storage.IdDepto != undefined){
-            this.DatoDepto = this.NavigationData.storage.IdDepto
-        }else{
-            this.DatoDepto = this.NavigationData.storage.Id_Departamento
+        else {
+            if (this.NavigationData.storage.IdDepto != undefined) {
+                this.DatoDepto = this.NavigationData.storage.IdDepto
+            } else {
+                this.DatoDepto = this.NavigationData.storage.Id_Departamento
+            }
         }
+
+
 
 
         // NumeroEventos: NUmero, Nombre: TextX, CodigoDepto: CodigoDepto ,IdDepto:IdDepto
@@ -44,11 +50,10 @@ export class VisorEventComponent implements OnInit {
     ObtenerReuniones() {
         var ObjReu: E_Reunion = new E_Reunion()
         ObjReu.Id_Departamento = this.DatoDepto
-        this.ReunionService.ReunionesxDepto(ObjReu).subscribe((x:Array<E_Reunion>) => {
-             x.forEach(element => {
-                 ;
-                 element.NombreCliente=element.NombrexAnonimo
-             });           
+        this.ReunionService.ReunionesxDepto(ObjReu).subscribe((x: Array<E_Reunion>) => {
+            x.forEach(element => {
+                element.NombreCliente = element.NombrexAnonimo
+            });
             this.rows = x;
             this.loadingIndicator = false;
         }
@@ -69,17 +74,27 @@ export class VisorEventComponent implements OnInit {
 
     }
     selectedEvent(x) {
-        console.log(x)
-        const dialogRef = this.dialog.open(DetailDialogComponent, {
-            //    height: '450px',
-            data:x
-        });
 
-        dialogRef.afterClosed().subscribe(result => {
-            if (result != undefined) {
+        var ImaObj: E_Imagen = new E_Imagen()
+        ImaObj.Id_Reunion = x.selected[0].Id
+        this.ImageService.ImagenxReunion(ImaObj).subscribe((y) => {
+            
+            x.selected[0].Estado = y.Id == undefined ? false : true
 
-            }
+            const dialogRef = this.dialog.open(DetailDialogComponent, {
+                data: x
+            });
 
-        });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result != undefined) {
+
+                }
+
+            });
+
+        })
+
+
+
     }
 }

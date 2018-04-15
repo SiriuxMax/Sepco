@@ -33,7 +33,7 @@ export class fotoDialogComponent implements OnInit {
     ngOnInit(): void {
         console.log(this.data)
 
-        PhotoTool.plauvideo()
+  //      PhotoTool.plauvideo()
 
     }
     onNoClick(): void {

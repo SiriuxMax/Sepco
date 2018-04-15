@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+
+
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { E_Departamentos } from 'app/Models/E_Departamentos';
 import { E_TipoReunion } from 'app/Models/E_TipoReunion';
 import { GenerateMask } from '../../../../Tools/MaskedLibrary';
 import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
-import { MatDialog } from '@angular/material';
 import { fotoDialogComponent } from './fotoDialog/fotoDialog.component';
 import { PhotoTool } from '../../../../Tools/PhotoTool';
 import { E_Reunion } from 'app/Models/E_Reunion';
@@ -20,6 +22,7 @@ import { E_Sector } from '../../../../Models/E_Sector';
 import { E_DirectorDepartamento } from '../../../../Models/E_DirectorDepartamento';
 import { AdminServices } from 'app/ApiServices/AdminServices';
 import { E_GerenteSector } from '../../../../Models/E_GerenteSector';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
     selector: 'EventCreator',
@@ -27,6 +30,7 @@ import { E_GerenteSector } from '../../../../Models/E_GerenteSector';
     styleUrls: ['./EventCreator.component.scss']
 })
 export class EventCreatorComponent implements OnInit {
+    SaveInProgress: boolean;
     DirectorTecnicoSector: string;
     SucceSave: boolean;
 
@@ -46,6 +50,7 @@ export class EventCreatorComponent implements OnInit {
     listDirectDep: Array<E_DirectorDepartamento> = new Array<E_DirectorDepartamento>()
     ListDepartamentos: Array<E_Departamentos> = new Array<E_Departamentos>()
     ListTipoEvento: Array<E_TipoReunion> = new Array<E_TipoReunion>()
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     // Horizontal Stepper
     constructor(private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
@@ -190,8 +195,29 @@ export class EventCreatorComponent implements OnInit {
         event.preventDefault();
         this.Router.navigate(['/Maps'])
     }
-    EnviarInfo() {
 
+    ConfirmarEvento() {
+        this.confirmDialogRef = this.dialog.open(FuseConfirmDialogComponent, {
+
+        })
+
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Estas seguro de realizar esta acción?';
+
+
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+
+            if (result) {
+                this.EnviarInfo()
+            }
+
+            this.confirmDialogRef = null;
+        });
+
+    }
+
+
+    EnviarInfo() {
+        this.SaveInProgress = true
         var objEvento: E_Reunion = new E_Reunion()
         objEvento.Titulo = this.form.value.Nombre
         objEvento.Estado = true;
@@ -214,7 +240,7 @@ export class EventCreatorComponent implements OnInit {
             var fd = new FormData(document.forms[0]);
             ImagenObj.Nombre = btoa(((new Date().getMilliseconds()) * Math.random()).toString())
             ImagenObj.Ruta = ImageBaseUrl + ImagenObj.Nombre + '.jpeg'
-            ImagenObj.Aprobada = true
+            ImagenObj.Aprobada = false
             fd.append("canvasImage", this.dataURL, ImagenObj.Nombre);
             this.ImageService.crearReunion(objEvento).subscribe((IdReunion) => {
                 if (IdReunion != 0) {

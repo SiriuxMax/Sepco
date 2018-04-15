@@ -63,7 +63,7 @@ export class AceptImageComponent implements OnInit {
         var ObjReu: E_Imagen = new E_Imagen()
         //ObjReu.Id_Departamento = this.DatoDepto
         this.ImageService.ListarImagenesPendientes().subscribe((x) => {
-            
+            debugger
             this.rows = x;
             this.loadingIndicator = false;
         }

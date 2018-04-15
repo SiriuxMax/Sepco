@@ -18,5 +18,6 @@ export class E_Reunion {
     public ApellidoCliente: string
     public Id_Sector: number
     public Costo: number
+    public EstadoString: string
     constructor() { }
 }

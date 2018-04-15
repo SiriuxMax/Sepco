@@ -9,10 +9,12 @@ import { FuseDemoModule } from '@fuse/components';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CorrouselComponent } from 'app/main/content/ClienteComponents/Mapas/Carrousel/Carrousel.component';
+import { ClientGuard } from 'app/Guards/ClientGuard';
 const routes = [
     {
         path: 'Carrousel',
-        component: CorrouselComponent
+        component: CorrouselComponent,
+        canActivate: [ClientGuard]
     }
 ];
 

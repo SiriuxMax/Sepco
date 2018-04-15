@@ -18,12 +18,13 @@ import { AppSettings } from '../../../../app.settings';
     animations: fuseAnimations
 })
 export class FuseLoginComponent implements OnInit {
+    IsAdmin: boolean
     Loading: boolean;
     errorLogin: boolean;
     @ViewChild("jojo") jojo: ElementRef
     loginForm: FormGroup;
     loginFormErrors: any;
-    public jey:string;
+    public jey: string;
 
     constructor(
         private fuseConfig: FuseConfigService,
@@ -42,15 +43,15 @@ export class FuseLoginComponent implements OnInit {
             email: {},
             password: {}
         };
-        
-        if(AppSettings.Global().TipoAplicacion==1){
-            this.jey="none";
+
+        if (AppSettings.Global().TipoAplicacion == 1) {
+            this.jey = "none";
             var user: E_Usuario = new E_Usuario();
             user.UserName = "arg@gmail.com"
             user.Passwordd = btoa("123123")
             this.Loading = true
             this.UserService.Login(user).subscribe((x: E_Usuario) => {
-                
+
                 if (x.error != undefined) {
                     if (x.error.Id == 1 || x.error.Id == 2) {
                         this.errorLogin = true
@@ -71,11 +72,11 @@ export class FuseLoginComponent implements OnInit {
 
 
             })
-        }else{
-            
+        } else if (AppSettings.Global().TipoAplicacion == 2) {
+            this.IsAdmin = true
         }
 
-        
+
     }
 
     ngOnInit() {

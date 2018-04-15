@@ -9,7 +9,7 @@
 
         <!-- CONTENT HEADER -->
         <div class="header white-fg p-24" fxLayout="row" fxLayoutAlign="start center">
-            <h2>Evento {{dataEvento.NombreDepartamento}}</h2>
+            <h2>Actividad {{dataEvento.NombreDepartamento}}</h2>
             <img width="128" style="height: 28vw;
         
             width: 100vw;
@@ -23,7 +23,7 @@
 
             <!-- CONTENT TOOLBAR -->
             <div class="toolbar px-24 py-8 headerback">
-                <span>Detalles del Evento </span>
+                <span>Detalles del Actividad </span>
                 <div class="icoLike" (click)="ReturnPage()">
                     <i class="material-icons">&#xE166;</i>
                 </div>
@@ -36,8 +36,8 @@
                 <div class="demo-content">
 
                     <img *ngIf="imageUrl != 'RutaNula'" [src]="imageUrl" alt="beach" style="max-width: 640px; width: 100%;">
-                    
-                   
+
+
                     <h1>{{dataEvento.Titulo}}</h1>
                     <h4 class="secondary-text">Creado por {{dataEvento.NombreCliente}}</h4>
 
@@ -46,6 +46,12 @@
                     </p>
 
                     <form name="registerForm" [formGroup]="registerForm" novalidate>
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Ingresa tu Nombre" formControlName="Nombre" required>
+                            <mat-error *ngIf="registerFormErrors.Nombre.required">
+                                Nombre es requerido
+                            </mat-error>
+                        </mat-form-field>
                         <mat-form-field class="example-full-width">
                             <textarea matInput placeholder="Deja tu comentario" formControlName="Comentario" required></textarea>
                             <mat-error *ngIf="registerFormErrors.Comentario.required">
@@ -57,8 +63,8 @@
                         <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="registerForm.invalid">
                             Enviar Comentario
                         </button>
-                        <div class="icoLike">
-                            <i class="material-icons">&#xE8DC;</i>
+                        <div class="icoLike" (click)="crearlike()">
+                            <i class="material-icons" [ngClass]="{'blanco': MobileApp, 'gris': !MobileApp }">&#xE8DC;</i>
                         </div>
                     </div>
 
@@ -70,7 +76,7 @@
                         </p>
 
                         <footer>
-                            {{item.nombrecliente}}  {{item.apellidocliente}}
+                            {{item.nombrecliente}} 
                         </footer>
                         <hr>
                     </blockquote>

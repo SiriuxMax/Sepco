@@ -13,6 +13,7 @@ export class ImagenBuilder {
     public Cedula: string
     constructor() { }
     buildFromObject(x: any): ImagenBuilder {
+        
         if (x.Id != undefined) { this.Id = x.Id }
         if (x.Nombre != undefined) { this.Nombre = x.Nombre }
         if (x.Ruta != undefined) { this.Ruta = x.Ruta }

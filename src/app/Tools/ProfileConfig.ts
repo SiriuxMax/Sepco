@@ -34,5 +34,37 @@ export class ProfileConfig {
         }
         return perfil
     }
+
+
+    public static cuerpo(usuario:string,pass:string) : string{
+        var cuerpo:string;
+        cuerpo="<!DOCTYPE html>"+
+        "<html lang=\"es\">"+
+        "<head>"+
+        
+        "</head>"+
+         
+        "<body>"+
+        "<div>"+
+        "    <div style=\"width: 100%;height: 120px;color: white;background-color: #c84c43;\">"+
+        "       <div style=\"float:left;width: 119px;\">"+
+        "            <img src=\"http://ec2-52-2-44-19.compute-1.amazonaws.com/VisualizaApi/Content/llerascorreo.png\" width=\"100%\">"+
+        "       </div>"+
+        "        <div style=\"float:right;width: 250px;margin-top:10px;\">"+
+        "           <b><h3>Asignacion de Usuario</h3></b>"+
+        "        </div>"+
+        "    </div>"+
+            
+        "    <div style=\"color:black;width: 100%;padding-left:27px;padding-top:20px;padding-bottom:50px;background-color:#f0d8d844;font-size:16px;\">"+
+                "<p>Cordial saludo.</p>"+
+                "<p>Esta es la asignacion de su perfil de usuario en la plataforma.</p>"+
+                "<b><p Style=\"margin-left:30px;\">Nombre Usuario: "+usuario+"</p></b>"+
+                "<b><p Style=\"margin-left:30px;\">Password: "+pass+"</p></b>"+                
+            "</div>"+
+        "</div>"+
+        "</body>"+
+        "</html>";
+        return cuerpo;
+    }
     constructor(){}
 }

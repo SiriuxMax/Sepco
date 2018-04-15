@@ -5,13 +5,14 @@ import { E_Departamentos } from 'app/Models/E_Departamentos';
 import { E_TipoReunion } from 'app/Models/E_TipoReunion';
 import { GenerateMask } from 'app/Tools/MaskedLibrary';
 import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { PhotoTool } from 'app/Tools/PhotoTool';
 import { E_Reunion } from 'app/Models/E_Reunion';
 import { E_Imagen } from 'app/Models/E_Imagen';
 import { AdminServices } from 'app/ApiServices/AdminServices';
 import { E_Municipios } from 'app/Models/E_Municipios';
 import { Router } from '@angular/router';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
     moduleId: module.id,
@@ -36,13 +37,13 @@ export class ParamSectoresComponent implements OnInit {
     public Nombre: string;
     public descripcion: string;
     public checked;
-    // Horizontal Stepper
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     constructor(private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
         private NavigationData: NavigationInfoService,
-        private dialog: MatDialog,
         private AdminServices: AdminServices,
-        private Router: Router
+        private Router: Router,
+        private Matdialog: MatDialog,
     ) {
         this.ParameterService.ListarTipoReunion(new E_TipoReunion())
             .subscribe((x: Array<E_TipoReunion>) => {
@@ -57,10 +58,10 @@ export class ParamSectoresComponent implements OnInit {
 
     }
 
-    ReturnPage(event:Event){
+    ReturnPage(event: Event) {
         event.preventDefault();
         this.Router.navigate(['/mainpageadmin'])
-     }
+    }
     ngOnInit() {
         this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
 
@@ -98,12 +99,24 @@ export class ParamSectoresComponent implements OnInit {
     }
 
     EnviarInfo() {
-        var objEvento: E_TipoReunion = new E_TipoReunion()
-        objEvento.Nombre = this.form.value.Nombre
-        objEvento.Descripcion = this.form.value.Descripcion
-        objEvento.Estado = this.form.value.checked
-        objEvento.Fecha = new Date();
-        this.AdminServices.crearTipoReunion(objEvento).subscribe((x: boolean) => { this.SucceSave = x })
+        this.confirmDialogRef = this.Matdialog.open(FuseConfirmDialogComponent, {})
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Estas seguro de realizar esta acción?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+
+
+                var objEvento: E_TipoReunion = new E_TipoReunion()
+                objEvento.Nombre = this.form.value.Nombre
+                objEvento.Descripcion = this.form.value.Descripcion
+                objEvento.Estado = this.form.value.checked
+                objEvento.Fecha = new Date();
+                this.AdminServices.crearTipoReunion(objEvento).subscribe((x: boolean) => { this.SucceSave = x })
+
+
+            }
+            this.confirmDialogRef = null;
+        });
+
 
     }
 

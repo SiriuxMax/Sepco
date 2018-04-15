@@ -5,6 +5,9 @@
         <img  [src]="imagee" width="250px;" height="250px;">
     </div>
     
+    <div *ngIf="SaveInProgress">
+        <mat-spinner style="margin:0 auto;"></mat-spinner>
+    </div>
     
     <div style="margin-top: 30px;">
         <button (click)="aprobar()" mat-raised-button color="accent" class="submit-button" aria-label="" style="margin-right:  70px;">

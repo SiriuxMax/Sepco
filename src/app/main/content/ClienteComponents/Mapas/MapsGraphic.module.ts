@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSpinner, MatProgressSpinnerModule, MatIconModule, MatListModule, MatDividerModule, MatDialogModule, MatChipsModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSpinner, MatProgressSpinnerModule, MatIconModule, MatListModule, MatDividerModule, MatDialogModule, MatChipsModule, MatSelectModule } from '@angular/material';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
@@ -12,10 +12,13 @@ import { MapContentComponent } from './Map-content/Map-content.component';
 import { MapSidenavComponent } from './Map-sidenav/Map-sidenav.component';
 import { MapDialogComponent } from './Map-Dialog-Options/Map-Dialog-Options.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-const routes = [
+import { ClientGuard } from 'app/Guards/ClientGuard';
+const routes: Routes = [
     {
         path: 'Maps',
-        component: MapsGraphicComponent
+        component: MapsGraphicComponent,
+        canActivate: [ClientGuard]
+
     }
 ];
 
@@ -41,7 +44,8 @@ const routes = [
         MatSidenavModule,
         MatDialogModule,
         MatAutocompleteModule,
-        MatChipsModule
+        MatChipsModule,
+        MatSelectModule
 
     ]
     , entryComponents: [MapDialogComponent]

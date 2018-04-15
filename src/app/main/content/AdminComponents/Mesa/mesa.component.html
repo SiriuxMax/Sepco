@@ -92,7 +92,7 @@
                 </div>
                 <!-- *********************************************************** -->
                 <div  *ngIf="SaveInProgress">  <mat-spinner style="margin:0 auto;"></mat-spinner></div>
-                <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="form.invalid || !EstadoFormulario || SaveInProgress">
+                <button (click)="ConfirmData()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="form.invalid || !EstadoFormulario || SaveInProgress">
                     Enviar Información
                 </button>
                 <div fxLayout="row" *ngIf="SucceSave" fxLayoutAlign="start center" fxFlex="1 0 auto">
