@@ -153,10 +153,27 @@ export const navigationDirectorDepartamento = [
                 'title': 'Creación Individuo 1',
                 'translate': 'NAV.SAMPLE.TITLE',
                 'type': 'item',
-                'icon': 'map',
+                'icon': 'account_box',
                 'url': '/individuo1',
             },
+            {
+                'id': 'metasdetalle',
+                'title': 'Crear Detalle de Metas',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'verified_user',
+                'url': '/metasdetalle',
+            },
+            {
+                'id': 'ListarMetasdetalle',
+                'title': 'Listado Detalle de Metas',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'verified_user',
+                'url': '/ListarMetasdetalle',
+            },
                  
+
             
             {
                 'id': 'Salir',
@@ -183,11 +200,26 @@ export const navigatioGerenteSector = [
                 'title': 'Director Departamento',
                 'translate': 'NAV.SAMPLE.TITLE',
                 'type': 'item',
-                'icon': 'map',
+                'icon': 'account_box',
                 'url': '/directordepartamento',
             },
-                     
+            {
+                'id': 'metas',
+                'title': 'Creación de Metas',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'verified_user',
+                'url': '/metas',
+            },
             
+            {
+                'id': 'ListarMetasGer',
+                'title': 'Listado de Metas',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'verified_user',
+                'url': '/ListarMetasGer',
+            },
 
 
 

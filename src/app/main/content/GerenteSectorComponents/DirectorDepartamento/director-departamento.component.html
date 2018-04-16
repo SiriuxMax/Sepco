@@ -3,7 +3,7 @@
     <!-- HEADER -->
     <div class="header mat-accent-bg p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
         <div fxLayout="column" fxLayoutAlign="center start">
-            <div class="h1 mt-16">Creación de Director Departamento</div>
+            <div class="h1 mt-16">Creación de Lider Politico</div>
         </div>
         <img width="128" style="height: 28vw;   width: 100vw;  max-width: 800px;" src="assets/images/logos/intro2.svg">
     </div>
@@ -21,7 +21,7 @@
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class="toolbar px-24 py-8 headerback">
-                        <div class="h2 mb-24">Datos del Director</div>
+                        <div class="h2 mb-24">Datos del Lider Politico</div>
                         <div fxLayout="column">
                             <div class="icoLike" (click)="ReturnPage($event)">
                                 <i class="material-icons">&#xE166;</i>
@@ -112,7 +112,7 @@
 
 
 
-                <button (click)="EnviarInfo()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="form.invalid">
+                <button (click)="ConfirmData()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="form.invalid">
                     Enviar Información
                 </button>
                 <div fxLayout="row" *ngIf="SucceSave" fxLayoutAlign="start center" fxFlex="1 0 auto">

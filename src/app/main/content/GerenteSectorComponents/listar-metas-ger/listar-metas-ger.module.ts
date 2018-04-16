@@ -11,7 +11,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
+import { FuseConfirmDialogModule } from '@fuse/components';
 // This Module's Components
 import { ListarMetasGerComponent } from './listar-metas-ger.component';
 
@@ -29,7 +29,7 @@ const routes: Routes = [
     ],
     imports: [
         RouterModule.forChild(routes),
-
+        FuseConfirmDialogModule,
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,

@@ -66,6 +66,8 @@
                         <div class="icoLike" (click)="crearlike()">
                             <i class="material-icons" [ngClass]="{'blanco': MobileApp, 'gris': !MobileApp }">&#xE8DC;</i>
                         </div>
+                        <div class="counter"> {{LikeCounter}}</div>
+
                     </div>
 
 
@@ -76,7 +78,7 @@
                         </p>
 
                         <footer>
-                            {{item.nombrecliente}} 
+                            {{item.nombrecliente}}
                         </footer>
                         <hr>
                     </blockquote>

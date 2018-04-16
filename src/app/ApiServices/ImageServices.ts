@@ -12,6 +12,7 @@ import { E_Imagen } from '../Models/E_Imagen';
 import { E_Reunion } from '../Models/E_Reunion';
 import { UserService } from './UserService';
 import { ImagenBuilder } from '../Builders/Imagen.model.builder';
+import { E_Like } from '../Models/E_Like';
 
 @Injectable()
 export class ImageService {
@@ -79,6 +80,16 @@ export class ImageService {
 
 
 
+
+
+    LikesxImagen(x: E_Like): Observable<Array<E_Like>> {
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+        var request = JSON.stringify(x)
+        return this.Http.post(this.UrlNow + "Likes/LikesxImagen"
+            , request, httpOptions).map(this.ExtractLikes)
+    }
+
     ImagenRandom(): Observable<Array<E_Imagen>> {
         var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
@@ -110,6 +121,14 @@ export class ImageService {
         });
         return x
     }
+
+    ExtractLikes(res: any): Array<E_Like> {
+        
+        var x: Array<E_Like> = new Array<E_Like>()
+        x = res
+        return x
+    }
+
 
     aprobarImagen(CLient: E_Imagen): Observable<boolean> {
         ;

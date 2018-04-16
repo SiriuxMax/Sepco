@@ -17,15 +17,15 @@ export class MetasBuilder {
     public metacumplida: boolean
     public activo: boolean
     public FechaCreacion: Date
-    
+        
     buildFromObject(x: any): MetasBuilder {
         if (x.Id != undefined) { this.Id = x.Id }
         if (x.Nombre != undefined) { this.Nombre = x.Nombre }
         if (x.Observacion != undefined) { this.Observacion = x.Observacion }
         if (x.cantidad != undefined) { this.cantidad = x.cantidad }
         if (x.Id_Item != undefined) { this.Id_Item = x.Id_Item }
-        if (x.id_directordepto != undefined) { this.id_directordepto = x.id_directordepto }
         if (x.id_gerentesector != undefined) { this.id_gerentesector = x.id_gerentesector }
+        if (x.id_directordepto != undefined) { this.id_directordepto = x.id_directordepto }
         if (x.fechainicio != undefined) { this.fechainicio = x.fechainicio }
         if (x.fechafin != undefined) { this.fechafin = x.fechafin }
         if (x.porcentajecumplimiento != undefined) { this.porcentajecumplimiento = x.porcentajecumplimiento }
@@ -42,10 +42,10 @@ export class MetasBuilder {
         obj.Observacion = this.Observacion
         obj.cantidad = this.cantidad
         obj.Id_Item = this.Id_Item
-        obj.id_directordepto = this.id_directordepto
         obj.id_gerentesector = this.id_gerentesector
-        obj.fechafin = this.fechafin
+        obj.id_directordepto = this.id_directordepto
         obj.fechainicio = this.fechainicio
+        obj.fechafin = this.fechafin
         obj.porcentajecumplimiento = this.porcentajecumplimiento
         obj.metacumplida = this.metacumplida
         obj.activo = this.activo

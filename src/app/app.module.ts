@@ -34,8 +34,6 @@ import { MainPageAdminModule } from './main/content/AdminComponents/MainPageAdmi
 import { ParamSectoresModule } from './main/content/AdminComponents/ParamSectores/ParamSectores.module';
 import { UserInfoModule } from 'app/main/content/AutenticationComponents/UserInfo/UserInfo.module';
 import { SectorModule } from './main/content/AdminComponents/Sector/sector.module';
-import { ListarMetasModule } from './main/content/listar-metasDir/listar-metas.module';
-import { ListarMetasGerModule } from './main/content/listar-metas-ger/listar-metas-ger.module';
 import { SacIndividuo2Module } from './main/content/AdminComponents/sac-individuo2/sac-individuo2.module';
 import { AdminIndividuo2Module } from './main/content/AdminComponents/sac-individuo2/admin-individuo2/admin-individuo2.module';
 
@@ -58,6 +56,10 @@ import { CarrouselModule } from './main/content/ClienteComponents/Mapas/Carrouse
 import { Error404Module } from './main/content/AutenticationComponents/404/error-404.module';
 import { ClientGuard } from 'app/Guards/ClientGuard';
 import { AdminGuard } from 'app/Guards/AdminGuard';
+import { ListarMetasGerModule } from 'app/main/content/GerenteSectorComponents/listar-metas-ger/listar-metas-ger.module';
+import { MetasModule } from './main/content/GerenteSectorComponents/Metas/metas.module';
+import { MetasDetalleModule } from './main/content/DirectorDepartamentosComponents/MetasDetalle/metas-detalle.module';
+import { ListarMetasModule } from 'app/main/content/DirectorDepartamentosComponents/listar-metasDir/listar-metas.module';
 
 
 const appRoutes: Routes = [
@@ -90,14 +92,20 @@ const appRoutes: Routes = [
     //Gerente
     { path: 'maingerente', redirectTo: '/maingerente', pathMatch: 'full' },
     { path: 'directordepartamento', redirectTo: '/directordepartamento', pathMatch: 'full' },
+    { path: 'ListarMetasGer', redirectTo: '/ListarMetasGer', pathMatch: 'full' },  
+    { path: 'metas', redirectTo: '/metas', pathMatch: 'full' },
+
     //Director
     { path: 'mainpagedirector', redirectTo: '/mainpagedirector', pathMatch: 'full' },
     { path: 'individuo1', redirectTo: '/individuo1', pathMatch: 'full' },
+    { path: 'metasdetalle', redirectTo: '/metasdetalle', pathMatch: 'full' },
+    { path: 'ListarMetasdetalle', redirectTo: '/ListarMetasdetalle', pathMatch: 'full' },
+
+     
     //Individuo 1
     { path: 'mainpageindividuo1', redirectTo: '/mainpageindividuo1', pathMatch: 'full' },
     { path: 'individuo2', redirectTo: '/individuo2', pathMatch: 'full' },
 
-    { path: 'ListarMetasGer', redirectTo: '/ListarMetasGer', pathMatch: 'full' },
 
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: 'login' },
@@ -145,10 +153,12 @@ const appRoutes: Routes = [
         TotalesModule,
         MainGerenteModule,
         ListarMetasModule,
+        MetasDetalleModule,
         ListarMetasGerModule,
         ListarVehiculosxDirModule,
         CarrouselModule,
         CorreoModule,
+        MetasModule,
         Error404Module,
     ],
     providers: [

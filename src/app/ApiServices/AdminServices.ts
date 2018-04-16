@@ -28,7 +28,10 @@ import { MetasBuilder } from '../Builders/Metas.model.builder';
 import { E_Vehiculo } from '../Models/E_Vehiculo';
 import { VehiculoBuilder } from '../Builders/Vehiculo.model.builder';
 import { E_Like } from '../Models/E_Like';
-
+import { E_MetasDetalle } from '../Models/E_MetasDetalle';
+import { E_Impugnacion } from '../Models/E_Impugnacion';
+import { E_SitioEscrutino } from '../Models/E_SitioEscrutino';
+import { E_ItemsMetas } from '../Models/E_ItemsMetas';
 
 @Injectable()
 export class AdminServices {
@@ -53,8 +56,8 @@ export class AdminServices {
             , file, this.setOptions()).map((x) => { return true })
     }
 
-    listarMetasActivasxDirector(metas:E_Metas): Observable<Array<E_Metas>> {
-        debugger;
+    listarMetasActivasxDirector(metas: E_Metas): Observable<Array<E_Metas>> {
+
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(metas)
         return this.Http.post(this.UrlNow + "Admin/listarMetasxDirexFechasxActiva"
@@ -62,32 +65,32 @@ export class AdminServices {
     }
 
 
-    listarMetasxDirector(metas:E_Metas): Observable<Array<E_Metas>> {
-        debugger;
+    listarMetasxDirector(metas: E_Metas): Observable<Array<E_Metas>> {
+
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(metas)
         return this.Http.post(this.UrlNow + "Admin/listarMetasxDir"
             , request, httpOptions).map(this.ExtractMetas)
     }
 
-    listarMetasxGerente(metas:E_Metas): Observable<Array<E_Metas>> {
-        debugger;
+    listarMetasxGerente(metas: E_Metas): Observable<Array<E_Metas>> {
+
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(metas)
         return this.Http.post(this.UrlNow + "Admin/listarMetasxGer"
             , request, httpOptions).map(this.ExtractMetas)
     }
 
-    listarVehiculoxDir(metas:E_Vehiculo): Observable<Array<E_Vehiculo>> {
-        debugger;
+    listarVehiculoxDir(metas: E_Vehiculo): Observable<Array<E_Vehiculo>> {
+
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(metas)
         return this.Http.post(this.UrlNow + "Admin/listarVehiculoxDir"
             , request, httpOptions).map(this.ExtractVehiculoss)
     }
 
-    listarVehiculoxIndi(metas:E_Vehiculo): Observable<Array<E_Vehiculo>> {
-        debugger;
+    listarVehiculoxIndi(metas: E_Vehiculo): Observable<Array<E_Vehiculo>> {
+
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(metas)
         return this.Http.post(this.UrlNow + "Admin/listarVehiculoxIndi"
@@ -104,7 +107,7 @@ export class AdminServices {
     }
 
     ExtractMetas(res: any): Array<E_Metas> {
-
+        debugger
         var x: Array<E_Metas> = new Array<E_Metas>()
         res.forEach(element => {
             x.push(new MetasBuilder().buildFromObject(element).Build())
@@ -185,7 +188,7 @@ export class AdminServices {
         return x
     }
     ListarIndividuos2Pendientes(): Observable<Array<E_Individuo2>> {
-      
+
         const httpOptions = this.HeaderBuilder.HeadNow()
         //var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Individuo/ListarIndividuos2Pendientes"
@@ -193,28 +196,28 @@ export class AdminServices {
     }
 
     listarGerentesxsector(obin: E_GerenteSector): Observable<Array<E_GerenteSector>> {
-     
+
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(obin)
         return this.Http.post(this.UrlNow + "Individuo/ListarGerentesSectorxSector"
             , request, httpOptions).map(this.ExtractGerenteSector)
     }
 
-    Individuo2xCorreo(obin:E_Individuo2): Observable<E_Individuo2> {       
+    Individuo2xCorreo(obin: E_Individuo2): Observable<E_Individuo2> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(obin)
         return this.Http.post(this.UrlNow + "Individuo/Individuo2xCorreo"
             , request, httpOptions).map(this.ExtractIndividuo2)
     }
 
-    directorxCorreo(obin:E_DirectorDepartamento): Observable<E_DirectorDepartamento> {       
+    directorxCorreo(obin: E_DirectorDepartamento): Observable<E_DirectorDepartamento> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(obin)
         return this.Http.post(this.UrlNow + "Admin/DirectorxCorreo"
             , request, httpOptions).map(this.ExtractDirector)
     }
 
-    gerentexCorreo(obin:E_GerenteSector): Observable<E_GerenteSector> {       
+    gerentexCorreo(obin: E_GerenteSector): Observable<E_GerenteSector> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(obin)
         return this.Http.post(this.UrlNow + "Individuo/GerentexCorreo"
@@ -319,8 +322,8 @@ export class AdminServices {
 
     vehiculoFiltro(CLient: E_Vehiculo): Observable<Array<E_Vehiculo>> {
         ;
-        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id        
-        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)        
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Admin/vehiculoFiltrar"
             , request, httpOptions).map(this.ExtractVehiculoss)
@@ -340,5 +343,49 @@ export class AdminServices {
         return a
     }
 
+
+    crearVehiculo(CLient: E_Vehiculo): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearVehiculo"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    crearSitioEscrutino(CLient: E_SitioEscrutino): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearSitioEscrutino"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    crearItemsMetas(CLient: E_ItemsMetas): Observable<boolean> {
+
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearItemsMetas"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    crearMetas(CLient: E_Metas): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearMetas"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    crearMetasDetalle(CLient: E_MetasDetalle): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearMetasDetalle"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    crearImpugnacion(CLient: E_Impugnacion): Observable<boolean> {
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearImpugnacion"
+            , request, httpOptions).map(this.EvalBool)
+    }
 }
 

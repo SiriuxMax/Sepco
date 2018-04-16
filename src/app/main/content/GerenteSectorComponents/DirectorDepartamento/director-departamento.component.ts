@@ -5,7 +5,7 @@ import { E_Departamentos } from 'app/Models/E_Departamentos';
 import { E_DirectorDepartamento } from 'app/Models/E_DirectorDepartamento';
 import { GenerateMask } from 'app/Tools/MaskedLibrary';
 import { NavigationInfoService } from 'app/ApiServices/NavigationInfoService';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { PhotoTool } from 'app/Tools/PhotoTool';
 import { E_Reunion } from 'app/Models/E_Reunion';
 import { E_Imagen } from 'app/Models/E_Imagen';
@@ -18,6 +18,7 @@ import { E_Cliente } from '../../../../Models/E_Cliente';
 import { E_GerenteSector } from '../../../../Models/E_GerenteSector';
 import { ProfileConfig } from '../../../../Tools/ProfileConfig';
 import { E_Email } from '../../../../Models/E_Email';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
     moduleId: module.id,
@@ -44,11 +45,11 @@ export class DirectorDepartamentoComponent implements OnInit {
     public Nombre: string;
     public descripcion: string;
     public checked;
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     constructor(private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
         private NavigationData: NavigationInfoService,
-        private dialog: MatDialog,
-        private AdminServices: AdminServices,
+        private Matdialog: MatDialog, private AdminServices: AdminServices,
         private Router: Router,
         private UserService: UserService
     ) {
@@ -81,10 +82,10 @@ export class DirectorDepartamentoComponent implements OnInit {
             .subscribe((x: Array<E_Departamentos>) => {
                 this.ListDepartamentos = x
             })
-            
+
         var ob: E_GerenteSector = new E_GerenteSector()
         ob.Correo = this.UserService.GetCurrentCurrentUserNow().UserName
-        
+
         this.AdminServices.ListarGerentesSectorxCorreo(ob).subscribe((x: E_GerenteSector) => {
             this.CurrentGerente = x
         })
@@ -139,10 +140,19 @@ export class DirectorDepartamentoComponent implements OnInit {
     }
 
 
+    ConfirmData() {
+        this.confirmDialogRef = this.Matdialog.open(FuseConfirmDialogComponent, {})
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Estas seguro de realizar esta acción?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) { this.EnviarInfo() }
+            this.confirmDialogRef = null;
+        });
+    }
 
     EnviarInfo() {
 
         this.SaveInProgress = true
+
         var objDirectorDepartamento: E_DirectorDepartamento = new E_DirectorDepartamento()
         objDirectorDepartamento.Cedula = this.form.value.Cedula.replace(/\./g, "");
         objDirectorDepartamento.Nombres = this.form.value.Nombre
@@ -187,12 +197,12 @@ export class DirectorDepartamentoComponent implements OnInit {
                         this.PasswordTemp = passTemp
                         this.SucceSave = x
                         this.clearform()
-                        var cl : E_Cliente=new E_Cliente();
-                        cl.Correo =objUsuario.UserName;                       
-                        cl.EmailObjeto= new E_Email();
-                        cl.EmailObjeto.cuerpo=ProfileConfig.cuerpo(objUsuario.UserName,passTemp)
+                        var cl: E_Cliente = new E_Cliente();
+                        cl.Correo = objUsuario.UserName;
+                        cl.EmailObjeto = new E_Email();
+                        cl.EmailObjeto.cuerpo = ProfileConfig.cuerpo(objUsuario.UserName, passTemp)
                         this.AdminServices.enviarEmail(cl).subscribe((x: boolean) => {
-                            debugger;
+                            
                         });
                     }
                     this.SaveInProgress = false

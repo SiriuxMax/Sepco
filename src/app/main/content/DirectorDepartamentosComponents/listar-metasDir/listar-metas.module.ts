@@ -16,7 +16,7 @@ import { ListarMetasComponent } from './listar-metas.component';
 
 const routes: Routes = [
     {
-        path: 'ListarMetas',
+        path: 'ListarMetasdetalle',
         component: ListarMetasComponent
     }
 ];

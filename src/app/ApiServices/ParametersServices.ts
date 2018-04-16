@@ -31,6 +31,16 @@ import { ConfiguracionTipoIndividuoBuilder } from '../Builders/ConfiguracionTipo
 import { E_TipoAntecedente } from '../Models/E_TipoAntecedente';
 import { TipoAntecedenteBuilder } from '../Builders/TipoAntecedente.model.builder';
 import { E_TipoEstadoRevision } from '../Models/E_TipoEstadoRevision';
+import { E_ItemsMetas } from '../Models/E_ItemsMetas';
+import { ItemsMetasBuilder } from '../Builders/ItemsMetas.model.builder';
+import { E_DirectorDepartamento } from '../Models/E_DirectorDepartamento';
+import { DirectorDepartamentoBuilder } from '../Builders/DirectorDepartamento.model.builder';
+import { E_Metas } from '../Models/E_Metas';
+import { MetasBuilder } from '../Builders/Metas.model.builder';
+import { E_TipoImpugnacion } from '../Models/E_TipoImpugnacion';
+import { E_SitioEscrutino } from '../Models/E_SitioEscrutino';
+import { SitioEscrutinoBuilder } from '../Builders/SitioEscrutino.model.builder';
+
 @Injectable()
 export class ParameterService {
     constructor(private Http: HttpClient, private UserService: UserService, private HeaderBuilder: HeaderBuilder) { }
@@ -322,7 +332,156 @@ export class ParameterService {
         }
         return x
     }
+    ExtractItemsMetas(res: any): Array<E_ItemsMetas> {
 
+        var x: Array<E_ItemsMetas> = new Array<E_ItemsMetas>()
+        if (res != null) {
+            res.forEach((element) => {
+                x.push(new ItemsMetasBuilder().buildFromObject(element).Build())
+            });
+
+        }
+        return x
+    }
+
+    ExtractDirectorDepartamento(res: any): Array<E_DirectorDepartamento> {
+
+        var x: Array<E_DirectorDepartamento> = new Array<E_DirectorDepartamento>()
+        if (res != null) {
+            res.forEach((element) => {
+                x.push(new DirectorDepartamentoBuilder().buildFromObject(element).Build())
+            });
+
+        }
+        return x
+    }
+
+    ExtractMetas(res: any): Array<E_Metas> {
+
+        var x: Array<E_Metas> = new Array<E_Metas>()
+        if (res != null) {
+            res.forEach((element) => {
+                x.push(new MetasBuilder().buildFromObject(element).Build())
+            });
+
+        }
+        return x
+    }    
+
+/*    ExtractTipoImpugnacion(res: any): Array<E_TipoImpugnacion> {
+
+        var x: Array<E_TipoImpugnacion> = new Array<E_TipoImpugnacion>()
+        if (res != null) {
+            res.forEach((element) => {
+                x.push(new MetasBuilder().buildFromObject(element).Build())
+            });
+
+        }
+        return x
+    }*/
+
+    ExtractSitioEscrutino(res: any): Array<E_SitioEscrutino> {
+
+        var x: Array<E_SitioEscrutino> = new Array<E_SitioEscrutino>()
+        if (res != null) {
+            res.forEach((element) => {
+                x.push(new SitioEscrutinoBuilder().buildFromObject(element).Build())
+            });
+
+        }
+        return x
+    }
+
+    ExtractMesa(res: any): Array<E_Mesa> {
+
+        var x: Array<E_Mesa> = new Array<E_Mesa>()
+        if (res != null) {
+            res.forEach((element) => {
+                x.push(new MesaBuilder().buildFromObject(element).Build())
+            });
+
+        }
+        return x
+    }
+
+   listarMetasxDirexFechasxActiva(obj :E_Metas): Observable<Array<E_Metas>> {
+        debugger;
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        }; 
+        var request = JSON.stringify(obj)
+        return this.Http.post(this.UrlNow + "Admin/listarMetasxDirexFechasxActiva"
+            , request, httpOptions).map(this.ExtractMetas)
+    }
+      ListarItemsMetas(): Observable<Array<E_ItemsMetas>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify("")
+        return this.Http.post(this.UrlNow + "Admin/listarItems"
+            , request, httpOptions).map(this.ExtractItemsMetas)
+    }
+
+    ListarDirectorDepartamento(): Observable<Array<E_DirectorDepartamento>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify("")
+        return this.Http.post(this.UrlNow + "Admin/listarDirectorDepartamento"
+            , request, httpOptions).map(this.ExtractDirectorDepartamento)
+    }
+
+    ListarDirectorDepartamentoxIdGerenteSector(obj :E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify(obj)
+        return this.Http.post(this.UrlNow + "Admin/ListarDirectorDeptoxGerente"
+            , request, httpOptions).map(this.ExtractDirectorDepartamento)
+    }
+
+    
+
+ /*   listarTipoImpugnacion(): Observable<Array<E_TipoImpugnacion>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };    
+        var request = JSON.stringify("")
+        return this.Http.post(this.UrlNow + "Admin/listarTipoImpugnacion"
+            , request, httpOptions).map(this.ExtractMetas)
+    }*/
+
+    listarSitioEscrutino(): Observable<Array<E_SitioEscrutino>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify("")
+        return this.Http.post(this.UrlNow + "Admin/listarSitioEscrutino"
+            , request, httpOptions).map(this.ExtractSitioEscrutino)
+    }
+
+    listarMesasxIdPuestoVotacion(obj :E_Mesa): Observable<Array<E_Mesa>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify(obj)
+        return this.Http.post(this.UrlNow + "Admin/listarMesasxIdPuestoVotacion"
+            , request, httpOptions).map(this.ExtractMesa)
+    }
 }
 
 
