@@ -102,7 +102,7 @@ export class UserService {
         return x
     }
     ExtractDataUserValid(res: object): E_Usuario {
-        debugger
+        
         var x: E_Usuario = new E_Usuario()
 
         if (res != null) { x = new UsuarioBuilder().buildFromObject(res).Build() }

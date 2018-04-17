@@ -100,7 +100,7 @@ export class SectorComponent implements OnInit {
         objSector.Nombre = this.form.value.Nombre
         objSector.Activo = this.form.value.checkedActivo
         objSector.FechaCreacion = new Date();
-        objSector.Id_Departamento = this.form.value.Departamentos
+        objSector.Id_departamento = this.form.value.Departamentos
         this.confirmDialogRef = this.Matdialog.open(FuseConfirmDialogComponent, {})
         this.confirmDialogRef.componentInstance.confirmMessage = '¿Estas seguro de realizar esta acción?';
         this.confirmDialogRef.afterClosed().subscribe(result => {

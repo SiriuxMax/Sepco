@@ -166,6 +166,13 @@ export class AdminServices {
             , request, httpOptions).map(this.ExtractListDirector)
     }
 
+    ListarAllDirectorDepto(): Observable<Array<E_DirectorDepartamento>> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        //var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/ListarAllDirectorDepto"
+            , "", httpOptions).map(this.ExtractListDirector)
+    }
+
     ListarGerentesSectorxCorreo(CLient: E_GerenteSector): Observable<E_GerenteSector> {
         var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
         const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
@@ -173,6 +180,16 @@ export class AdminServices {
         return this.Http.post(this.UrlNow + "Individuo/ListarGerentesSectorxCorreo"
             , request, httpOptions).map(this.ExtractGerente)
     }
+
+    ListarGerentesSector(): Observable<Array<E_GerenteSector>> {
+     
+        const httpOptions = this.HeaderBuilder.HeadNow()
+       
+        return this.Http.post(this.UrlNow + "Individuo/ListarGerentesSector"
+            , "", httpOptions).map(this.ExtractGerenteSector)
+    }
+
+
     ListarDirectorDeptoxGerente(CLient: E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(CLient)

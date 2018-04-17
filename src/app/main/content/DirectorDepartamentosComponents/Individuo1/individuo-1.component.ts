@@ -82,7 +82,7 @@ export class Individuo1Component implements OnInit {
             .subscribe((x: E_Cliente) => {
                 this.ClienteInfo = x
                 var objDirector: E_DirectorDepartamento = new E_DirectorDepartamento()
-                objDirector.Id_Departamento = this.ClienteInfo.Id_Departamento
+                objDirector.Id_departamento = this.ClienteInfo.Id_Departamento
                 this.AdminServices.ListarDirectorDepto(objDirector).subscribe((x: Array<E_DirectorDepartamento>) => {
                     if (x.filter((z) => z.Correo == this.ClienteInfo.Correo).length > 0) {
                         this.IdDirectorDepto = x.find((z) => z.Correo == this.ClienteInfo.Correo).Id

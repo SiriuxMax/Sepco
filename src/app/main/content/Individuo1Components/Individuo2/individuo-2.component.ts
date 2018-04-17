@@ -391,7 +391,7 @@ export class Individuo2Component implements OnInit {
         this.UserService.ClientexId(ObjClientDirector)
             .subscribe((x: E_Cliente) => {
                 var ObjSector: E_Sector = new E_Sector()
-                ObjSector.Id_Departamento = x.Id_Departamento
+                ObjSector.Id_departamento = x.Id_Departamento
                 this.ParameterService.ListarSector(ObjSector).subscribe((x) => {
                     this.ListSector = x
                 })

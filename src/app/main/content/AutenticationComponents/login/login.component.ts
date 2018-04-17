@@ -134,6 +134,8 @@ export class FuseLoginComponent implements OnInit {
                 this.Router.navigate(["/mainpageindividuo1/"])
             } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 7) {
                 this.Router.navigate(["/maingerente/"])
+            } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 14) {
+                this.Router.navigate(["/mainpagealtagerencia/"])
             }
 
 

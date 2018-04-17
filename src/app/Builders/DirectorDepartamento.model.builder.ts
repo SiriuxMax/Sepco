@@ -12,7 +12,7 @@ export class DirectorDepartamentoBuilder {
     public Correo: string
     public Telefono: string
     public Celular: string   
-    public Id_Departamento: number
+    public Id_departamento: number
     public Estado: boolean
     public FechaCreacion: Date
     public Id_Sector: number
@@ -29,7 +29,7 @@ export class DirectorDepartamentoBuilder {
         if (x.Celular != undefined) { this.Celular = x.Celular }
         if (x.Correo != undefined) { this.Correo = x.Correo }
         if (x.Direccion != undefined) { this.Direccion = x.Direccion }
-        if (x.Id_Departamento != undefined) { this.Id_Departamento = x.Id_Departamento }
+        if (x.Id_departamento != undefined) { this.Id_departamento = x.Id_departamento }
         if (x.Id_Sector != undefined) { this.Id_Sector = x.Id_Sector }
         if (x.Estado != undefined) { this.Estado = x.Estado }
         if (x.FechaCreacion != undefined) { this.FechaCreacion = x.FechaCreacion }
@@ -49,7 +49,7 @@ export class DirectorDepartamentoBuilder {
         obj.Celular = this.Celular
         obj.Correo = this.Correo
         obj.Direccion = this.Direccion
-        obj.Id_Departamento = this.Id_Departamento
+        obj.Id_departamento = this.Id_departamento
         obj.Id_Sector = this.Id_Sector
         obj.Estado = this.Estado
         obj.FechaCreacion = this.FechaCreacion

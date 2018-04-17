@@ -12,20 +12,19 @@ import { E_Reunion } from 'app/Models/E_Reunion';
 import { E_Imagen } from 'app/Models/E_Imagen';
 import { AppSettings } from 'app/app.settings';
 import { ImageService } from 'app/ApiServices/ImageServices';
-
 import { ReunionBuilder } from 'app/Builders/Reunion.model.builder';
 import { ReunionService } from 'app/ApiServices/ReunionService';
 import { Router } from '@angular/router';
 import { E_Municipios } from 'app/Models/E_Municipios';
-import { AdminServices } from '../../../../ApiServices/AdminServices';
+import { AdminServices } from '../../../../../ApiServices/AdminServices';
 
 @Component({
     moduleId: module.id,
-    selector: 'sac-individuo2',
-    templateUrl: 'sac-individuo2.component.html',
-    styleUrls: ['sac-individuo2.component.scss']
+    selector: 'listar-directores',
+    templateUrl: 'listar-directores.component.html',
+    styleUrls: ['listar-directores.component.scss']
 })
-export class SacIndividuo2Component implements OnInit {
+export class ListarDirectoresComponent implements OnInit {
     rows = [];
     public DepartamentoSeleccionado: string = ""
     public MunicipioSeleccionado: string = ""
@@ -46,7 +45,7 @@ export class SacIndividuo2Component implements OnInit {
         private ReunionService: ReunionService,
         private Router: Router,
         private dialog: MatDialog,
-        private AdminServices: AdminServices,public navigation:NavigationInfoService) {
+        private ImageService: AdminServices) {
 
         if (this.NavigationData.storage == undefined) {}// this.Router.navigate(["/Maps"]) }
      //   this.DatoDepto = this.NavigationData.storage.IdDepto
@@ -60,11 +59,17 @@ export class SacIndividuo2Component implements OnInit {
         this.Router.navigate(['/mainpageadmin'])
      }
     ObtenerReuniones() {
-        ;
-        var ObjReu: E_Imagen = new E_Imagen()
+        
+        var ObjReu: E_TipoReunion = new E_TipoReunion()
         //ObjReu.Id_Departamento = this.DatoDepto
-        this.AdminServices.ListarIndividuos2Pendientes().subscribe((x) => {
-            ;
+        this.ImageService.ListarAllDirectorDepto().subscribe((x) => {
+            debugger;
+            x.forEach(element => {
+                if(this.ListDepartamentos.find( (x) => x.Id == element.Id_departamento) !=  undefined){
+                            element.NombreDepto=this.ListDepartamentos.find( (x) => x.Id == element.Id_departamento).Nombre
+                }
+                
+            });
             this.rows = x;
             this.loadingIndicator = false;
         }
@@ -74,7 +79,7 @@ export class SacIndividuo2Component implements OnInit {
     }
 
     SelectedDepartamento(y) {
-        ;
+
         var depObj = this.ListDepartamentos.find(x => x.Id == y.value)
         this.ListMunicipiosGroup = this.ListMunicipiosBase.filter(x => x.Id_Departamento == Number(depObj.Codigo))
     }
@@ -93,7 +98,7 @@ export class SacIndividuo2Component implements OnInit {
     }
 
     ngOnInit() {
-        
+
         this.ParameterService.listarDepartamentos()
             .subscribe((x: Array<E_Departamentos>) => {
                 this.ListDepartamentos = x
@@ -108,27 +113,10 @@ export class SacIndividuo2Component implements OnInit {
     }
     selectedEvent(x) {
         
-        // console.log(x)
-        // const dialogRef = this.dialog.open(OkImageComponent, {            
-        //     data: x.selected[0]
-        // });
-
-        // dialogRef.afterClosed().subscribe(result => {
-        //     if (result) {
-        //         this.ObtenerReuniones();
-        //     }
-
-        // });
+       
     }
-    modificar(event:any){
-        ;
-        console.log(event);
-        this.navigation.dataIndividuo2=event;
-        this.Router.navigate(['/Sector'])
 
+    nuevo(){
+        this.Router.navigate(['/directordepartamento'])
     }
 }
-
-
-
-

@@ -4,5 +4,6 @@ export class E_TipoReunion {
     public Estado: boolean
     public Fecha: Date
     public Nombre: string
+    
     constructor() { }
 }

@@ -129,7 +129,7 @@ export class GerenteSectorComponent implements OnInit {
     SelectedDepartamento(y) {
         var depObj = this.ListDepartamentos.find(x => x.Id == y.value)
         var objSector: E_Sector = new E_Sector()
-        objSector.Id_Departamento = Number(y.value)
+        objSector.Id_departamento = Number(y.value)
         this.ParameterService.ListarSector(objSector)
             .subscribe((x: Array<E_Sector>) => {
                 this.ListSectorGroup = x

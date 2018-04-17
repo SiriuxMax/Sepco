@@ -130,7 +130,7 @@ export class DirectorDepartamentoComponent implements OnInit {
     SelectedDepartamento(y) {
 
         var objSector: E_Sector = new E_Sector()
-        objSector.Id_Departamento = y.value.Id
+        objSector.Id_departamento = y.value.Id
         this.ParameterService.ListarSector(objSector)
             .subscribe((x: Array<E_Sector>) => {
                 this.ListSectorGroup = x
@@ -160,7 +160,7 @@ export class DirectorDepartamentoComponent implements OnInit {
         objDirectorDepartamento.Correo = this.form.value.email.toLowerCase()
         objDirectorDepartamento.Telefono = this.form.value.Telefonof
         objDirectorDepartamento.Celular = this.form.value.Celular
-        objDirectorDepartamento.Id_Departamento = this.CurrentGerente.Id_Departamento
+        objDirectorDepartamento.Id_departamento = this.CurrentGerente.Id_Departamento
         objDirectorDepartamento.Estado = true
         objDirectorDepartamento.FechaCreacion = new Date();
         objDirectorDepartamento.CambiarClave = true
@@ -181,7 +181,7 @@ export class DirectorDepartamentoComponent implements OnInit {
         objCliente.Cedula = objDirectorDepartamento.Cedula
         objCliente.Telefono = objDirectorDepartamento.Telefono
         objCliente.Celular = objDirectorDepartamento.Celular
-        objCliente.Id_Departamento = objDirectorDepartamento.Id_Departamento
+        objCliente.Id_Departamento = objDirectorDepartamento.Id_departamento
         objCliente.Apellido = objDirectorDepartamento.Apellidos
         objCliente.Estado = true
         objCliente.Direccion = objDirectorDepartamento.Direccion

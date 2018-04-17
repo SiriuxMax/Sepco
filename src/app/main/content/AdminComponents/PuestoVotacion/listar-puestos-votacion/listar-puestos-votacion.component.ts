@@ -12,25 +12,24 @@ import { E_Reunion } from 'app/Models/E_Reunion';
 import { E_Imagen } from 'app/Models/E_Imagen';
 import { AppSettings } from 'app/app.settings';
 import { ImageService } from 'app/ApiServices/ImageServices';
-
 import { ReunionBuilder } from 'app/Builders/Reunion.model.builder';
 import { ReunionService } from 'app/ApiServices/ReunionService';
 import { Router } from '@angular/router';
 import { E_Municipios } from 'app/Models/E_Municipios';
-import { AdminServices } from '../../../../ApiServices/AdminServices';
+import { E_ZonaElectoral } from '../../../../../Models/E_ZonaElectoral';
 
 @Component({
     moduleId: module.id,
-    selector: 'sac-individuo2',
-    templateUrl: 'sac-individuo2.component.html',
-    styleUrls: ['sac-individuo2.component.scss']
+    selector: 'listar-puestos-votacion',
+    templateUrl: 'listar-puestos-votacion.component.html',
+    styleUrls: ['listar-puestos-votacion.component.scss']
 })
-export class SacIndividuo2Component implements OnInit {
+export class ListarPuestosVotacionComponent implements OnInit {
     rows = [];
     public DepartamentoSeleccionado: string = ""
     public MunicipioSeleccionado: string = ""
     public ListDepartamentos: Array<E_Departamentos> = new Array<E_Departamentos>()
-    public ListMunicipiosBase: Array<E_Municipios> = new Array<E_Municipios>()
+    public ListMunicipiosBase: Array<E_ZonaElectoral> = new Array<E_ZonaElectoral>()
     public ListMunicipiosGroup: Array<E_Municipios> = new Array<E_Municipios>()
     public nombrefil:string;
     public cedula:string;
@@ -46,7 +45,7 @@ export class SacIndividuo2Component implements OnInit {
         private ReunionService: ReunionService,
         private Router: Router,
         private dialog: MatDialog,
-        private AdminServices: AdminServices,public navigation:NavigationInfoService) {
+        private ImageService: ParameterService) {
 
         if (this.NavigationData.storage == undefined) {}// this.Router.navigate(["/Maps"]) }
      //   this.DatoDepto = this.NavigationData.storage.IdDepto
@@ -60,23 +59,33 @@ export class SacIndividuo2Component implements OnInit {
         this.Router.navigate(['/mainpageadmin'])
      }
     ObtenerReuniones() {
-        ;
-        var ObjReu: E_Imagen = new E_Imagen()
+        
+        var ObjReu: E_TipoReunion = new E_TipoReunion()
         //ObjReu.Id_Departamento = this.DatoDepto
-        this.AdminServices.ListarIndividuos2Pendientes().subscribe((x) => {
-            ;
-            this.rows = x;
-            this.loadingIndicator = false;
-        }
-
-
-        )
+        this.ParameterService.listarZonas().subscribe((x: Array<E_ZonaElectoral>) => {
+            debugger;
+            this.ListMunicipiosBase = x
+            this.ImageService.listarPuestosVotacion().subscribe((x) => {
+                debugger;
+                x.forEach(element => {
+                    if(this.ListMunicipiosBase.find( (x) => x.Id == element.Id_ZonaElectoral) !=  undefined){
+                                element.NombreZE=this.ListMunicipiosBase.find( (x) => x.Id == element.Id_ZonaElectoral).Nombre
+                    }
+                    
+                });
+                this.rows = x;
+                this.loadingIndicator = false;
+            }
+    
+    
+            )
+        })
     }
 
     SelectedDepartamento(y) {
-        ;
-        var depObj = this.ListDepartamentos.find(x => x.Id == y.value)
-        this.ListMunicipiosGroup = this.ListMunicipiosBase.filter(x => x.Id_Departamento == Number(depObj.Codigo))
+
+        // var depObj = this.ListDepartamentos.find(x => x.Id == y.value)
+        // this.ListMunicipiosGroup = this.ListMunicipiosBase.filter(x => x.Id_Departamento == Number(depObj.Codigo))
     }
 
     filtrar() {
@@ -93,42 +102,22 @@ export class SacIndividuo2Component implements OnInit {
     }
 
     ngOnInit() {
-        
+
         this.ParameterService.listarDepartamentos()
             .subscribe((x: Array<E_Departamentos>) => {
                 this.ListDepartamentos = x
             })
-        this.ParameterService.ListarMunicipios()
-            .subscribe((x: Array<E_Municipios>) => {
-                this.ListMunicipiosBase = x
-            })
+        
         this.loadingIndicator = true;
         this.ObtenerReuniones()
 
     }
     selectedEvent(x) {
         
-        // console.log(x)
-        // const dialogRef = this.dialog.open(OkImageComponent, {            
-        //     data: x.selected[0]
-        // });
-
-        // dialogRef.afterClosed().subscribe(result => {
-        //     if (result) {
-        //         this.ObtenerReuniones();
-        //     }
-
-        // });
+       
     }
-    modificar(event:any){
-        ;
-        console.log(event);
-        this.navigation.dataIndividuo2=event;
-        this.Router.navigate(['/Sector'])
 
+    nuevo(){
+        this.Router.navigate(['/puestovotacion'])
     }
 }
-
-
-
-

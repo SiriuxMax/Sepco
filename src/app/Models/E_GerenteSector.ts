@@ -8,6 +8,7 @@ export class E_GerenteSector {
     public Telefono: string
     public Celular: string   
     public Id_Departamento: number
+    public NombreDepto: string   
     public Activo: boolean
     public FechaCreacion: Date
     public Id_Sector: number

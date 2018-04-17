@@ -172,7 +172,7 @@ export class AdminIndividuo2Component implements OnInit {
 
 
         var ObjSector: E_Sector = new E_Sector()
-        ObjSector.Id_Departamento = para.Id_departamento
+        ObjSector.Id_departamento = para.Id_departamento
         this.ParameterService.ListarSector(ObjSector).subscribe((x) => {
 
             this.ListSector = x

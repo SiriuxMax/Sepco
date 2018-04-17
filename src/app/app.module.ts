@@ -56,11 +56,20 @@ import { CarrouselModule } from './main/content/ClienteComponents/Mapas/Carrouse
 import { Error404Module } from './main/content/AutenticationComponents/404/error-404.module';
 import { ClientGuard } from 'app/Guards/ClientGuard';
 import { AdminGuard } from 'app/Guards/AdminGuard';
-import { ListarMetasGerModule } from 'app/main/content/GerenteSectorComponents/listar-metas-ger/listar-metas-ger.module';
 import { MetasModule } from './main/content/GerenteSectorComponents/Metas/metas.module';
 import { MetasDetalleModule } from './main/content/DirectorDepartamentosComponents/MetasDetalle/metas-detalle.module';
-import { ListarMetasModule } from 'app/main/content/DirectorDepartamentosComponents/listar-metasDir/listar-metas.module';
 import { ReporteMetasModule } from './main/content/ReporteComponents/ReporteMetas/ReporteMetas.module';
+import { MainPageAltaGerenciaModule } from './main/content/AltaGerenciaComponents/MainPageAltaGerencia/MainPageAltaGerencia.module';
+import { AltaGerenciaGuard } from './Guards/AltaGerencia';
+import { ListTipoEventoModule } from 'app/main/content/AdminComponents/TipoEvento/list-tipo-evento/list-tipo-evento.module';
+import { ListSectorModule } from 'app/main/content/AdminComponents/Sector/list-sector/list-sector.module';
+import { ListarDirectoresModule } from 'app/main/content/GerenteSectorComponents/DirectorDepartamento/listar-directores/listar-directores.module';
+import { ListaZonaElectoModule } from 'app/main/content/AdminComponents/ZonaElectoral/lista-zona-electo/lista-zona-electo.module';
+import { ListarPuestosVotacionModule } from 'app/main/content/AdminComponents/PuestoVotacion/listar-puestos-votacion/listar-puestos-votacion.module';
+import { ListarMesasModule } from 'app/main/content/AdminComponents/Mesa/listar-mesas/listar-mesas.module';
+import { ListarGerenteModule } from 'app/main/content/AdminComponents/GerenteSector/listar-gerente/listar-gerente.module';
+import { ListarMetasGerModule } from 'app/main/content/GerenteSectorComponents/listar-metas-ger/listar-metas-ger.module';
+import { ListarMetasModule } from 'app/main/content/DirectorDepartamentosComponents/listar-metasDir/listar-metas.module';
 
 
 const appRoutes: Routes = [
@@ -90,11 +99,18 @@ const appRoutes: Routes = [
     { path: 'mesa', redirectTo: '/mesa', pathMatch: 'full' },
     { path: 'gerentesector', redirectTo: '/gerentesector', pathMatch: 'full' },
     { path: 'ListarVehiculosxDir', redirectTo: '/ListarVehiculosxDir', pathMatch: 'full' },
+    { path: 'listarTipoEvento', redirectTo: '/listarTipoEvento', pathMatch: 'full' },
+    { path: 'listarSector', redirectTo: '/listarSector', pathMatch: 'full' },
+    { path: 'listarZonaElec', redirectTo: '/listarZonaElec', pathMatch: 'full' },
+    { path: 'listarPuestos', redirectTo: '/listarPuestos', pathMatch: 'full' },
+    { path: 'listarMesas', redirectTo: '/listarMesas', pathMatch: 'full' },
+    { path: 'lsitarGerente', redirectTo: '/lsitarGerente', pathMatch: 'full' },
     //Gerente
     { path: 'maingerente', redirectTo: '/maingerente', pathMatch: 'full' },
     { path: 'directordepartamento', redirectTo: '/directordepartamento', pathMatch: 'full' },
     { path: 'ListarMetasGer', redirectTo: '/ListarMetasGer', pathMatch: 'full' },
     { path: 'metas', redirectTo: '/metas', pathMatch: 'full' },
+    { path: 'ListarDirector', redirectTo: '/ListarDirector', pathMatch: 'full' },
 
     //Director
     { path: 'mainpagedirector', redirectTo: '/mainpagedirector', pathMatch: 'full' },
@@ -108,7 +124,11 @@ const appRoutes: Routes = [
     { path: 'individuo2', redirectTo: '/individuo2', pathMatch: 'full' },
     //Reporte
     { path: 'ReporteMetas', redirectTo: '/ReporteMetas', pathMatch: 'full' },
-    
+    //AltaGerencia
+    { path: 'mainpagealtagerencia', redirectTo: '/mainpagealtagerencia', pathMatch: 'full' },
+
+
+
 
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: 'login' },
@@ -129,6 +149,7 @@ const appRoutes: Routes = [
 
         // Fuse Main and Shared modules
         FuseModule.forRoot(fuseConfig),
+        ListTipoEventoModule,
         FuseSharedModule,
         FuseMainModule,
         FuseSampleModule,
@@ -165,7 +186,14 @@ const appRoutes: Routes = [
         CorreoModule,
         MetasModule,
         Error404Module,
-        ReporteMetasModule
+        ReporteMetasModule,
+        ListSectorModule,
+        ListarDirectoresModule,
+        ListaZonaElectoModule,
+        ListarPuestosVotacionModule,
+        ListarMesasModule,
+        ListarGerenteModule,
+        MainPageAltaGerenciaModule
     ],
     providers: [
         UserService
@@ -177,7 +205,8 @@ const appRoutes: Routes = [
         , AdminServices
         , IndividuoServices
         , ClientGuard
-        , AdminGuard]
+        , AdminGuard
+        , AltaGerenciaGuard]
     ,
     bootstrap: [
         AppComponent

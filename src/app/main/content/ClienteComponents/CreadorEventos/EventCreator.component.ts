@@ -97,9 +97,9 @@ export class EventCreatorComponent implements OnInit {
     SelectedDepartamento(y) {
 
         var objDir: E_DirectorDepartamento = new E_DirectorDepartamento()
-        objDir.Id_Departamento = y.value.Id
+        objDir.Id_departamento = y.value.Id
         var objSector: E_Sector = new E_Sector()
-        objSector.Id_Departamento = y.value.Id
+        objSector.Id_departamento = y.value.Id
         this.ParameterService.ListarSector(objSector)
             .subscribe((x: Array<E_Sector>) => {
                 this.ListSector = x

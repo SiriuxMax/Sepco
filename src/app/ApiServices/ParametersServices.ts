@@ -114,6 +114,17 @@ export class ParameterService {
             , request, httpOptions).map(this.ExtractSector)
     }
 
+    ListarSectorAll(): Observable<Array<E_Sector>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify("")
+        return this.Http.post(this.UrlNow + "Admin/listarSectorAll"
+            , "", httpOptions).map(this.ExtractSector)
+    }
+
     ListarZonaElectoral(): Observable<Array<E_ZonaElectoral>> {
         const httpOptions = {
             headers: new HttpHeaders({
@@ -135,6 +146,18 @@ export class ParameterService {
         return this.Http.post(this.UrlNow + "Admin/listarZonasxMunicipio"
             , request, httpOptions).map(this.ExtractZonaElectoral)
     }
+
+    listarZonas(): Observable<Array<E_ZonaElectoral>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify("")
+        return this.Http.post(this.UrlNow + "Admin/listarZonas"
+            , "", httpOptions).map(this.ExtractZonaElectoral)
+    }
+
     listarMesasxPuesto(obj: E_Mesa): Observable<Array<E_Mesa>> {
         var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
@@ -142,12 +165,29 @@ export class ParameterService {
         return this.Http.post(this.UrlNow + "Admin/listarMesasxPuesto"
             , request, httpOptions).map(this.ExtractMesas)
     }
+
+    listarMesas(): Observable<Array<E_Mesa>> {
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+        
+        return this.Http.post(this.UrlNow + "Admin/listarMesas"
+            , "", httpOptions).map(this.ExtractMesas)
+    }
+
     listarPuestosVotacionxZona(obj: E_PuestoVotacion): Observable<Array<E_PuestoVotacion>> {
         var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(obj)
         return this.Http.post(this.UrlNow + "Admin/listarPuestosVotacionxZona"
             , request, httpOptions).map(this.ExtractPuestoVotacion)
+    }
+
+    listarPuestosVotacion( ): Observable<Array<E_PuestoVotacion>> {
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+       
+        return this.Http.post(this.UrlNow + "Admin/listarPuestosVotacion"
+            , "", httpOptions).map(this.ExtractPuestoVotacion)
     }
 
     ListarConfTipoIndividuo(): Observable<Array<E_ConfiguracionTipoIndividuo>> {
