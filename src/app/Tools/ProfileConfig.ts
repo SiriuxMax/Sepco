@@ -8,7 +8,7 @@ export class ProfileConfig {
 
     public static ExtractProfilexTipo2(x: number): number {
         var perfil = 0
-        debugger
+        
         switch (x) {
             case TipoPersona2.Testigo:
                 perfil = Perfiles.Testigo

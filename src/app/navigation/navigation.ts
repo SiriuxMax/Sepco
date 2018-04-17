@@ -185,7 +185,9 @@ export const navigationDirectorDepartamento = [
             },
             
         ]
-    }
+        
+    },
+    
 ];
 
 export const navigatioGerenteSector = [
@@ -197,7 +199,7 @@ export const navigatioGerenteSector = [
         'children': [
             {
                 'id': 'directordepartamento',
-                'title': 'Director Departamento',
+                'title': 'Lider Político',
                 'translate': 'NAV.SAMPLE.TITLE',
                 'type': 'item',
                 'icon': 'account_box',
@@ -220,19 +222,39 @@ export const navigatioGerenteSector = [
                 'icon': 'verified_user',
                 'url': '/ListarMetasGer',
             },
-
-
-
+        ]
+    },
+    
+    {
+        'id': 'Reporte',
+        'title': 'Reportes',
+        'translate': 'NAV.APPLICATIONS',
+        'type': 'group',
+        'children': [
             {
-                'id': 'Salir',
+                'id': 'Reporte1',
+                'title': 'Reporte de Metas',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'assessment',
+                'url': '/ReporteMetas',
+            },
+           
+            
+            {
+                'id': 'Salir1',
                 'title': 'Salir',
                 'translate': 'NAV.SAMPLE.TITLE',
                 'type': 'item',
                 'icon': 'input',
                 'url': '/login',
             },
+            
         ]
+        
     }
+
+
 ];
 
 export const navigationIndividuo1 = [

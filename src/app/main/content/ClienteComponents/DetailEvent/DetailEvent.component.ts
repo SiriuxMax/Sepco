@@ -107,7 +107,7 @@ export class DetailEventComponent implements OnInit {
         lik.FechaCreacion = new Date;
         lik.Id_Imagen = this.ImagenGeneral.Id
         this.Adminservice.crearLike(lik).subscribe((x: boolean) => {
-            debugger;
+            ;
             if (x) {
                  this.MobileApp = true;
                 this.ImageService.LikesxImagen(lik).subscribe((x: Array<E_Like>) => {

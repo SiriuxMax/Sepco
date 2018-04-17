@@ -65,8 +65,8 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field fxFlex="50">
-                        <mat-select placeholder="Lider Politico" formControlName="DirectorDepto" [(ngModel)]="DirectorDeptoSeleccionado" required>
-                            <mat-option *ngFor="let Item of ListDirectorDepto" [value]="Item.Id">
+                        <mat-select placeholder="Lider Politico" formControlName="DirectorDepto" [(ngModel)]="DirectorDeptoSeleccionado" (change)="hola()" multiple required>
+                            <mat-option *ngFor="let Item of ListDirectorDepto" [value]="Item">
                                 {{ Item.Nombres+' '+ Item.Apellidos }}
                             </mat-option>
                         </mat-select>
@@ -102,6 +102,9 @@
                 </div>
                 <!-- *********************************************************** -->
 
+                <div *ngIf="SaveInprogress">
+                    <mat-spinner style="margin:0 auto;"></mat-spinner>
+                </div>
                 <button (click)="ConfirmData()" mat-raised-button color="accent" class="submit-button" aria-label="CREATE AN ACCOUNT" [disabled]="form.invalid">
                     Enviar Información
                 </button>

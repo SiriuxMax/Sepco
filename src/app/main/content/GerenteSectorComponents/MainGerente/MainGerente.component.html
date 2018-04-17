@@ -8,7 +8,7 @@
     <div class="center">
 
         <!-- CONTENT HEADER -->
-        <div class="header mat-accent-bg p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
+        <div class="header  p-24 h-160" fxLayout="row" fxLayoutAlign="start center">
             <div fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="center start">
                 <div class="h2 mt-16" style="color:white">Gerente</div>
 
@@ -40,10 +40,13 @@
                         <mat-toolbar-row [routerLink]="'/ListarMetasGer'" class="bottomSeparator">
                             <span>Listado de Metas</span>
                         </mat-toolbar-row>
-                    
-
-                        
-                        
+                    </mat-toolbar>
+                    <h1>Reportes</h1>
+                    <mat-toolbar color="primary">
+                        <mat-toolbar-row [routerLink]="'/ReporteMetas'" class="bottomSeparator">
+                            <span>Reporte de Metas</span>
+                        </mat-toolbar-row>
+                  
                     </mat-toolbar>
 
 

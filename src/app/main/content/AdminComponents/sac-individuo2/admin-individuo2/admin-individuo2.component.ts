@@ -127,12 +127,12 @@ export class AdminIndividuo2Component implements OnInit {
     cargador(para: E_Individuo2) {
 
         this.ParameterService.listarTipoAntecedente().subscribe((x) => {
-            debugger;
+            ;
             this.listTipoAntecedente = x
             var ante: E_TipoAntecedente;
 
             this.listTipoAntecedente.forEach(function (part, index, Source) {
-                debugger;
+                ;
 
                 Source[index].valuee =
 
@@ -179,7 +179,7 @@ export class AdminIndividuo2Component implements OnInit {
         })
 
         this.ParameterService.listarDepartamentos().subscribe((x) => {
-            debugger;
+            ;
             this.ListDepartamentos = x
             this.departaseleccionado = 5
         })
@@ -221,7 +221,7 @@ export class AdminIndividuo2Component implements OnInit {
 
     }
     EnviarInfo() {
-        debugger;
+        ;
         var lista = this.listTipoAntecedente
         var cantidad: number;
 
@@ -252,7 +252,7 @@ export class AdminIndividuo2Component implements OnInit {
         });
 
         this.AdminServices.modificarIndividuo2(objIndividuo2).subscribe((x: boolean) => {
-            debugger;
+            ;
             this.SucceSave = x;
             this.resultado = "Exito al modificar!";
         })

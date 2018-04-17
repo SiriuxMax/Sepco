@@ -27,6 +27,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
     styleUrls: ['director-departamento.component.scss']
 })
 export class DirectorDepartamentoComponent implements OnInit {
+    ErrorSave: boolean;
     SaveInProgress: boolean;
     PasswordTemp: string;
     UserNameTemp: string;
@@ -63,7 +64,6 @@ export class DirectorDepartamentoComponent implements OnInit {
             Nombre: {},
             Apellido: {},
             Celular: {},
-            Departamentos: {},
             Direccion: {},
             Sector: {}
         };
@@ -98,7 +98,6 @@ export class DirectorDepartamentoComponent implements OnInit {
             Nombre: ['', [Validators.required]],
             Apellido: ['', [Validators.required]],
             Direccion: ['', [Validators.required]],
-            Departamentos: [undefined, [Validators.required]],
 
 
         });
@@ -161,7 +160,7 @@ export class DirectorDepartamentoComponent implements OnInit {
         objDirectorDepartamento.Correo = this.form.value.email.toLowerCase()
         objDirectorDepartamento.Telefono = this.form.value.Telefonof
         objDirectorDepartamento.Celular = this.form.value.Celular
-        objDirectorDepartamento.Id_Departamento = this.form.value.Departamentos.Id
+        objDirectorDepartamento.Id_Departamento = this.CurrentGerente.Id_Departamento
         objDirectorDepartamento.Estado = true
         objDirectorDepartamento.FechaCreacion = new Date();
         objDirectorDepartamento.CambiarClave = true
@@ -187,28 +186,36 @@ export class DirectorDepartamentoComponent implements OnInit {
         objCliente.Estado = true
         objCliente.Direccion = objDirectorDepartamento.Direccion
         objCliente.usuario = objUsuario
+        this.ErrorSave = false
+        this.SucceSave = false
+        this.UserService.UsuarioxNombre(objUsuario).subscribe((x: E_Usuario) => {
 
+            if (x.UserName == undefined) {
+                this.AdminServices.crearDirectorDepartamento(objDirectorDepartamento).subscribe((x: boolean) => {
+                    if (x) {
+                        this.UserService.crearCliente(objCliente).subscribe((y: boolean) => {
+                            if (y) {
+                                this.UserNameTemp = objUsuario.UserName
+                                this.PasswordTemp = passTemp
+                                this.SucceSave = x
+                                this.clearform()
+                                var cl: E_Cliente = new E_Cliente();
+                                cl.Correo = objUsuario.UserName;
+                                cl.EmailObjeto = new E_Email();
+                                cl.EmailObjeto.cuerpo = ProfileConfig.cuerpo(objUsuario.UserName, passTemp)
+                                this.AdminServices.enviarEmail(cl).subscribe((x: boolean) => {
 
-        this.AdminServices.crearDirectorDepartamento(objDirectorDepartamento).subscribe((x: boolean) => {
-            if (x) {
-                this.UserService.crearCliente(objCliente).subscribe((y: boolean) => {
-                    if (y) {
-                        this.UserNameTemp = objUsuario.UserName
-                        this.PasswordTemp = passTemp
-                        this.SucceSave = x
-                        this.clearform()
-                        var cl: E_Cliente = new E_Cliente();
-                        cl.Correo = objUsuario.UserName;
-                        cl.EmailObjeto = new E_Email();
-                        cl.EmailObjeto.cuerpo = ProfileConfig.cuerpo(objUsuario.UserName, passTemp)
-                        this.AdminServices.enviarEmail(cl).subscribe((x: boolean) => {
-                            
-                        });
+                                });
+                            }
+                            this.SaveInProgress = false
+                        })
                     }
-                    this.SaveInProgress = false
-                })
-            }
 
+                })
+            } else {
+                console.log('no existe')
+                this.ErrorSave = true
+            }
         })
 
     }
@@ -222,7 +229,6 @@ export class DirectorDepartamentoComponent implements OnInit {
             email: '',
             Telefonof: '',
             Celular: '',
-            Departamentos: 0,
         })
 
     }

@@ -405,7 +405,7 @@ export class ParameterService {
     }
 
    listarMetasxDirexFechasxActiva(obj :E_Metas): Observable<Array<E_Metas>> {
-        debugger;
+        ;
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',

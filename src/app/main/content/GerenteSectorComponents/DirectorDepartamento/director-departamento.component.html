@@ -32,7 +32,7 @@
                 </div>
                 <!-- *********************************************************** -->
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field fxFlex="50">
+                    <mat-form-field fxFlex="100">
                         <input matInput type="text" placeholder="Cedula" formControlName="Cedula" [textMask]="{mask: MaskedNumber}" required>
                         <mat-error *ngIf="formErrors.Cedula.required">
                             Cedula es requerida
@@ -46,9 +46,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                </div>
-
-                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+   
 
                     <mat-form-field fxFlex="50">
                         <input matInput placeholder="Apellido" formControlName="Apellido" required>
@@ -62,9 +60,7 @@
                             Dirección es requerido
                         </mat-error>
                     </mat-form-field>
-                </div>
-
-                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          
 
                     <mat-form-field fxFlex="50">
                         <input matInput placeholder="Email" formControlName="email" required>
@@ -80,9 +76,7 @@
                         <input matInput placeholder="Telefono Fijo" formControlName="Telefonof" [textMask]="{mask: MaskedNumberNoDecimal}">
                     </mat-form-field>
 
-                </div>
-
-                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+           
 
                     <mat-form-field fxFlex="50">
                         <input matInput placeholder="Telefono Celular" formControlName="Celular" [textMask]="{mask: MaskedNumberNoDecimal}" required>
@@ -91,7 +85,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field fxFlex="50">
+        <!--            <mat-form-field fxFlex="50">
                         <mat-select placeholder="Departamentos" formControlName="Departamentos" [(ngModel)]="DepartamentoSeleccionado" (change)="SelectedDepartamento($event)"
                             required>
                             <mat-option *ngFor="let Item of ListDepartamentos" [value]="Item">
@@ -101,7 +95,7 @@
                         <mat-error *ngIf="formErrors.Departamentos.required">
                             Departamento es requerido
                         </mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
 
                 </div>
 
@@ -119,6 +113,10 @@
                     <div fxFlex="100" style="color:#19611e">Registro Exitoso! Usuario creado Nombre :
                         <span style="font-weight: bolder"> {{UserNameTemp}} </span> - Contraseña Temporal :
                         <span style="font-weight: bolder">{{PasswordTemp}}</span>
+                    </div>
+                </div>
+                <div fxLayout="row" *ngIf="ErrorSave" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div fxFlex="100" style="color:#c84c43">Error Usuario ya se encuentra registrado
                     </div>
                 </div>
 

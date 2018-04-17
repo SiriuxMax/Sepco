@@ -60,6 +60,7 @@ import { ListarMetasGerModule } from 'app/main/content/GerenteSectorComponents/l
 import { MetasModule } from './main/content/GerenteSectorComponents/Metas/metas.module';
 import { MetasDetalleModule } from './main/content/DirectorDepartamentosComponents/MetasDetalle/metas-detalle.module';
 import { ListarMetasModule } from 'app/main/content/DirectorDepartamentosComponents/listar-metasDir/listar-metas.module';
+import { ReporteMetasModule } from './main/content/ReporteComponents/ReporteMetas/ReporteMetas.module';
 
 
 const appRoutes: Routes = [
@@ -92,7 +93,7 @@ const appRoutes: Routes = [
     //Gerente
     { path: 'maingerente', redirectTo: '/maingerente', pathMatch: 'full' },
     { path: 'directordepartamento', redirectTo: '/directordepartamento', pathMatch: 'full' },
-    { path: 'ListarMetasGer', redirectTo: '/ListarMetasGer', pathMatch: 'full' },  
+    { path: 'ListarMetasGer', redirectTo: '/ListarMetasGer', pathMatch: 'full' },
     { path: 'metas', redirectTo: '/metas', pathMatch: 'full' },
 
     //Director
@@ -101,14 +102,18 @@ const appRoutes: Routes = [
     { path: 'metasdetalle', redirectTo: '/metasdetalle', pathMatch: 'full' },
     { path: 'ListarMetasdetalle', redirectTo: '/ListarMetasdetalle', pathMatch: 'full' },
 
-     
+
     //Individuo 1
     { path: 'mainpageindividuo1', redirectTo: '/mainpageindividuo1', pathMatch: 'full' },
     { path: 'individuo2', redirectTo: '/individuo2', pathMatch: 'full' },
-
+    //Reporte
+    { path: 'ReporteMetas', redirectTo: '/ReporteMetas', pathMatch: 'full' },
+    
 
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: 'login' },
+
+
 ];
 
 @NgModule({
@@ -160,6 +165,7 @@ const appRoutes: Routes = [
         CorreoModule,
         MetasModule,
         Error404Module,
+        ReporteMetasModule
     ],
     providers: [
         UserService

@@ -60,11 +60,11 @@ export class SacIndividuo2Component implements OnInit {
         this.Router.navigate(['/mainpageadmin'])
      }
     ObtenerReuniones() {
-        debugger;
+        ;
         var ObjReu: E_Imagen = new E_Imagen()
         //ObjReu.Id_Departamento = this.DatoDepto
         this.AdminServices.ListarIndividuos2Pendientes().subscribe((x) => {
-            debugger;
+            ;
             this.rows = x;
             this.loadingIndicator = false;
         }
@@ -74,7 +74,7 @@ export class SacIndividuo2Component implements OnInit {
     }
 
     SelectedDepartamento(y) {
-        debugger;
+        ;
         var depObj = this.ListDepartamentos.find(x => x.Id == y.value)
         this.ListMunicipiosGroup = this.ListMunicipiosBase.filter(x => x.Id_Departamento == Number(depObj.Codigo))
     }
@@ -121,7 +121,7 @@ export class SacIndividuo2Component implements OnInit {
         // });
     }
     modificar(event:any){
-        debugger;
+        ;
         console.log(event);
         this.navigation.dataIndividuo2=event;
         this.Router.navigate(['/AdminIndividuo2'])

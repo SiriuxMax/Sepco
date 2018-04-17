@@ -194,7 +194,7 @@ export class Individuo1Component implements OnInit {
                         cl.EmailObjeto= new E_Email();
                         cl.EmailObjeto.cuerpo=ProfileConfig.cuerpo(objUsuario.UserName,passTemp)
                         this.AdminServices.enviarEmail(cl).subscribe((x: boolean) => {
-                            debugger;
+                            ;
                         });
                     }
                 })

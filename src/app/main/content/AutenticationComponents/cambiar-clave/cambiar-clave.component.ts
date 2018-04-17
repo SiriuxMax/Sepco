@@ -34,7 +34,34 @@ export class CambiarClaveComponent {
                 footer: 'none'
             }
         });
-        this.divclaves=false;;
+if(this.UserService.GetCurrentCurrentUserNow() != undefined){
+            if(this.UserService.GetCurrentCurrentUserNow().CambiarClave){
+                this.email=this.UserService.GetCurrentCurrentUserNow().UserName;
+                this.divclaves=true;;
+    
+                var user: E_Usuario = new E_Usuario();
+                user.Email = this.email.trim(); 
+                this.Loading=true;
+                this.UserService.validarEmail(user).subscribe((x: E_Usuario) => {
+                    ;
+                    if (x.UserName != undefined) {
+                        this.usu = x;
+                        this.divclaves=true;
+                        this.resultado="";
+                        this.Loading=false;
+                    }else{
+                        this.resultado="EL usuario no existe.";
+                        this.Loading=false;
+                    }            
+                })
+                
+            }else{
+                this.divclaves=false;;
+            }
+        }else{
+            this.divclaves=false;;
+        }
+     
     }
 
 
@@ -75,6 +102,7 @@ export class CambiarClaveComponent {
             this.resultado=""
         }       
         this.usu.Passwordd = btoa(this.clave)
+        this.usu.CambiarClave=false;
         this.Loading=true;
         this.UserService.cambiarClave(this.usu).subscribe((x: boolean) => {
             ;

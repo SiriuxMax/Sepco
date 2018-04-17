@@ -10,6 +10,7 @@ export class E_Usuario {
     public Id_Cliente: number
     public Id_Perfil: number
     public Estado: boolean
+    public CambiarClave: boolean
     public FechaCreacion: Date
     public Imagen :string
     public error: E_Error

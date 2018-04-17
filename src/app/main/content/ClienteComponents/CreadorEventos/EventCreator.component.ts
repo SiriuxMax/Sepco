@@ -125,12 +125,12 @@ export class EventCreatorComponent implements OnInit {
     }
 
     SelectedGerenteSect(y) {
-        debugger;
+        ;
         var objDir: E_DirectorDepartamento = new E_DirectorDepartamento()
         objDir.Id_GerenteSector = y.value.Id
         this.AdminServices.ListarDirectorDeptoxGerente(objDir)
             .subscribe((x: Array<E_DirectorDepartamento>) => {
-                debugger;
+                ;
                 this.listDirectDep = x
             })
     }

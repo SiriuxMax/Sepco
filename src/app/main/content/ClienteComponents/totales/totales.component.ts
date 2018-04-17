@@ -74,7 +74,7 @@ export class TotalesComponent implements OnInit {
 
    
     selectedEvent(x) {
-        debugger;        
+        ;        
         this.NavigationInfoService.storage = x.selected[0]
         this.Router.navigate(["/eventvisor"])
     }

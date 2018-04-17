@@ -26,6 +26,7 @@ import { E_Usuario } from 'app/Models/E_Usuario';
     styleUrls: ['metas.component.scss']
 })
 export class MetasComponent implements OnInit {
+    SaveInprogress: boolean;
     GerenteLogeado: E_GerenteSector;
     SucceSave: boolean;
     dataURL: any;
@@ -39,7 +40,7 @@ export class MetasComponent implements OnInit {
     public checkedActivo;
     ItemMetaSeleccionado: any
     ListItemsMetas: Array<E_ItemsMetas> = new Array<E_ItemsMetas>()
-    DirectorDeptoSeleccionado: any
+    DirectorDeptoSeleccionado: Array<E_DirectorDepartamento> = new Array<E_DirectorDepartamento>()
     ListDirectorDepto: Array<E_DirectorDepartamento> = new Array<E_DirectorDepartamento>()
     // Horizontal Stepper
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -67,6 +68,9 @@ export class MetasComponent implements OnInit {
 
     }
 
+    hola() {
+        console.log(this.DirectorDeptoSeleccionado)
+    }
     ReturnPage(event: Event) {
         event.preventDefault();
         this.Router.navigate(['/maingerente'])
@@ -147,13 +151,27 @@ export class MetasComponent implements OnInit {
         objMetas.cantidad = this.form.value.Cantidad
         objMetas.Id_Item = this.form.value.ItemsMetas
         objMetas.id_gerentesector = this.GerenteLogeado.Id
-        objMetas.id_directordepto = this.form.value.DirectorDepto
+
         objMetas.fechainicio = this.form.value.FechaInicio
         objMetas.fechafin = this.form.value.FechaFin
         objMetas.porcentajecumplimiento = "0"
         objMetas.metacumplida = false
         objMetas.activo = true
+        var counter = 0
+        var counterSave = this.DirectorDeptoSeleccionado.length
+        this.SaveInprogress = true
+        this.SucceSave = false
         objMetas.FechaCreacion = new Date();
+        this.DirectorDeptoSeleccionado.forEach(element => {
+            objMetas.id_directordepto = element.Id
+            this.AdminServices.crearMetas(objMetas).subscribe((x: boolean) => {
+                counter += 1
+                if (x && counter == counterSave) {
+                    this.SucceSave = true
+                    this.SaveInprogress = false
+                }
+            })
+        });
         this.form.setValue({
             Nombre: '',
             Observacion: '',
@@ -163,9 +181,7 @@ export class MetasComponent implements OnInit {
             FechaInicio: '',
             FechaFin: ''
         })
-        this.AdminServices.crearMetas(objMetas).subscribe((x: boolean) => {
-            this.SucceSave = x
-        })
+
 
     }
 }

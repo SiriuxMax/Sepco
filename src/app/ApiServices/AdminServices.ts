@@ -107,7 +107,7 @@ export class AdminServices {
     }
 
     ExtractMetas(res: any): Array<E_Metas> {
-        debugger
+        
         var x: Array<E_Metas> = new Array<E_Metas>()
         res.forEach(element => {
             x.push(new MetasBuilder().buildFromObject(element).Build())
@@ -137,6 +137,7 @@ export class AdminServices {
     }
 
     crearDirectorDepartamento(CLient: E_DirectorDepartamento): Observable<boolean> {
+        debugger
         var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
         const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
         var request = JSON.stringify(CLient)
@@ -179,7 +180,7 @@ export class AdminServices {
             , request, httpOptions).map(this.ExtractListDirector)
     }
     ExtractGerente(res: any): E_GerenteSector {
-        debugger
+        
         var x: E_GerenteSector = new E_GerenteSector()
         res.forEach(element => {
             x = new GerenteSectorBuilder().buildFromObject(element).Build();
@@ -225,21 +226,21 @@ export class AdminServices {
     }
 
     ExtractGerente2(res: any): E_GerenteSector {
-        debugger
+        
         var x: E_GerenteSector = new E_GerenteSector()
         if (res != null) { x = new GerenteSectorBuilder().buildFromObject(res).Build() }
         return x
     }
 
     ExtractDirector(res: any): E_DirectorDepartamento {
-        debugger
+        
         var x: E_DirectorDepartamento = new E_DirectorDepartamento()
         if (res != null) { x = new DirectorDepartamentoBuilder().buildFromObject(res).Build() }
         return x
     }
 
     ExtractIndividuo2(res: any): E_Individuo2 {
-        debugger
+        
         var x: E_Individuo2 = new E_Individuo2()
         if (res != null) { x = new Individuo2Builder().buildFromObject(res).Build() }
         return x

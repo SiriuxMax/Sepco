@@ -33,9 +33,20 @@ export class UserService {
             , request, httpOptions).map(this.ExtractDataUserValid)
     }
 
+    
+    UsuarioxNombre(User: E_Usuario): Observable<E_Usuario> {
+        //var IdUser = this.GetCurrentCurrentUserNow().Id
+        ;
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(User)
+        return this.Http.post(this.UrlNow + "Usuario/UsuarioxNombre"
+            , request, httpOptions).map(this.ExtractDataUser)
+    }
+
+
     cambiarClave(User: E_Usuario): Observable<boolean> {
         var IdUser = this.GetCurrentCurrentUserNow().Id
-        ;
+            ;
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
         var request = JSON.stringify(User)
         return this.Http.post(this.UrlNow + "Usuario/cambiarContrasena"
@@ -73,7 +84,7 @@ export class UserService {
     ExtractDataClient(res: Response): E_Cliente {
 
         var x: E_Cliente = new E_Cliente()
-        
+
         if (res != null) { x = new ClienteBuilder().buildFromObject(res).Build() }
         return x
     }
@@ -91,7 +102,7 @@ export class UserService {
         return x
     }
     ExtractDataUserValid(res: object): E_Usuario {
-
+        debugger
         var x: E_Usuario = new E_Usuario()
 
         if (res != null) { x = new UsuarioBuilder().buildFromObject(res).Build() }
@@ -101,7 +112,7 @@ export class UserService {
                 return x
             }
         }
-        sessionStorage.setItem("CurrentUser", JSON.stringify(res))
+        sessionStorage.setItem("CurrentUser", JSON.stringify(x))
         return x
     }
 

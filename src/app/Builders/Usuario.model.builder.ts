@@ -11,6 +11,7 @@ export class UsuarioBuilder {
     public Id_Cliente: number
     public Id_Perfil: number
     public Estado: boolean
+    public CambiarClave: boolean
     public FechaCreacion: Date
     public error: E_Error
     public Imagen: string
@@ -30,6 +31,7 @@ export class UsuarioBuilder {
         if (x.FechaCreacion != undefined) { this.FechaCreacion = x.FechaCreacion }
         if (x.error != undefined) { this.error = x.error }
         if (x.imagen != undefined) { this.error = x.imagen }
+        if (x.CambiarClave != undefined) { this.CambiarClave = x.CambiarClave }
 
         return this
     }
@@ -47,6 +49,7 @@ export class UsuarioBuilder {
         obj.FechaCreacion = this.FechaCreacion
         obj.error = this.error
         obj.Imagen = this.Imagen
+        obj.CambiarClave = this.CambiarClave
 
         return obj
     }

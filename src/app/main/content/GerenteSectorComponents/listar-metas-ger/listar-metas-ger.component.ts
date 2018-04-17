@@ -73,7 +73,7 @@ export class ListarMetasGerComponent implements OnInit {
             this.gerentedep = x
             ObjReu.id_gerentesector = this.gerentedep.Id;
             this.MetasService.listarMetasxGerente(ObjReu).subscribe((x) => {
-                debugger
+                
                 this.rows = x;
                 this.loadingIndicator = false;
             })
