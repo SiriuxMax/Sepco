@@ -70,6 +70,7 @@ import { ListarMesasModule } from 'app/main/content/AdminComponents/Mesa/listar-
 import { ListarGerenteModule } from 'app/main/content/AdminComponents/GerenteSector/listar-gerente/listar-gerente.module';
 import { ListarMetasGerModule } from 'app/main/content/GerenteSectorComponents/listar-metas-ger/listar-metas-ger.module';
 import { ListarMetasModule } from 'app/main/content/DirectorDepartamentosComponents/listar-metasDir/listar-metas.module';
+import { Individuo2DirModule } from 'app/main/content/DirectorDepartamentosComponents/Individuo2Dir/Individuo2Dir.module';
 
 
 const appRoutes: Routes = [
@@ -117,6 +118,7 @@ const appRoutes: Routes = [
     { path: 'individuo1', redirectTo: '/individuo1', pathMatch: 'full' },
     { path: 'metasdetalle', redirectTo: '/metasdetalle', pathMatch: 'full' },
     { path: 'ListarMetasdetalle', redirectTo: '/ListarMetasdetalle', pathMatch: 'full' },
+    { path: 'Individuo2Dir', redirectTo: '/Individuo2Dir', pathMatch: 'full' },
 
 
     //Individuo 1
@@ -193,7 +195,8 @@ const appRoutes: Routes = [
         ListarPuestosVotacionModule,
         ListarMesasModule,
         ListarGerenteModule,
-        MainPageAltaGerenciaModule
+        MainPageAltaGerenciaModule,
+        Individuo2DirModule,
     ],
     providers: [
         UserService

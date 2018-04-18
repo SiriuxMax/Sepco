@@ -1,4 +1,4 @@
-import { TipoPersona2, Perfiles } from "app/Enums/Enumerations";
+import { TipoPersona2, Perfiles, TipoPersona1 } from "app/Enums/Enumerations";
 
 
 
@@ -27,6 +27,25 @@ export class ProfileConfig {
                 break;
             case TipoPersona2.TransportadorCarro:
                 perfil = Perfiles.Jurado
+                break;
+            default:
+                perfil = 0
+                break;
+        }
+        return perfil
+    }
+    public static ExtractProfilexTipo1(x: number): number {
+        var perfil = 0
+        
+        switch (x) {
+            case TipoPersona1.CoodinadorElectoral:
+                perfil = Perfiles.CoodinadorElectoral
+                break;
+            case TipoPersona1.ITAuditoria:
+                perfil = Perfiles.ITAuditoria
+                break;
+            case TipoPersona1.TransporteLogistica:
+                perfil = Perfiles.TransporteLogistica
                 break;
             default:
                 perfil = 0

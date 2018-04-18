@@ -33,8 +33,23 @@ export class IndividuoServices {
             , request, httpOptions).map(this.ExtractIndivduo1)
     }
 
+    Individuos1xDirectorEsp(CLient: E_Individuo1): Observable<Array<E_Individuo1>> {
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Individuo/Individuos1xDirectorEsp"
+            , request, httpOptions).map(this.ExtractArrayIndivduo1)
+    }
     ExtractIndivduo1(res: any) {
         return new Individuo1Builder().buildFromObject(res).Build()
+    }
+    ExtractArrayIndivduo1(res: any) {
+        var x: Array<E_Individuo1> = new Array<E_Individuo1>()
+        res.forEach(element => {
+            x.push(new Individuo1Builder().buildFromObject(element).Build())
+        });
+        return x
+
     }
 
     EvalBool(res: any): boolean {

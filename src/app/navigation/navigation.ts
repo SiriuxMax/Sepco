@@ -157,6 +157,14 @@ export const navigationDirectorDepartamento = [
                 'url': '/individuo1',
             },
             {
+                'id': 'tipoevento',
+                'title': 'Creación Individuo 2',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'account_box',
+                'url': '/Individuo2Dir',
+            },
+            {
                 'id': 'metasdetalle',
                 'title': 'Crear Detalle de Metas',
                 'translate': 'NAV.SAMPLE.TITLE',
