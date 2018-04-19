@@ -39,6 +39,14 @@ export class ReunionService {
         return this.Http.post(this.UrlNow + "Reunion/ReunionesxDepto"
             , request, httpOptions).map(this.ExtractReunion)
     }
+
+    ListarReuniones(): Observable<Array<E_Reunion>> {
+        var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
+        const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
+        let request = JSON.stringify("")
+        return this.Http.post(this.UrlNow + "Reunion/ListarReuniones"
+            , request, httpOptions).map(this.ExtractReunion)
+    }
     ExtractReunion(res: any): Array<E_Reunion> {
 
         var x: Array<E_Reunion> = new Array<E_Reunion>()

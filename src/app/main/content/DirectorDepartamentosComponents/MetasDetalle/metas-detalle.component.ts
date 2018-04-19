@@ -13,6 +13,7 @@ import { UserService } from '../../../../ApiServices/UserService';
 import { E_Departamentos } from 'app/Models/E_Departamentos';
 import { E_MetasDetalle } from 'app/Models/E_MetasDetalle';
 import { E_Metas } from 'app/Models/E_Metas';
+import { E_DirectorDepartamento } from '../../../../Models/E_DirectorDepartamento';
 
 @Component({
     moduleId: module.id,
@@ -21,6 +22,7 @@ import { E_Metas } from 'app/Models/E_Metas';
     styleUrls: ['metas-detalle.component.scss']
 })
 export class MetasDetalleComponent implements OnInit {
+    DirectorGuardador: E_DirectorDepartamento;
     SucceSave: boolean;
     dataURL: any;
     public MaskedNumber: any[]
@@ -59,13 +61,17 @@ export class MetasDetalleComponent implements OnInit {
     ngOnInit() {
         this.MaskedNumber = GenerateMask.numberMask
         this.MaskedNumberNoDecimal = GenerateMask.Nodecimal
-
-        var objMetas: E_Metas = new E_Metas()
-        objMetas.id_directordepto = 11; //TODO: Poner el Id del director depto en sesion.
-        this.ParameterService.listarMetasxDirexFechasxActiva(objMetas)
-            .subscribe((x: Array<E_Metas>) => {
-                this.ListMetas = x
-            })
+        var User = this.UserService.GetCurrentCurrentUserNow()
+        var DriObj: E_DirectorDepartamento = new E_DirectorDepartamento()
+        DriObj.Correo = User.UserName
+        this.AdminServices.directorxCorreo(DriObj).mergeMap((x: E_DirectorDepartamento) => {
+            this.DirectorGuardador = x
+            var objMetas: E_Metas = new E_Metas()
+            objMetas.id_directordepto = x.Id
+            return this.ParameterService.listarMetasxDirexFechasxActiva(objMetas)
+        }).subscribe((x: Array<E_Metas>) => {
+            this.ListMetas = x
+        })
 
         this.form = this.formBuilder.group({
 
@@ -105,7 +111,7 @@ export class MetasDetalleComponent implements OnInit {
         objMetasDetalle.Id_Meta = this.form.value.Meta
         objMetasDetalle.CantidadRecolectada = this.form.value.CantidadRecolectada
         objMetasDetalle.Observacion = this.form.value.Observacion
-        objMetasDetalle.Id_GerenteSector = 4 //TODO: Poner el Id del generente de sector en sesion.
+        objMetasDetalle.Id_GerenteSector = this.DirectorGuardador.Id_GerenteSector
         objMetasDetalle.FechaCreacion = new Date();
 
         this.AdminServices.crearMetasDetalle(objMetasDetalle).subscribe((x: boolean) => {

@@ -72,7 +72,7 @@ export class ListarMetasComponent implements OnInit {
             this.directordepto = x;
             var ObjReu: E_Metas = new E_Metas()
             ObjReu.id_directordepto = this.directordepto.Id;
-            this.MetasService.listarMetasxGerente(ObjReu).subscribe((x) => {
+            this.MetasService.listarMetasxDirector(ObjReu).subscribe((x) => {
 
                 this.rows = x;
                 this.loadingIndicator = false;

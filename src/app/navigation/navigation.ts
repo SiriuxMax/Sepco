@@ -293,3 +293,33 @@ export const navigationIndividuo1 = [
         ]
     }
 ];
+export const navigationAltaGerencia = [
+    {
+        'id': 'applications',
+        'title': 'Menu',
+        'translate': 'NAV.APPLICATIONS',
+        'type': 'group',
+        'children': [
+            {
+                'id': 'reporteactividades',
+                'title': 'Reporte de Actividades',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'assessment',
+                'url': '/reporteactividades',
+            },
+                     
+            
+            {
+                'id': 'Salir',
+                'title': 'Salir',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'input',
+                'url': '/login',
+            },
+        ]
+    }
+];
+
+

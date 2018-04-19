@@ -88,7 +88,7 @@ export class MetasComponent implements OnInit {
 
         this.AdminServices.gerentexCorreo(objGerente).subscribe((y: E_GerenteSector) => {
             this.GerenteLogeado = y
-            objDirectorDepartamento.Id_GerenteSector = this.GerenteLogeado.Id; //TODO: Poner el Id del generente de sector en sesion.
+            objDirectorDepartamento.Id_GerenteSector = this.GerenteLogeado.Id;
             this.ParameterService.ListarDirectorDepartamentoxIdGerenteSector(objDirectorDepartamento)
                 .subscribe((x: Array<E_DirectorDepartamento>) => {
                     this.ListDirectorDepto = x

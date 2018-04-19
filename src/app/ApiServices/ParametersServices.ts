@@ -211,7 +211,7 @@ export class ParameterService {
             , request, httpOptions).map(this.ExtractPuestoVotacion)
     }
 
-    ListarTipoReunion(E_TipoReunion: E_TipoReunion): Observable<Array<E_TipoReunion>> {
+    ListarTipoReunion(E_TipoReunion?: E_TipoReunion): Observable<Array<E_TipoReunion>> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',

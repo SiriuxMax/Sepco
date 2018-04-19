@@ -4,6 +4,7 @@ import { E_Reunion } from "../Models/E_Reunion";
 import { UsuarioBuilder } from "./Usuario.model.builder";
 
 export class ReunionBuilder {
+    public NombreTipoReunion: string;
     public Id: number
     public Descripcion: string
     public Titulo: string
@@ -50,6 +51,7 @@ export class ReunionBuilder {
         if (x.ApellidoCliente != undefined) { this.ApellidoCliente = x.ApellidoCliente }
         if (x.Id_Sector != undefined) { this.Id_Sector = x.Id_Sector }
         if (x.Costo != undefined) { this.Costo = x.Costo }
+        if (x.NombreTipoReunion != undefined) { this.NombreTipoReunion = x.NombreTipoReunion }
         return this
     }
     Build(): E_Reunion {
@@ -78,6 +80,7 @@ export class ReunionBuilder {
         obj.Id_Sector = this.Id_Sector
         obj.Costo = this.Costo
         obj.NombrexAnonimo = this.NombrexAnonimo
+        obj.NombreTipoReunion = this.NombreTipoReunion
         return obj
     }
 

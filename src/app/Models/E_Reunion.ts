@@ -19,5 +19,6 @@ export class E_Reunion {
     public Id_Sector: number
     public Costo: number
     public EstadoString: string
+    public NombreTipoReunion: string
     constructor() { }
 }

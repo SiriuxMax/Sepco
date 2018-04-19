@@ -4,12 +4,13 @@ import { Subscription } from 'rxjs/Subscription';
 import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
-import { navigation, navigationAdmin, navigationDirectorDepartamento, navigationIndividuo1, navigatioGerenteSector } from 'app/navigation/navigation';
+import { navigation, navigationAdmin, navigationDirectorDepartamento, navigationIndividuo1, navigatioGerenteSector, navigationAltaGerencia } from 'app/navigation/navigation';
 import { navigationClient } from 'app/navigation/navigation';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { AppSettings } from '../../app.settings';
 import { UserService } from 'app/ApiServices/UserService';
 import { Router } from '@angular/router';
+import { Perfiles } from '../../Enums/Enumerations';
 
 @Component({
     selector: 'fuse-navbar',
@@ -48,6 +49,7 @@ export class FuseNavbarComponent implements OnDestroy {
     ) {
         // Navigation data
         //   if (AppSettings.Global().TipoAplicacion == 1) 
+        
         if (this.userService.GetCurrentCurrentUserNow() == null) {
             this.navigation = navigation;
         }
@@ -66,6 +68,11 @@ export class FuseNavbarComponent implements OnDestroy {
             else if (this.userService.GetCurrentCurrentUserNow().Id_Perfil == 7) {
                 this.navigation = navigatioGerenteSector;
             }
+            else if(this.userService.GetCurrentCurrentUserNow().Id_Perfil == Perfiles.AltaGerencia)
+            {
+                this.navigation =  navigationAltaGerencia
+            }
+            
             
         }
 

@@ -96,7 +96,7 @@
                     </mat-form-field>
 
                     <mat-form-field fxFlex="50">
-                        <mat-select placeholder="Tipo Individuo" formControlName="TipoIndividuo1" [(ngModel)]="TipoIndividuo1Seleccionado" (change)="CargarIndividuo2($event)" required>
+                        <mat-select placeholder="Tipo Individuo" formControlName="TipoIndividuo1"  (change)="CargarIndividuo2($event)" required>
                             <mat-option *ngFor="let Item of ListTipoIndividuo1" [value]="Item.Id">
                                 {{ Item.Nombre }}
                             </mat-option>
