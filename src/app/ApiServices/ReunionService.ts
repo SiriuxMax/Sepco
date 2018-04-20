@@ -40,10 +40,10 @@ export class ReunionService {
             , request, httpOptions).map(this.ExtractReunion)
     }
 
-    ListarReuniones(): Observable<Array<E_Reunion>> {
+    ListarReuniones(Obj: E_Reunion): Observable<Array<E_Reunion>> {
         var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
-        let request = JSON.stringify("")
+        let request = JSON.stringify(Obj)
         return this.Http.post(this.UrlNow + "Reunion/ListarReuniones"
             , request, httpOptions).map(this.ExtractReunion)
     }

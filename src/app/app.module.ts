@@ -71,7 +71,8 @@ import { ListarGerenteModule } from 'app/main/content/AdminComponents/GerenteSec
 import { ListarMetasGerModule } from 'app/main/content/GerenteSectorComponents/listar-metas-ger/listar-metas-ger.module';
 import { ListarMetasModule } from 'app/main/content/DirectorDepartamentosComponents/listar-metasDir/listar-metas.module';
 import { Individuo2DirModule } from 'app/main/content/DirectorDepartamentosComponents/Individuo2Dir/Individuo2Dir.module';
-import { ReporteActividadesModule } from './main/content/AltaGerenciaComponents/ReporteActividades/ReporteActividades.module';
+import { ReporteActividadesModule } from 'app/main/content/AltaGerenciaComponents/ReporteActividades/ReporteActividades.module';
+import { ReporteIndividuo2Module } from './main/content/AltaGerenciaComponents/ReporteIndividuo2/ReporteIndividuo2.module';
 
 
 const appRoutes: Routes = [
@@ -130,7 +131,8 @@ const appRoutes: Routes = [
     //AltaGerencia
     { path: 'mainpagealtagerencia', redirectTo: '/mainpagealtagerencia', pathMatch: 'full' },
     { path: 'reporteactividades', redirectTo: '/reporteactividades', pathMatch: 'full' },
-
+    { path: 'ReporteIndividuo2', redirectTo: '/ReporteIndividuo2', pathMatch: 'full' },
+    
     
 
 
@@ -200,7 +202,8 @@ const appRoutes: Routes = [
         ListarGerenteModule,
         MainPageAltaGerenciaModule,
         Individuo2DirModule,
-        ReporteActividadesModule
+        ReporteActividadesModule,
+        ReporteIndividuo2Module
     ],
     providers: [
         UserService

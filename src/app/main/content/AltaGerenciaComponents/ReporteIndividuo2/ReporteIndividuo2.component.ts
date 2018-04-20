@@ -20,11 +20,11 @@ import { AdminServices } from 'app/ApiServices/AdminServices';
 
 @Component({
     moduleId: module.id,
-    selector: 'ReporteActividades',
-    templateUrl: 'ReporteActividades.component.html',
-    styleUrls: ['ReporteActividades.component.scss']
+    selector: 'ReporteIndividuo2',
+    templateUrl: 'ReporteIndividuo2.component.html',
+    styleUrls: ['ReporteIndividuo2.component.scss']
 })
-export class ReporteActividadesComponent implements OnInit {
+export class ReporteIndividuo2Component implements OnInit {
     SelectedDepto: any;
     Actividades2Show: E_Reunion[];
     TipoReunion: E_TipoReunion[];
@@ -92,12 +92,13 @@ export class ReporteActividadesComponent implements OnInit {
         this.Router.navigate(['/mainpagealtagerencia'])
     }
     ngOnInit(): void {
-    //    this.chargeGrid()
+        this.chargeGrid()
     }
 
     chargeGrid() {
-  
-    
+  /*      this.FechaFin = undefined
+        this.FechaInicio = undefined
+        this.SelectedDepto = 0
         this.loadingIndicator = true
         this.ParameterService.listarDepartamentos()
             .mergeMap((y: Array<E_Departamentos>) => {
@@ -106,11 +107,7 @@ export class ReporteActividadesComponent implements OnInit {
                 return this.ParameterService.ListarTipoReunion(ObjReu)
             }).mergeMap((z: Array<E_TipoReunion>) => {
                 this.TipoReunion = z
-                var ObjReunion :E_Reunion = new E_Reunion()
-                ObjReunion.Id_Departamento = this.SelectedDepto 
-                ObjReunion.fechaini = this.FechaInicio 
-                ObjReunion.fechafin = this.FechaFin 
-                return this.ReunionService.ListarReuniones(ObjReunion)
+                return this.ReunionService.ListarReuniones()
             }).subscribe((x: Array<E_Reunion>) => {
                 x.forEach(element => {
                     if (this.DepartamentosPivot.filter((x) => x.Id == element.Id_Departamento).length > 0) {
@@ -126,5 +123,5 @@ export class ReporteActividadesComponent implements OnInit {
                 console.log(this.Actividades)
             })
 
-    }
+        */}
 }

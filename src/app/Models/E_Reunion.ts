@@ -20,5 +20,7 @@ export class E_Reunion {
     public Costo: number
     public EstadoString: string
     public NombreTipoReunion: string
+    public fechaini: Date
+    public fechafin: Date
     constructor() { }
 }
