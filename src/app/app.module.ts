@@ -73,6 +73,7 @@ import { ListarMetasModule } from 'app/main/content/DirectorDepartamentosCompone
 import { Individuo2DirModule } from 'app/main/content/DirectorDepartamentosComponents/Individuo2Dir/Individuo2Dir.module';
 import { ReporteActividadesModule } from 'app/main/content/AltaGerenciaComponents/ReporteActividades/ReporteActividades.module';
 import { ReporteIndividuo2Module } from './main/content/AltaGerenciaComponents/ReporteIndividuo2/ReporteIndividuo2.module';
+import { ReporteIndividuo2FromGerenteModule } from 'app/main/content/GerenteSectorComponents/ReporteIndividuo2FromGerente/ReporteIndividuo2FromGerente.module';
 
 
 const appRoutes: Routes = [
@@ -114,7 +115,8 @@ const appRoutes: Routes = [
     { path: 'ListarMetasGer', redirectTo: '/ListarMetasGer', pathMatch: 'full' },
     { path: 'metas', redirectTo: '/metas', pathMatch: 'full' },
     { path: 'ListarDirector', redirectTo: '/ListarDirector', pathMatch: 'full' },
-
+    { path: 'ReporteIndividuo2FromGerente', redirectTo: '/ReporteIndividuo2FromGerente', pathMatch: 'full' },
+    
     //Director
     { path: 'mainpagedirector', redirectTo: '/mainpagedirector', pathMatch: 'full' },
     { path: 'individuo1', redirectTo: '/individuo1', pathMatch: 'full' },
@@ -203,7 +205,8 @@ const appRoutes: Routes = [
         MainPageAltaGerenciaModule,
         Individuo2DirModule,
         ReporteActividadesModule,
-        ReporteIndividuo2Module
+        ReporteIndividuo2Module,
+        ReporteIndividuo2FromGerenteModule
     ],
     providers: [
         UserService

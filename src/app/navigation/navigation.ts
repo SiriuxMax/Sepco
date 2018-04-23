@@ -247,7 +247,14 @@ export const navigatioGerenteSector = [
                 'icon': 'assessment',
                 'url': '/ReporteMetas',
             },
-           
+            {
+                'id': 'ReporteIndividuo2FromGerente',
+                'title': 'Reporte Control Estructura',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'assessment',
+                'url': '/ReporteIndividuo2FromGerente',
+            },
             
             {
                 'id': 'Salir1',
@@ -308,8 +315,15 @@ export const navigationAltaGerencia = [
                 'icon': 'assessment',
                 'url': '/reporteactividades',
             },
-                     
-            
+            {
+                'id': 'reporteactividades',
+                'title': 'Reporte Control Estructura',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'assessment',
+                'url': '/ReporteIndividuo2',
+            },
+
             {
                 'id': 'Salir',
                 'title': 'Salir',

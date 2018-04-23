@@ -24,14 +24,17 @@ import { E_DirectorDepartamento } from 'app/Models/E_DirectorDepartamento';
 import { E_GerenteSector } from 'app/Models/E_GerenteSector';
 import { IndividuoServices } from '../../../../ApiServices/IndividuoServices';
 import { E_ReporteIndividuo2 } from '../../../../Models/E_ReporteIndividuo2';
+import { UserService } from 'app/ApiServices/UserService';
 
 @Component({
     moduleId: module.id,
-    selector: 'ReporteIndividuo2',
-    templateUrl: 'ReporteIndividuo2.component.html',
-    styleUrls: ['ReporteIndividuo2.component.scss']
+    selector: 'ReporteIndividuo2FromGerente',
+    templateUrl: 'ReporteIndividuo2FromGerente.component.html',
+    styleUrls: ['ReporteIndividuo2FromGerente.component.scss']
 })
-export class ReporteIndividuo2Component implements OnInit {
+export class ReporteIndividuo2FromGerenteComponent implements OnInit {
+    CodigoDepto: string;
+    GerenteSeleccionado: E_GerenteSector;
     MunicipiosBase: E_Municipios[];
     SearchTypeAdvance: boolean = true
     SelectedMesas: any;
@@ -68,11 +71,10 @@ export class ReporteIndividuo2Component implements OnInit {
     ListImage: Array<E_Imagen> = new Array<E_Imagen>();
     constructor(private NavigationData: NavigationInfoService,
         private ParameterService: ParameterService,
-        private ReunionService: ReunionService,
         private Router: Router,
-        private dialog: MatDialog,
         private AdminServices: AdminServices,
-        private IndividuoServices: IndividuoServices) {
+        private IndividuoServices: IndividuoServices,
+        private UserService: UserService) {
     }
 
 
@@ -91,6 +93,19 @@ export class ReporteIndividuo2Component implements OnInit {
         })
 
     }
+    ChangeMunicipio(selected) {
+        var objZona: E_ZonaElectoral = new E_ZonaElectoral()
+        objZona.Id_Municipio = selected.value
+        if (selected.value = 0) {
+            this.Zonas = []
+        }
+        else {
+            this.ParameterService.listarZonasxMunicipio(objZona)
+                .subscribe((x: Array<E_ZonaElectoral>) => {
+                    this.Zonas = x
+                })
+        }
+    }
     ChangeGerente(selected) {
         if (this.SearchTypeAdvance) {
 
@@ -107,6 +122,28 @@ export class ReporteIndividuo2Component implements OnInit {
         this.Router.navigate(['/mainpagealtagerencia'])
     }
     ngOnInit(): void {
+        var objGer: E_GerenteSector = new E_GerenteSector()
+        objGer.Correo = this.UserService.GetCurrentCurrentUserNow().UserName
+        this.AdminServices.gerentexCorreo(objGer)
+            .mergeMap((x: E_GerenteSector) => {
+                this.GerenteSeleccionado = x
+                this.SelectedGerente = x.Id
+                this.SelectedDepto = x.Id_Departamento
+                var objDir: E_DirectorDepartamento = new E_DirectorDepartamento()
+                objDir.Id_GerenteSector = this.SelectedGerente
+                return this.AdminServices.ListarDirectorDeptoxGerente(objDir)
+            }).mergeMap((x: Array<E_DirectorDepartamento>) => {
+                this.Directores = x
+                return this.ParameterService.listarDepartamentos()
+            }).mergeMap((x: Array<E_Departamentos>) => {
+                this.CodigoDepto = ""
+                if (x.some((y) => y.Id == this.SelectedDepto)) {
+                    this.CodigoDepto = x.find((y) => y.Id == this.SelectedDepto).Codigo
+                }
+                return this.ParameterService.ListarMunicipios()
+            }).subscribe((x: Array<E_Municipios>) => {
+                this.Municipios = x.filter((y) => y.Id_Departamento == Number(this.CodigoDepto))
+            })
         this.SearchTypeAdvance = false
         this.chargeParamsBasic()
     }
@@ -129,7 +166,7 @@ export class ReporteIndividuo2Component implements OnInit {
                 this.Puestos = x
                 return this.ParameterService.listarZonas()
             })
-            .subscribe((x) => {
+            .subscribe((x: Array<E_ZonaElectoral>) => {
                 this.Zonas = x
                 return this.ParameterService.listarDepartamentos()
             })
@@ -150,11 +187,6 @@ export class ReporteIndividuo2Component implements OnInit {
         this.DepartamentosPivot = new Array<E_Departamentos>()
         this.Municipios = new Array<E_Municipios>()
         this.Mesas = new Array<E_Mesa>()
-
-        this.ParameterService.listarDepartamentos()
-            .subscribe((x) => {
-                this.DepartamentosPivot = x
-            })
 
 
     }

@@ -279,6 +279,7 @@ export class Individuo2DirComponent implements OnInit {
                 break;
             case 3:
                 if (this.formDinamic.value.ZonaElectoral != undefined) {
+                    objDetalle.Id_Municipio = this.formDinamic.value.Municipio
                     objDetalle.Id_ZonaElectoral = this.formDinamic.value.ZonaElectoral
                     if (!this.Detalleindividuo.some((x) => x.Id_ZonaElectoral == this.formDinamic.value.ZonaElectoral)) {
                         this.Detalleindividuo.push(objDetalle)
@@ -289,6 +290,8 @@ export class Individuo2DirComponent implements OnInit {
                 break;
             case 4:
                 if (this.formDinamic.value.PuestoVotacion != undefined) {
+                    objDetalle.Id_Municipio = this.formDinamic.value.Municipio
+                    objDetalle.Id_ZonaElectoral = this.formDinamic.value.ZonaElectoral
                     objDetalle.Id_PuestoVotacion = this.formDinamic.value.PuestoVotacion
                     if (!this.Detalleindividuo.some((x) => x.Id_PuestoVotacion == this.formDinamic.value.PuestoVotacion)) {
                         this.Detalleindividuo.push(objDetalle)
@@ -299,6 +302,9 @@ export class Individuo2DirComponent implements OnInit {
                 break;
             case 5:
                 if (this.formDinamic.value.Mesa.Id != undefined) {
+                    objDetalle.Id_Municipio = this.formDinamic.value.Municipio
+                    objDetalle.Id_ZonaElectoral = this.formDinamic.value.ZonaElectoral
+                    objDetalle.Id_PuestoVotacion = this.formDinamic.value.PuestoVotacion
                     objDetalle.Id_Mesa = this.formDinamic.value.Mesa.Id
                     if (!this.Detalleindividuo.some((x) => x.Id_Mesa == this.formDinamic.value.Mesa.Id)) {
                         this.Detalleindividuo.push(objDetalle)
@@ -545,7 +551,7 @@ export class Individuo2DirComponent implements OnInit {
             Apellido: '',
             Direccion: '',
             TipoIndividuo2: 0,
-            TipoIndividuo1 : 0
+            TipoIndividuo1: 0
         })
     }
 }

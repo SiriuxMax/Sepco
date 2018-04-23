@@ -14,36 +14,6 @@
     <div class="mat-white-bg mat-elevation-z4 p-24  mb-24">
         <div fxLayout="column" fxLayoutAlign="center center" class="centerSearch">
             <div fxLayout="row wrap" fxLayoutAlign="start center">
-                <mat-form-field fxFlex="100">
-                    <mat-select placeholder="Departamentos" (change)="SelectedDepartamento($event)" [(ngModel)]="SelectedDepto">
-                        <mat-option [value]="0">
-                            Selecciona
-                        </mat-option>
-                        <mat-option *ngFor="let item of DepartamentosPivot" [value]="item">
-                            {{ item.Nombre }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field *ngIf="SearchTypeAdvance" fxFlex="50">
-                    <mat-select placeholder="Municipios" [(ngModel)]="SelectedMunicipio">
-                        <mat-option [value]="0">
-                            Selecciona
-                        </mat-option>
-                        <mat-option *ngFor="let item of Municipios" [value]="item.Id">
-                            {{ item.Nombre }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field fxFlex="50">
-                    <mat-select placeholder="Gerentes" [(ngModel)]="SelectedGerente"  (change)="ChangeGerente($event)" >
-                        <mat-option [value]="0">
-                            Selecciona
-                        </mat-option>
-                        <mat-option *ngFor="let item of Gerentes" [value]="item.Id">
-                            {{ item.Nombres + ' ' + item.Apellidos}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
                 <mat-form-field fxFlex="50">
                     <mat-select placeholder="Directores" [(ngModel)]="SelectedDirector">
                         <mat-option [value]="0">
@@ -51,6 +21,16 @@
                         </mat-option>
                         <mat-option *ngFor="let item of Directores" [value]="item.Id">
                             {{ item.Nombres + ' ' + item.Apellidos}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field fxFlex="50">
+                    <mat-select placeholder="Municipios" [(ngModel)]="SelectedMunicipio" (change)="ChangeMunicipio($event)">
+                        <mat-option [value]="0">
+                            Selecciona
+                        </mat-option>
+                        <mat-option *ngFor="let item of Municipios" [value]="item.Id">
+                            {{ item.Nombre }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

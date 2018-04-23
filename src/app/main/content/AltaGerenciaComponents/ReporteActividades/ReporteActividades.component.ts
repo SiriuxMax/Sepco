@@ -92,12 +92,15 @@ export class ReporteActividadesComponent implements OnInit {
         this.Router.navigate(['/mainpagealtagerencia'])
     }
     ngOnInit(): void {
-    //    this.chargeGrid()
+        this.ParameterService.listarDepartamentos()
+            .subscribe((y: Array<E_Departamentos>) => {
+                this.DepartamentosPivot = y
+            })
     }
 
     chargeGrid() {
-  
-    
+
+
         this.loadingIndicator = true
         this.ParameterService.listarDepartamentos()
             .mergeMap((y: Array<E_Departamentos>) => {
@@ -106,10 +109,10 @@ export class ReporteActividadesComponent implements OnInit {
                 return this.ParameterService.ListarTipoReunion(ObjReu)
             }).mergeMap((z: Array<E_TipoReunion>) => {
                 this.TipoReunion = z
-                var ObjReunion :E_Reunion = new E_Reunion()
-                ObjReunion.Id_Departamento = this.SelectedDepto 
-                ObjReunion.fechaini = this.FechaInicio 
-                ObjReunion.fechafin = this.FechaFin 
+                var ObjReunion: E_Reunion = new E_Reunion()
+                ObjReunion.Id_Departamento = this.SelectedDepto
+                ObjReunion.fechaini = this.FechaInicio
+                ObjReunion.fechafin = this.FechaFin
                 return this.ReunionService.ListarReuniones(ObjReunion)
             }).subscribe((x: Array<E_Reunion>) => {
                 x.forEach(element => {
