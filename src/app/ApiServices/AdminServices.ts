@@ -32,6 +32,8 @@ import { E_MetasDetalle } from '../Models/E_MetasDetalle';
 import { E_Impugnacion } from '../Models/E_Impugnacion';
 import { E_SitioEscrutino } from '../Models/E_SitioEscrutino';
 import { E_ItemsMetas } from '../Models/E_ItemsMetas';
+import { E_ReporteMetas } from 'app/Models/E_ReporteMetas';
+import { ReporteMetasbuilder } from 'app/Builders/ReporteMetasbuilder.model.builder';
 
 @Injectable()
 export class AdminServices {
@@ -404,6 +406,23 @@ export class AdminServices {
         var request = JSON.stringify(CLient)
         return this.Http.post(this.UrlNow + "Admin/crearImpugnacion"
             , request, httpOptions).map(this.EvalBool)
+    }
+
+    
+    ObtenerReporteMetas(CLient: E_ReporteMetas): Observable<Array<E_ReporteMetas>> {
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/ObtenerReporteMetas"
+            , request, httpOptions).map(this.ExtractReporteMetas)
+    }
+    ExtractReporteMetas(res: any): Array<E_ReporteMetas> {
+
+        var x: Array<E_ReporteMetas> = new Array<E_ReporteMetas>()
+        res.forEach(element => {
+            x.push(new ReporteMetasbuilder().buildFromObject(element).Build())
+        });
+        return x
     }
 }
 

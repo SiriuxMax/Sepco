@@ -180,7 +180,15 @@ export const navigationDirectorDepartamento = [
                 'icon': 'verified_user',
                 'url': '/ListarMetasdetalle',
             },
-                 
+            {
+                'id': 'ReporteIndividuo2FromDirector',
+                'title': 'Reporte de Individuos',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'verified_user',
+                'url': '/ReporteIndividuo2FromDirector',
+            },
+            
 
             
             {
@@ -323,7 +331,14 @@ export const navigationAltaGerencia = [
                 'icon': 'assessment',
                 'url': '/ReporteIndividuo2',
             },
-
+            {
+                'id': 'ReporteMetasAlta',
+                'title': 'Reporte de Metas',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'assessment',
+                'url': '/ReporteMetasAlta',
+            },            
             {
                 'id': 'Salir',
                 'title': 'Salir',

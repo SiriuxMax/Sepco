@@ -74,6 +74,8 @@ import { Individuo2DirModule } from 'app/main/content/DirectorDepartamentosCompo
 import { ReporteActividadesModule } from 'app/main/content/AltaGerenciaComponents/ReporteActividades/ReporteActividades.module';
 import { ReporteIndividuo2Module } from './main/content/AltaGerenciaComponents/ReporteIndividuo2/ReporteIndividuo2.module';
 import { ReporteIndividuo2FromGerenteModule } from 'app/main/content/GerenteSectorComponents/ReporteIndividuo2FromGerente/ReporteIndividuo2FromGerente.module';
+import { ReporteIndividuo2FromDirectorModule } from 'app/main/content/DirectorDepartamentosComponents/ReporteIndividuo2FromDirector/ReporteIndividuo2FromDirector.module';
+import { ReporteMetasAltaModule } from './main/content/AltaGerenciaComponents/ReporteMetasAlta/ReporteMetasAlta.module';
 
 
 const appRoutes: Routes = [
@@ -123,8 +125,9 @@ const appRoutes: Routes = [
     { path: 'metasdetalle', redirectTo: '/metasdetalle', pathMatch: 'full' },
     { path: 'ListarMetasdetalle', redirectTo: '/ListarMetasdetalle', pathMatch: 'full' },
     { path: 'Individuo2Dir', redirectTo: '/Individuo2Dir', pathMatch: 'full' },
+    { path: 'ReporteIndividuo2FromDirector', redirectTo: '/ReporteIndividuo2FromDirector', pathMatch: 'full' },
 
-
+    
     //Individuo 1
     { path: 'mainpageindividuo1', redirectTo: '/mainpageindividuo1', pathMatch: 'full' },
     { path: 'individuo2', redirectTo: '/individuo2', pathMatch: 'full' },
@@ -134,6 +137,7 @@ const appRoutes: Routes = [
     { path: 'mainpagealtagerencia', redirectTo: '/mainpagealtagerencia', pathMatch: 'full' },
     { path: 'reporteactividades', redirectTo: '/reporteactividades', pathMatch: 'full' },
     { path: 'ReporteIndividuo2', redirectTo: '/ReporteIndividuo2', pathMatch: 'full' },
+    { path: 'ReporteMetasAlta', redirectTo: '/ReporteMetasAlta', pathMatch: 'full' },
     
     
 
@@ -206,7 +210,9 @@ const appRoutes: Routes = [
         Individuo2DirModule,
         ReporteActividadesModule,
         ReporteIndividuo2Module,
-        ReporteIndividuo2FromGerenteModule
+        ReporteIndividuo2FromGerenteModule,
+        ReporteIndividuo2FromDirectorModule,
+        ReporteMetasAltaModule
     ],
     providers: [
         UserService

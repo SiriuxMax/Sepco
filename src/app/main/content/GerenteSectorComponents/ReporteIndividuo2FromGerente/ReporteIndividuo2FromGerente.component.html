@@ -34,8 +34,8 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field  *ngIf="SearchTypeAdvance" fxFlex="50">
-                    <mat-select placeholder="Zonas" [(ngModel)]="SelectedZonas">
+                <mat-form-field *ngIf="SearchTypeAdvance" fxFlex="50" >
+                    <mat-select placeholder="Zonas" [(ngModel)]="SelectedZonas" (change)="ChangeZonas($event)">
                         <mat-option [value]="0">
                             Selecciona
                         </mat-option>
@@ -44,8 +44,8 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field  *ngIf="SearchTypeAdvance"  fxFlex="50">
-                    <mat-select placeholder="Puestos" [(ngModel)]="SelectedPuestos">
+                <mat-form-field *ngIf="SearchTypeAdvance" fxFlex="50" >
+                    <mat-select placeholder="Puestos" [(ngModel)]="SelectedPuestos" (change)="ChangePuesto($event)">
                         <mat-option [value]="0">
                             Selecciona
                         </mat-option>
@@ -54,7 +54,7 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field  *ngIf="SearchTypeAdvance" fxFlex="50">
+                <mat-form-field *ngIf="SearchTypeAdvance" fxFlex="50">
                     <mat-select placeholder="Mesas" [(ngModel)]="SelectedMesas">
                         <mat-option [value]="0">
                             Selecciona
@@ -87,7 +87,7 @@
                     <span style="color:#c84c43">Buscar</span>
                 </div>
                 <div fxLayout="column" class="pl-24 pr-24 pb-12">
-                    <div class="icoLike" (click)="ChangeType($event)">
+                    <div class="icoLike" (click)="ChangeType()">
                         <i class="material-icons">&#xE152;</i>
                     </div>
                     <div>
@@ -122,7 +122,6 @@
 
                 <ngx-datatable-column name="Gerente " prop="NombreGerente"></ngx-datatable-column>
                 <ngx-datatable-column name="Director" prop="NombreDirectorDepartamento"></ngx-datatable-column>
-                <ngx-datatable-column name="Cantidad de Personas " prop="CantidadPersonas"></ngx-datatable-column>
                 <ngx-datatable-column name="Estado SAC " prop="NombreEstadoRevision"></ngx-datatable-column>
                 <ngx-datatable-column name="Observacion " prop="observacionsac"></ngx-datatable-column>
 

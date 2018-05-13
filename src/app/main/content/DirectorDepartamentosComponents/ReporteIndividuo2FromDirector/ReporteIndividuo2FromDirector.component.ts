@@ -28,13 +28,13 @@ import { UserService } from 'app/ApiServices/UserService';
 
 @Component({
     moduleId: module.id,
-    selector: 'ReporteIndividuo2FromGerente',
-    templateUrl: 'ReporteIndividuo2FromGerente.component.html',
-    styleUrls: ['ReporteIndividuo2FromGerente.component.scss']
+    selector: 'ReporteIndividuo2FromDirector',
+    templateUrl: 'ReporteIndividuo2FromDirector.component.html',
+    styleUrls: ['ReporteIndividuo2FromDirector.component.scss']
 })
-export class ReporteIndividuo2FromGerenteComponent implements OnInit {
+export class ReporteIndividuo2FromDirectorComponent implements OnInit {
     CodigoDepto: string;
-    GerenteSeleccionado: E_GerenteSector;
+    DirectorSeleccionado: E_DirectorDepartamento;
     MunicipiosBase: E_Municipios[];
     SearchTypeAdvance: boolean = true
     SelectedMesas: any;
@@ -150,18 +150,15 @@ export class ReporteIndividuo2FromGerenteComponent implements OnInit {
         this.Router.navigate(['/mainpagealtagerencia'])
     }
     ngOnInit(): void {
-        var objGer: E_GerenteSector = new E_GerenteSector()
+        var objGer: E_DirectorDepartamento = new E_DirectorDepartamento()
         objGer.Correo = this.UserService.GetCurrentCurrentUserNow().UserName
-        this.AdminServices.gerentexCorreo(objGer)
-            .mergeMap((x: E_GerenteSector) => {
-                this.GerenteSeleccionado = x
-                this.SelectedGerente = x.Id
-                this.SelectedDepto = x.Id_Departamento
+        this.AdminServices.directorxCorreo(objGer)
+            .mergeMap((x: E_DirectorDepartamento) => {
+                this.SelectedDirector = x.Id
+                this.SelectedGerente = x.Id_GerenteSector
+                this.SelectedDepto = x.Id_departamento
                 var objDir: E_DirectorDepartamento = new E_DirectorDepartamento()
                 objDir.Id_GerenteSector = this.SelectedGerente
-                return this.AdminServices.ListarDirectorDeptoxGerente(objDir)
-            }).mergeMap((x: Array<E_DirectorDepartamento>) => {
-                this.Directores = x
                 return this.ParameterService.listarDepartamentos()
             }).mergeMap((x: Array<E_Departamentos>) => {
                 this.CodigoDepto = ""

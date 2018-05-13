@@ -78,7 +78,7 @@
 
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field fxFlex="50">
-                        <input matInput [matDatepicker]="picker1" formControlName="FechaInicio" placeholder="Fecha Inicio" required>
+                        <input matInput [min]="minDate" [matDatepicker]="picker1" formControlName="FechaInicio" placeholder="Fecha Inicio" required>
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                         <mat-error *ngIf="formErrors.FechaInicio.required">
@@ -86,7 +86,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field fxFlex="50">
-                        <input matInput [matDatepicker]="picker2" formControlName="FechaFin" placeholder="Fecha Fin" required>
+                        <input matInput [min]="minDate" [matDatepicker]="picker2" formControlName="FechaFin" placeholder="Fecha Fin" required>
                         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker #picker2></mat-datepicker>
                         <mat-error *ngIf="formErrors.FechaFin.required">

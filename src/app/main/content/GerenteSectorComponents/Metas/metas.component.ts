@@ -29,6 +29,7 @@ export class MetasComponent implements OnInit {
     SaveInprogress: boolean;
     GerenteLogeado: E_GerenteSector;
     SucceSave: boolean;
+    minDate = new Date()
     dataURL: any;
     public MaskedNumber: any[]
     MaskedNumberNoDecimal: any[]
