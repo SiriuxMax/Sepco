@@ -64,7 +64,7 @@ export class VehiculoComponent implements OnInit {
 
     ReturnPage(event:Event){
         event.preventDefault();
-        this.Router.navigate(['/mainpageadmin'])
+        this.Router.navigate(['/maintransportadorcarro'])
      }
     ngOnInit() {
         this.MaskedNumber = GenerateMask.numberMask

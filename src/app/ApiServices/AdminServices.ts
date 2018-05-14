@@ -32,9 +32,18 @@ import { E_MetasDetalle } from '../Models/E_MetasDetalle';
 import { E_Impugnacion } from '../Models/E_Impugnacion';
 import { E_SitioEscrutino } from '../Models/E_SitioEscrutino';
 import { E_ItemsMetas } from '../Models/E_ItemsMetas';
+import { E_MetasCall } from '../Models/E_MetasCall';
+import { E_Llamadas } from '../Models/E_Llamadas';
+import { MetasCallBuilder } from '../Builders/MetasCall.model.builder';
+import { LlamadasBuilder } from '../Builders/Llamadas.model.builder';
+import { E_Canal } from '../Models/E_Canal';
+import { CanalBuilder } from '../Builders/Canal.model.Builder';
+import { E_TipoCanal } from '../Models/E_TipoCanal';
+import { TipoCanalBuilder } from '../Builders/TipoCanal.model.builder';
+import { E_CallCenter } from '../Models/E_CallCenter';
+import { CallCenterBuilder } from '../Builders/CallCenter.model.builder';
 import { E_ReporteMetas } from 'app/Models/E_ReporteMetas';
 import { ReporteMetasbuilder } from 'app/Builders/ReporteMetasbuilder.model.builder';
-
 @Injectable()
 export class AdminServices {
     constructor(private Http: HttpClient, private HeaderBuilder: HeaderBuilder, private UserService: UserService) { }
@@ -407,9 +416,7 @@ export class AdminServices {
         return this.Http.post(this.UrlNow + "Admin/crearImpugnacion"
             , request, httpOptions).map(this.EvalBool)
     }
-
-    
-    ObtenerReporteMetas(CLient: E_ReporteMetas): Observable<Array<E_ReporteMetas>> {
+           ObtenerReporteMetas(CLient: E_ReporteMetas): Observable<Array<E_ReporteMetas>> {
         var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
         const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
         var request = JSON.stringify(CLient)
@@ -424,5 +431,116 @@ export class AdminServices {
         });
         return x
     }
+
+
+    crearMetasCall(CLient: E_MetasCall): Observable<boolean> {
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearMetasCall"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    listarMetasCall(): Observable<Array<E_MetasCall>> {
+
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        //var request = JSON.stringify(obin)
+        return this.Http.post(this.UrlNow + "Admin/listarMetasCall"
+            , "", httpOptions).map(this.ExtractMetasCall)
+    }
+
+    listarMetasCallActivas(CLient: E_MetasCall): Observable<Array<E_MetasCall>> {
+        debugger;
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/listarMetasCallActivas"
+            , request, httpOptions).map(this.ExtractMetasCall)
+    }
+
+    ExtractMetasCall(res: any): Array<E_MetasCall> {
+
+        var x: Array<E_MetasCall> = new Array<E_MetasCall>()
+        res.forEach(element => {
+            x.push(new MetasCallBuilder().buildFromObject(element).Build())
+        });
+        return x
+    }
+
+    crearLlamada(CLient: Array<E_Llamadas>): Observable<boolean> {
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        const httpOptions = this.HeaderBuilder.HeadNow(User.Id)
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Admin/crearLlamada"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
+    listarLLamadaxUsu(obj:E_Llamadas): Observable<Array<E_Llamadas>> {
+
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(obj)
+        return this.Http.post(this.UrlNow + "Admin/listarLLamadaxUsu"
+            , request, httpOptions).map(this.ExtractLlamadas)
+    }
+
+    ExtractLlamadas(res: any): Array<E_Llamadas> {
+
+        var x: Array<E_Llamadas> = new Array<E_Llamadas>()
+        res.forEach(element => {
+            x.push(new LlamadasBuilder().buildFromObject(element).Build())
+        });
+        return x
+    }
+
+    listarCanal(): Observable<Array<E_Canal>> {
+
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        //var request = JSON.stringify(obj)
+        return this.Http.post(this.UrlNow + "Admin/listarCanalLLamadas"
+            , "", httpOptions).map(this.ExtractCanal)
+    }
+
+    ExtractCanal(res: any): Array<E_Canal> {
+
+        var x: Array<E_Canal> = new Array<E_Canal>()
+        res.forEach(element => {
+            x.push(new CanalBuilder().buildFromObject(element).Build())
+        });
+        return x
+    }
+
+    listarTipoCanal(): Observable<Array<E_TipoCanal>> {
+
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        //var request = JSON.stringify(obj)
+        return this.Http.post(this.UrlNow + "Admin/listarTipoCanalLLamadas"
+            , "", httpOptions).map(this.ExtractTipoCanal)
+    }
+
+    ExtractTipoCanal(res: any): Array<E_TipoCanal> {
+
+        var x: Array<E_TipoCanal> = new Array<E_TipoCanal>()
+        res.forEach(element => {
+            x.push(new TipoCanalBuilder().buildFromObject(element).Build())
+        });
+        return x
+    }
+
+    listarCallCenter(): Observable<Array<E_CallCenter>> {
+
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        //var request = JSON.stringify(obj)
+        return this.Http.post(this.UrlNow + "Admin/listarCallCenter"
+            , "", httpOptions).map(this.ExtractCallCenter)
+    }
+
+    ExtractCallCenter(res: any): Array<E_CallCenter> {
+
+        var x: Array<E_CallCenter> = new Array<E_CallCenter>()
+        res.forEach(element => {
+            x.push(new CallCenterBuilder().buildFromObject(element).Build())
+        });
+        return x
+    }
+
 }
 

@@ -124,7 +124,7 @@ export class SacIndividuo2Component implements OnInit {
         ;
         console.log(event);
         this.navigation.dataIndividuo2=event;
-        this.Router.navigate(['/Sector'])
+        this.Router.navigate(['/AdminIndividuo2'])
 
     }
 }

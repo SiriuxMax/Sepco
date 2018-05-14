@@ -12,27 +12,33 @@ import { E_Reunion } from 'app/Models/E_Reunion';
 import { E_Imagen } from 'app/Models/E_Imagen';
 import { AppSettings } from 'app/app.settings';
 import { ImageService } from 'app/ApiServices/ImageServices';
-
 import { ReunionBuilder } from 'app/Builders/Reunion.model.builder';
 import { ReunionService } from 'app/ApiServices/ReunionService';
 import { Router } from '@angular/router';
 import { E_Municipios } from 'app/Models/E_Municipios';
-import { E_GerenteSector } from 'app/Models/E_GerenteSector';
-import { UserService } from 'app/ApiServices/UserService';
 import { AdminServices } from 'app/ApiServices/AdminServices';
-import { E_Metas } from 'app/Models/E_Metas';
+import { E_ReporteMetas } from '../../../../Models/E_ReporteMetas';
+import { E_GerenteSector } from 'app/Models/E_GerenteSector';
 import { E_Usuario } from 'app/Models/E_Usuario';
+import { UserService } from 'app/ApiServices/UserService';
 
 @Component({
     moduleId: module.id,
-    selector: 'listar-metas-ger',
+    selector: 'ListarMetasGer',
     templateUrl: 'listar-metas-ger.component.html',
     styleUrls: ['listar-metas-ger.component.scss']
 })
 export class ListarMetasGerComponent implements OnInit {
     GerenteLogeado: E_GerenteSector;
+    MetasGrid: E_ReporteMetas[];
+    SelectedDepto: any;
+    Actividades2Show: E_Reunion[];
+    TipoReunion: E_TipoReunion[];
+    Actividades: E_Reunion[];
+    DepartamentosPivot: E_Departamentos[];
+    FechaInicio: any
+    FechaFin: any
     rows = [];
-    public gerentedep: E_GerenteSector;
     public DepartamentoSeleccionado: string = ""
     public MunicipioSeleccionado: string = ""
     public ListDepartamentos: Array<E_Departamentos> = new Array<E_Departamentos>()
@@ -52,83 +58,78 @@ export class ListarMetasGerComponent implements OnInit {
         private ReunionService: ReunionService,
         private Router: Router,
         private dialog: MatDialog,
-        private MetasService: AdminServices,
-        public userservices: UserService,
-    ) {
+        private AdminServices: AdminServices,
+        private UserService: UserService) {
 
-        if (this.NavigationData.storage == undefined) { }
+        var User: E_Usuario = this.UserService.GetCurrentCurrentUserNow()
+        var objGerente: E_GerenteSector = new E_GerenteSector()
+        objGerente.Correo = User.UserName
+        this.AdminServices.gerentexCorreo(objGerente).subscribe((y: E_GerenteSector) => {
+            this.GerenteLogeado = y
+        })
     }
 
+    Filter() {
+
+
+        if (this.FechaInicio == undefined
+            || this.FechaInicio == undefined
+            || this.FechaFin == null
+            || this.FechaFin == null) {
+            this.chargeGrid()
+            return
+        }
+        else {
+            debugger
+            this.Actividades2Show =
+                this.Actividades.filter((x) => {
+                    return (new Date(x.FechaCreacion) >= new Date(this.FechaInicio)) &&
+                        (new Date(x.FechaCreacion) <= new Date(this.FechaFin))
+                })
+
+
+        }
+
+    }
+    SelectedDepartamento(selected) {
+        if (selected.value == 0) {
+            this.Actividades2Show = this.Actividades
+        }
+        else {
+            this.Actividades2Show = this.Actividades.filter((x) => x.Id_Departamento == selected.value)
+        }
+
+
+    }
     ReturnPage(event: Event) {
         event.preventDefault();
-        this.Router.navigate(['/maingerente'])
+        this.Router.navigate(['/mainpagealtagerencia'])
     }
-    ObtenerReuniones() {
-
-        var Objdire: E_GerenteSector = new E_GerenteSector()
-        var ObjReu: E_Metas = new E_Metas()
-        var xxx = this.userservices.GetCurrentCurrentUserNow().UserName
-        Objdire.Correo = xxx;
-        this.MetasService.gerentexCorreo(Objdire).subscribe((x) => {
-            this.gerentedep = x
-            ObjReu.id_gerentesector = this.gerentedep.Id;
-            this.MetasService.listarMetasxGerente(ObjReu).subscribe((x) => {
-                
-                this.rows = x;
-                this.loadingIndicator = false;
-            })
-        });
-
-
-    }
-
-    SelectedDepartamento(y) {
-
-        var depObj = this.ListDepartamentos.find(x => x.Id == y.value)
-        this.ListMunicipiosGroup = this.ListMunicipiosBase.filter(x => x.Id_Departamento == Number(depObj.Codigo))
-    }
-
-    filtrar() {
-
-        var ima: E_Imagen = new E_Imagen();
-        ima.Nombre = this.nombrefil == undefined ? null : this.cedula;
-        ima.Cedula = this.cedula == undefined ? null : this.cedula;
-        // this.ImageService.imagenesFiltro(ima).subscribe((x) => {
-        //     ;
-        //     this.rows = x;
-        //     this.loadingIndicator = false;
-        // });
-
-    }
-
-    ngOnInit() {
-
+    ngOnInit(): void {
         this.ParameterService.listarDepartamentos()
-            .subscribe((x: Array<E_Departamentos>) => {
-                this.ListDepartamentos = x
+            .subscribe((y: Array<E_Departamentos>) => {
+                this.DepartamentosPivot = y
             })
-        this.ParameterService.ListarMunicipios()
-            .subscribe((x: Array<E_Municipios>) => {
-                this.ListMunicipiosBase = x
-            })
+    }
+
+    chargeGrid() {
 
 
-        this.loadingIndicator = true;
-        this.ObtenerReuniones()
+        this.loadingIndicator = true
+        var objReport: E_ReporteMetas = new E_ReporteMetas()
+        objReport.Param_i_fechain = this.FechaInicio
+        objReport.Param_i_fechain = this.FechaFin
+        objReport.Param_id_gerente = this.GerenteLogeado.Id
+        this.AdminServices.ObtenerReporteMetas(objReport)
+            .subscribe((x: Array<E_ReporteMetas>) => {
+                this.loadingIndicator = false
+                this.MetasGrid = x
+            })
 
     }
-    selectedEvent(x) {
-
-        // console.log(x)
-        // const dialogRef = this.dialog.open(OkImageComponent, {            
-        //     data: x.selected[0]
-        // });
-
-        // dialogRef.afterClosed().subscribe(result => {
-        //     if (result) {
-        //         this.ObtenerReuniones();
-        //     }
-
-        // });
+    getRowClass(row) {
+        if (row.metacumplida == true) { return 'Cumplido' }
+        if (row.PorcentCantidad > row.PorcentajeFecha) { return 'Cumplido' }
+        else { return 'InCumplido' }
     }
 }

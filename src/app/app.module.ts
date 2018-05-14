@@ -76,6 +76,12 @@ import { ReporteIndividuo2Module } from './main/content/AltaGerenciaComponents/R
 import { ReporteIndividuo2FromGerenteModule } from 'app/main/content/GerenteSectorComponents/ReporteIndividuo2FromGerente/ReporteIndividuo2FromGerente.module';
 import { ReporteIndividuo2FromDirectorModule } from 'app/main/content/DirectorDepartamentosComponents/ReporteIndividuo2FromDirector/ReporteIndividuo2FromDirector.module';
 import { ReporteMetasAltaModule } from './main/content/AltaGerenciaComponents/ReporteMetasAlta/ReporteMetasAlta.module';
+import { MainTransportadorCarroModule } from './main/content/TransportadorCarroComponents/MainTransportadorCarro/MainTransportadorCarro.module';
+import { MetasCallModule } from './main/content/AdminComponents/metas-call/metas-call.module';
+import { LlamadasModule } from './main/content/AdminComponents/llamadas/llamadas.module';
+import { ListMetasCallModule } from './main/content/AdminComponents/metas-call/list-metas-call/list-metas-call.module';
+import { ListarLlamadasModule } from './main/content/AdminComponents/llamadas/listar-llamadas/listar-llamadas.module';
+import { VehiculoModule } from './main/content/TransportadorCarroComponents/Vehiculo/vehiculo.module';
 
 
 const appRoutes: Routes = [
@@ -111,6 +117,10 @@ const appRoutes: Routes = [
     { path: 'listarPuestos', redirectTo: '/listarPuestos', pathMatch: 'full' },
     { path: 'listarMesas', redirectTo: '/listarMesas', pathMatch: 'full' },
     { path: 'lsitarGerente', redirectTo: '/lsitarGerente', pathMatch: 'full' },
+    { path: 'MetasCall', redirectTo: '/MetasCall', pathMatch: 'full' },
+    { path: 'Llamadas', redirectTo: '/Llamadas', pathMatch: 'full' },
+    { path: 'ListarMetasCall', redirectTo: '/ListarMetasCall', pathMatch: 'full' },
+    { path: 'ListarLlamadas', redirectTo: '/ListarLlamadas', pathMatch: 'full' },
     //Gerente
     { path: 'maingerente', redirectTo: '/maingerente', pathMatch: 'full' },
     { path: 'directordepartamento', redirectTo: '/directordepartamento', pathMatch: 'full' },
@@ -118,7 +128,7 @@ const appRoutes: Routes = [
     { path: 'metas', redirectTo: '/metas', pathMatch: 'full' },
     { path: 'ListarDirector', redirectTo: '/ListarDirector', pathMatch: 'full' },
     { path: 'ReporteIndividuo2FromGerente', redirectTo: '/ReporteIndividuo2FromGerente', pathMatch: 'full' },
-    
+
     //Director
     { path: 'mainpagedirector', redirectTo: '/mainpagedirector', pathMatch: 'full' },
     { path: 'individuo1', redirectTo: '/individuo1', pathMatch: 'full' },
@@ -127,19 +137,23 @@ const appRoutes: Routes = [
     { path: 'Individuo2Dir', redirectTo: '/Individuo2Dir', pathMatch: 'full' },
     { path: 'ReporteIndividuo2FromDirector', redirectTo: '/ReporteIndividuo2FromDirector', pathMatch: 'full' },
 
-    
+
     //Individuo 1
     { path: 'mainpageindividuo1', redirectTo: '/mainpageindividuo1', pathMatch: 'full' },
     { path: 'individuo2', redirectTo: '/individuo2', pathMatch: 'full' },
     //Reporte
     { path: 'ReporteMetas', redirectTo: '/ReporteMetas', pathMatch: 'full' },
+    //Conductor
+    { path: 'maintransportadorcarro', redirectTo: '/maintransportadorcarro', pathMatch: 'full' },
+    { path: 'vehiculo', redirectTo: '/vehiculo', pathMatch: 'full' },
+    
     //AltaGerencia
     { path: 'mainpagealtagerencia', redirectTo: '/mainpagealtagerencia', pathMatch: 'full' },
     { path: 'reporteactividades', redirectTo: '/reporteactividades', pathMatch: 'full' },
     { path: 'ReporteIndividuo2', redirectTo: '/ReporteIndividuo2', pathMatch: 'full' },
     { path: 'ReporteMetasAlta', redirectTo: '/ReporteMetasAlta', pathMatch: 'full' },
-    
-    
+
+
 
 
 
@@ -212,7 +226,14 @@ const appRoutes: Routes = [
         ReporteIndividuo2Module,
         ReporteIndividuo2FromGerenteModule,
         ReporteIndividuo2FromDirectorModule,
-        ReporteMetasAltaModule
+        ReporteMetasAltaModule,
+        MainTransportadorCarroModule,
+        MetasCallModule,
+        LlamadasModule,
+        ListMetasCallModule,
+        ListarLlamadasModule,
+        VehiculoModule
+
     ],
     providers: [
         UserService

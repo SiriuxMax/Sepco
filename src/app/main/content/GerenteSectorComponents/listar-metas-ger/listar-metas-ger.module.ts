@@ -1,35 +1,37 @@
 // Angular Imports
-// Angular Imports
 import { NgModule } from '@angular/core';
+
+// This Module's Components
+
+
 import { RouterModule, Routes } from '@angular/router';
 
-import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatStepperModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatStepperModule, MatDialogModule, MatProgressSpinnerModule, MatNativeDateModule, MatDatepickerModule, MAT_DATE_LOCALE } from '@angular/material';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { TextMaskModule } from 'angular2-text-mask';
-
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FuseConfirmDialogModule } from '@fuse/components';
-// This Module's Components
-import { ListarMetasGerComponent } from './listar-metas-ger.component';
+import { AdminGuard } from 'app/Guards/AdminGuard';
+import { ListarMetasGerComponent } from 'app/main/content/GerenteSectorComponents/listar-metas-ger/listar-metas-ger.component';
 
 const routes: Routes = [
     {
         path: 'ListarMetasGer',
         component: ListarMetasGerComponent
+        //       , canActivate:[AdminGuard]
     }
 ];
 
 @NgModule({
     declarations: [
         ListarMetasGerComponent
-        
+
     ],
     imports: [
         RouterModule.forChild(routes),
-        FuseConfirmDialogModule,
+        MatProgressSpinnerModule,
         MatButtonModule,
         MatFormFieldModule,
         MatIconModule,
@@ -40,12 +42,12 @@ const routes: Routes = [
         FuseSharedModule,
         TextMaskModule,
         NgxDatatableModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatNativeDateModule,
+        MatDatepickerModule
 
-    ],//, entryComponents: [AceptImageComponent,OkImageComponent]
-    exports: [
-        ListarMetasGerComponent,
-    ]
+    ],providers:[{provide: MAT_DATE_LOCALE, useValue: 'es-ES'},]
+
 })
 export class ListarMetasGerModule {
 

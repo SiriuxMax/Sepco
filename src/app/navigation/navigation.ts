@@ -125,6 +125,25 @@ export const navigationAdmin = [
                 'url': '/gerentesector',
             },
             {
+                'id': 'SacIndividuo2',
+                'title': 'Aprobar Estructura SAC',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/SacIndividuo2',
+            },
+            {
+                'id': 'MetasCall',
+                'title': 'Metas CallCenter',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/MetasCall',
+            },
+            
+
+
+            {
                 'id': 'Salir',
                 'title': 'Salir',
                 'translate': 'NAV.SAMPLE.TITLE',
@@ -230,14 +249,7 @@ export const navigatioGerenteSector = [
                 'url': '/metas',
             },
             
-            {
-                'id': 'ListarMetasGer',
-                'title': 'Listado de Metas',
-                'translate': 'NAV.SAMPLE.TITLE',
-                'type': 'item',
-                'icon': 'verified_user',
-                'url': '/ListarMetasGer',
-            },
+          
         ]
     },
     
@@ -253,7 +265,7 @@ export const navigatioGerenteSector = [
                 'translate': 'NAV.SAMPLE.TITLE',
                 'type': 'item',
                 'icon': 'assessment',
-                'url': '/ReporteMetas',
+                'url': '/ListarMetasGer',
             },
             {
                 'id': 'ReporteIndividuo2FromGerente',
@@ -308,6 +320,37 @@ export const navigationIndividuo1 = [
         ]
     }
 ];
+
+export const navigationTransportador = [
+    {
+        'id': 'applications',
+        'title': 'Menu',
+        'translate': 'NAV.APPLICATIONS',
+        'type': 'group',
+        'children': [
+            {
+                'id': 'vehiculo',
+                'title': 'Creación Vehiculo',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/vehiculo',
+            },
+                     
+            
+            {
+                'id': 'Salir',
+                'title': 'Salir',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'input',
+                'url': '/login',
+            },
+        ]
+    }
+];
+
+
 export const navigationAltaGerencia = [
     {
         'id': 'applications',

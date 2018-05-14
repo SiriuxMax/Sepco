@@ -113,9 +113,11 @@ export class ReporteMetasAltaComponent implements OnInit {
         var objReport: E_ReporteMetas = new E_ReporteMetas()
         objReport.Param_i_fechain = this.FechaInicio
         objReport.Param_i_fechain = this.FechaFin
-        objReport.Param_DeptoSeleccionado
+        objReport.Param_DeptoSeleccionado = Multiple
         this.AdminServices.ObtenerReporteMetas(objReport)
             .subscribe((x: Array<E_ReporteMetas>) => {
+                this.loadingIndicator = false
+
                 this.MetasGrid = x
             })
 

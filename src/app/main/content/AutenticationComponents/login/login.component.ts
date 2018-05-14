@@ -8,6 +8,7 @@ import { UserService } from 'app/ApiServices/UserService';
 import { E_Usuario } from 'app/Models/E_Usuario';
 import { PhotoTool } from 'app/Tools/PhotoTool';
 import { AppSettings } from '../../../../app.settings';
+import { Perfiles } from 'app/Enums/Enumerations';
 //import { AppSettings } from '../../../../models/AppSettings.model';
 
 
@@ -51,7 +52,7 @@ export class FuseLoginComponent implements OnInit {
             user.Passwordd = btoa("123123")
             this.Loading = true
             this.UserService.Login(user).subscribe((x: E_Usuario) => {
-
+                debugger
                 if (x.error != undefined) {
                     if (x.error.Id == 1 || x.error.Id == 2) {
                         this.errorLogin = true
@@ -68,6 +69,8 @@ export class FuseLoginComponent implements OnInit {
                     this.Router.navigate(["/mainpagedirector/"])
                 } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 4) {
                     this.Router.navigate(["/mainpageindividuo1/"])
+                } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == Perfiles.TransportadorCarro) {
+                    this.Router.navigate(["/maintransportadorcarro/"])
                 }
 
 
@@ -115,7 +118,7 @@ export class FuseLoginComponent implements OnInit {
         user.Passwordd = btoa(this.loginForm.value.password)
         this.Loading = true
         this.UserService.Login(user).subscribe((x: E_Usuario) => {
-
+            debugger
             if (x.error != undefined) {
                 if (x.error.Id == 1 || x.error.Id == 2) {
                     this.errorLogin = true
@@ -136,6 +139,8 @@ export class FuseLoginComponent implements OnInit {
                 this.Router.navigate(["/maingerente/"])
             } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == 14) {
                 this.Router.navigate(["/mainpagealtagerencia/"])
+            } else if (this.UserService.GetCurrentCurrentUserNow().Id_Perfil == Perfiles.TransportadorCarro) {
+                this.Router.navigate(["/maintransportadorcarro/"])
             }
 
 

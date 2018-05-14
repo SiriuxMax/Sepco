@@ -26,7 +26,7 @@ export class ProfileConfig {
                 perfil = Perfiles.Jurado
                 break;
             case TipoPersona2.TransportadorCarro:
-                perfil = Perfiles.Jurado
+                perfil = Perfiles.TransportadorCarro
                 break;
             default:
                 perfil = 0

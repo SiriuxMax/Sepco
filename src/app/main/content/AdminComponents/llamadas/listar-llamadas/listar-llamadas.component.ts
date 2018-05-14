@@ -12,93 +12,99 @@ import { E_Reunion } from 'app/Models/E_Reunion';
 import { E_Imagen } from 'app/Models/E_Imagen';
 import { AppSettings } from 'app/app.settings';
 import { ImageService } from 'app/ApiServices/ImageServices';
-
 import { ReunionBuilder } from 'app/Builders/Reunion.model.builder';
 import { ReunionService } from 'app/ApiServices/ReunionService';
 import { Router } from '@angular/router';
 import { E_Municipios } from 'app/Models/E_Municipios';
-import { E_DirectorDepartamento } from 'app/Models/E_DirectorDepartamento';
-import { UserService } from 'app/ApiServices/UserService';
-import { AdminServices } from 'app/ApiServices/AdminServices';
-import { E_Metas } from 'app/Models/E_Metas';
+import { E_PuestoVotacion } from '../../../../../Models/E_PuestoVotacion';
+import { AdminServices } from '../../../../../ApiServices/AdminServices';
+import { E_Canal } from '../../../../../Models/E_Canal';
+import { E_TipoCanal } from '../../../../../Models/E_TipoCanal';
+import { E_CallCenter } from '../../../../../Models/E_CallCenter';
+import { E_Usuario } from '../../../../../Models/E_Usuario';
+import { UserService } from '../../../../../ApiServices/UserService';
+import { E_Llamadas } from '../../../../../Models/E_Llamadas';
 
 @Component({
     moduleId: module.id,
-    selector: 'listar-metas',
-    templateUrl: 'listar-metas.component.html',
-    styleUrls: ['listar-metas.component.scss']
+    selector: 'listar-llamadas',
+    templateUrl: 'listar-llamadas.component.html',
+    styleUrls: ['listar-llamadas.component.scss']
 })
-export class ListarMetasComponent implements OnInit {
+export class ListarLlamadasComponent implements OnInit {
     rows = [];
-    public directordepto: E_DirectorDepartamento;
     public DepartamentoSeleccionado: string = ""
     public MunicipioSeleccionado: string = ""
     public ListDepartamentos: Array<E_Departamentos> = new Array<E_Departamentos>()
-    public ListMunicipiosBase: Array<E_Municipios> = new Array<E_Municipios>()
+    public ListMunicipiosBase: Array<E_PuestoVotacion> = new Array<E_PuestoVotacion>()
     public ListMunicipiosGroup: Array<E_Municipios> = new Array<E_Municipios>()
-    public nombrefil: string;
-    public cedula: string;
-    public Aprobada: number;
+    public nombrefil:string;
+    public cedula:string;
+    public Aprobada:number;
     selected = [];
     loadingIndicator = true;
     reorderable = true;
     DeptoName = ""
     DatoDepto: any
     ListImage: Array<E_Imagen> = new Array<E_Imagen>();
+    listCanal: Array<E_Canal> = new Array<E_Canal>()
+    listTipoCanal: Array<E_TipoCanal> = new Array<E_TipoCanal>()    
+    listCallCenter: Array<E_CallCenter> = new Array<E_CallCenter>()
+
     constructor(private NavigationData: NavigationInfoService,
         private ParameterService: ParameterService,
         private ReunionService: ReunionService,
         private Router: Router,
         private dialog: MatDialog,
-        private MetasService: AdminServices, public userservices: UserService) {
+        private ImageService: AdminServices,
+        private UserService: UserService) {
 
-        if (this.NavigationData.storage == undefined) { }// this.Router.navigate(["/Maps"]) }
-        //   this.DatoDepto = this.NavigationData.storage.IdDepto
+        if (this.NavigationData.storage == undefined) {}// this.Router.navigate(["/Maps"]) }
+     //   this.DatoDepto = this.NavigationData.storage.IdDepto
 
 
         // NumeroEventos: NUmero, Nombre: TextX, CodigoDepto: CodigoDepto ,IdDepto:IdDepto
     }
+    
 
-    ReturnPage(event: Event) {
+    ReturnPage(event:Event){
         event.preventDefault();
-        this.Router.navigate(['/mainpagedirector'])
-    }
+        this.Router.navigate(['/mainpageadmin'])
+     }
     ObtenerReuniones() {
-
-        var Objdire: E_DirectorDepartamento = new E_DirectorDepartamento()
-        var xxx = this.userservices.GetCurrentCurrentUserNow().UserName
-        Objdire.Correo = xxx;
-        this.MetasService.directorxCorreo(Objdire).subscribe((x) => {
-            this.directordepto = x;
-            var ObjReu: E_Metas = new E_Metas()
-            ObjReu.id_directordepto = this.directordepto.Id;
-            this.MetasService.listarMetasxDirector(ObjReu).subscribe((x) => {
-
+        
+        var ObjReu: E_Llamadas = new E_Llamadas()
+        ObjReu.Id_Usuario = this.UserService.GetCurrentCurrentUserNow().Id;
+        //ObjReu.Id_Departamento = this.DatoDepto
+            
+            this.ImageService.listarLLamadaxUsu(ObjReu).subscribe((x) => {
+                                
                 this.rows = x;
                 this.loadingIndicator = false;
-            })
-        });
-
-
+            }
+    
+    
+            )
+       
     }
 
     SelectedDepartamento(y) {
 
-        var depObj = this.ListDepartamentos.find(x => x.Id == y.value)
-        this.ListMunicipiosGroup = this.ListMunicipiosBase.filter(x => x.Id_Departamento == Number(depObj.Codigo))
+        // var depObj = this.ListDepartamentos.find(x => x.Id == y.value)
+        // this.ListMunicipiosGroup = this.ListMunicipiosBase.filter(x => x.Id_Departamento == Number(depObj.Codigo))
     }
 
     filtrar() {
-
-        var ima: E_Imagen = new E_Imagen();
-        ima.Nombre = this.nombrefil == undefined ? null : this.cedula;
-        ima.Cedula = this.cedula == undefined ? null : this.cedula;
+        
+        // var ima: E_Imagen = new E_Imagen();
+        // ima.Nombre = this.nombrefil == undefined ? null : this.cedula ;
+        // ima.Cedula = this.cedula == undefined ? null : this.cedula ;
         // this.ImageService.imagenesFiltro(ima).subscribe((x) => {
         //     ;
         //     this.rows = x;
         //     this.loadingIndicator = false;
         // });
-
+                
     }
 
     ngOnInit() {
@@ -107,26 +113,17 @@ export class ListarMetasComponent implements OnInit {
             .subscribe((x: Array<E_Departamentos>) => {
                 this.ListDepartamentos = x
             })
-        this.ParameterService.ListarMunicipios()
-            .subscribe((x: Array<E_Municipios>) => {
-                this.ListMunicipiosBase = x
-            })
+       
         this.loadingIndicator = true;
         this.ObtenerReuniones()
 
     }
     selectedEvent(x) {
+        
+       
+    }
 
-        // console.log(x)
-        // const dialogRef = this.dialog.open(OkImageComponent, {            
-        //     data: x.selected[0]
-        // });
-
-        // dialogRef.afterClosed().subscribe(result => {
-        //     if (result) {
-        //         this.ObtenerReuniones();
-        //     }
-
-        // });
+    nuevo(){
+        this.Router.navigate(['/Llamadas'])
     }
 }
