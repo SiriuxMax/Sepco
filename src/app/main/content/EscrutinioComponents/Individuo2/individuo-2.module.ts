@@ -1,16 +1,17 @@
 // Angular Imports
 import { NgModule } from '@angular/core';
-import { ImpugnacionComponent } from './impugnacion.component';
+import { Individuo2Component } from './individuo-2.component';
 import { RouterModule, Routes } from '@angular/router';
-import { MatButtonModule, MatFormFieldModule,MatCheckboxModule, MatIconModule, MatInputModule, MatSelectModule, MatStepperModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatCheckboxModule, MatIconModule, MatInputModule, MatSelectModule, MatStepperModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule } from '@angular/material';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { TextMaskModule } from 'angular2-text-mask';
+import { FuseConfirmDialogModule } from '@fuse/components';
 
 
 const routes: Routes = [
     {
-        path: 'impugnacion',
-        component: ImpugnacionComponent
+        path: 'individuo2',
+        component: Individuo2Component
     }
 ];
 
@@ -30,14 +31,18 @@ const routes: Routes = [
         MatCheckboxModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        FuseConfirmDialogModule,
+        MatProgressSpinnerModule
     ],
     declarations: [
-        ImpugnacionComponent,
-    ],
+        Individuo2Component,
+
+    ], entryComponents: [],
     exports: [
-        ImpugnacionComponent,
+        Individuo2Component,
+
     ]
 })
-export class ImpugnacionModule {
+export class Individuo2Module {
 
 }

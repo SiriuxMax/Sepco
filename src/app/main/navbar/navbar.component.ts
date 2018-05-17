@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
-import { navigation, navigationAdmin, navigationDirectorDepartamento, navigationIndividuo1, navigatioGerenteSector, navigationAltaGerencia, navigationTransportador } from 'app/navigation/navigation';
+import { navigation, navigationAdmin, navigationDirectorDepartamento, navigationIndividuo1, navigatioGerenteSector, navigationAltaGerencia, navigationTransportador, navigationEscrutinio } from 'app/navigation/navigation';
 import { navigationClient } from 'app/navigation/navigation';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { AppSettings } from '../../app.settings';
@@ -73,6 +73,9 @@ export class FuseNavbarComponent implements OnDestroy {
             }
             else if (this.userService.GetCurrentCurrentUserNow().Id_Perfil == Perfiles.TransportadorCarro) {
                 this.navigation = navigationTransportador
+            }
+            else if (this.userService.GetCurrentCurrentUserNow().Id_Perfil == Perfiles.Escrutinio) {
+                this.navigation = navigationEscrutinio
             }
 
 

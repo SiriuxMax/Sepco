@@ -40,9 +40,11 @@ import { MetasBuilder } from '../Builders/Metas.model.builder';
 import { E_TipoImpugnacion } from '../Models/E_TipoImpugnacion';
 import { E_SitioEscrutino } from '../Models/E_SitioEscrutino';
 import { SitioEscrutinoBuilder } from '../Builders/SitioEscrutino.model.builder';
+import { TipoImpugnacionBuilder } from '../Builders/TipoImpugnacion.model.builder';
 
 @Injectable()
 export class ParameterService {
+
     constructor(private Http: HttpClient, private UserService: UserService, private HeaderBuilder: HeaderBuilder) { }
     private UrlNow: string = AppSettings.Global().API
     private textarea: HTMLTextAreaElement;
@@ -169,7 +171,7 @@ export class ParameterService {
     listarMesas(): Observable<Array<E_Mesa>> {
         var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
-        
+
         return this.Http.post(this.UrlNow + "Admin/listarMesas"
             , "", httpOptions).map(this.ExtractMesas)
     }
@@ -182,10 +184,10 @@ export class ParameterService {
             , request, httpOptions).map(this.ExtractPuestoVotacion)
     }
 
-    listarPuestosVotacion( ): Observable<Array<E_PuestoVotacion>> {
+    listarPuestosVotacion(): Observable<Array<E_PuestoVotacion>> {
         var IdUser = this.UserService.GetCurrentCurrentUserNow().Id
         const httpOptions = this.HeaderBuilder.HeadNow(IdUser)
-       
+
         return this.Http.post(this.UrlNow + "Admin/listarPuestosVotacion"
             , "", httpOptions).map(this.ExtractPuestoVotacion)
     }
@@ -197,7 +199,7 @@ export class ParameterService {
         return this.Http.post(this.UrlNow + "Admin/ListarConfTipoIndividuo"
             , request, httpOptions).map(this.ExtraerConfiguracionIndividuo)
     }
-    
+
 
 
     ListarPuestoVotacion(): Observable<Array<E_PuestoVotacion>> {
@@ -406,19 +408,19 @@ export class ParameterService {
 
         }
         return x
-    }    
+    }
 
-/*    ExtractTipoImpugnacion(res: any): Array<E_TipoImpugnacion> {
-
-        var x: Array<E_TipoImpugnacion> = new Array<E_TipoImpugnacion>()
-        if (res != null) {
-            res.forEach((element) => {
-                x.push(new MetasBuilder().buildFromObject(element).Build())
-            });
-
-        }
-        return x
-    }*/
+    /*    ExtractTipoImpugnacion(res: any): Array<E_TipoImpugnacion> {
+    
+            var x: Array<E_TipoImpugnacion> = new Array<E_TipoImpugnacion>()
+            if (res != null) {
+                res.forEach((element) => {
+                    x.push(new MetasBuilder().buildFromObject(element).Build())
+                });
+    
+            }
+            return x
+        }*/
 
     ExtractSitioEscrutino(res: any): Array<E_SitioEscrutino> {
 
@@ -444,18 +446,18 @@ export class ParameterService {
         return x
     }
 
-   listarMetasxDirexFechasxActiva(obj :E_Metas): Observable<Array<E_Metas>> {
+    listarMetasxDirexFechasxActiva(obj: E_Metas): Observable<Array<E_Metas>> {
         ;
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
             })
-        }; 
+        };
         var request = JSON.stringify(obj)
         return this.Http.post(this.UrlNow + "Admin/listarMetasxDirexFechasxActiva"
             , request, httpOptions).map(this.ExtractMetas)
     }
-      ListarItemsMetas(): Observable<Array<E_ItemsMetas>> {
+    ListarItemsMetas(): Observable<Array<E_ItemsMetas>> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -477,7 +479,7 @@ export class ParameterService {
             , request, httpOptions).map(this.ExtractDirectorDepartamento)
     }
 
-    ListarDirectorDepartamentoxIdGerenteSector(obj :E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
+    ListarDirectorDepartamentoxIdGerenteSector(obj: E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -488,18 +490,18 @@ export class ParameterService {
             , request, httpOptions).map(this.ExtractDirectorDepartamento)
     }
 
-    
 
- /*   listarTipoImpugnacion(): Observable<Array<E_TipoImpugnacion>> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-            })
-        };    
-        var request = JSON.stringify("")
-        return this.Http.post(this.UrlNow + "Admin/listarTipoImpugnacion"
-            , request, httpOptions).map(this.ExtractMetas)
-    }*/
+
+    /*   listarTipoImpugnacion(): Observable<Array<E_TipoImpugnacion>> {
+           const httpOptions = {
+               headers: new HttpHeaders({
+                   'Content-Type': 'application/json',
+               })
+           };    
+           var request = JSON.stringify("")
+           return this.Http.post(this.UrlNow + "Admin/listarTipoImpugnacion"
+               , request, httpOptions).map(this.ExtractMetas)
+       }*/
 
     listarSitioEscrutino(): Observable<Array<E_SitioEscrutino>> {
         const httpOptions = {
@@ -512,7 +514,7 @@ export class ParameterService {
             , request, httpOptions).map(this.ExtractSitioEscrutino)
     }
 
-    listarMesasxIdPuestoVotacion(obj :E_Mesa): Observable<Array<E_Mesa>> {
+    listarMesasxIdPuestoVotacion(obj: E_Mesa): Observable<Array<E_Mesa>> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -522,6 +524,29 @@ export class ParameterService {
         return this.Http.post(this.UrlNow + "Admin/listarMesasxIdPuestoVotacion"
             , request, httpOptions).map(this.ExtractMesa)
     }
+
+    ObtenerTipoInpugnacion(): Observable<Array<E_TipoImpugnacion>> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+            })
+        };
+        var request = JSON.stringify("")
+        return this.Http.post(this.UrlNow + "Admin/ObtenerTipoInpugnacion"
+            , request, httpOptions).map(this.ExtractTipoImpugnacion)
+    }
+    ExtractTipoImpugnacion(res: any): Array<E_TipoImpugnacion> {
+
+        var x: Array<E_TipoImpugnacion> = new Array<E_TipoImpugnacion>()
+        if (res != null) {
+            res.forEach((element) => {
+                x.push(new TipoImpugnacionBuilder().buildFromObject(element).Build())
+            });
+
+        }
+        return x
+    }
+
 }
 
 

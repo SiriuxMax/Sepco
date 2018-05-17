@@ -330,6 +330,7 @@ export const navigationIndividuo1 = [
     }
 ];
 
+
 export const navigationTransportador = [
     {
         'id': 'applications',
@@ -399,6 +400,36 @@ export const navigationAltaGerencia = [
                 'icon': 'assessment',
                 'url': '/ReporteMetasEstructura',
             },        
+                
+            {
+                'id': 'Salir',
+                'title': 'Salir',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'input',
+                'url': '/login',
+            },
+        ]
+    }
+];
+
+
+export const navigationEscrutinio = [
+    {
+        'id': 'applications',
+        'title': 'Menu',
+        'translate': 'NAV.APPLICATIONS',
+        'type': 'group',
+        'children': [
+            {
+                'id': 'impugnacion',
+                'title': 'Inpugnacion',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'assessment',
+                'url': '/impugnacion',
+            },
+           
                 
             {
                 'id': 'Salir',

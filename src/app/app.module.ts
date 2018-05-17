@@ -83,6 +83,8 @@ import { ListMetasCallModule } from './main/content/AdminComponents/metas-call/l
 import { ListarLlamadasModule } from './main/content/AdminComponents/llamadas/listar-llamadas/listar-llamadas.module';
 import { VehiculoModule } from './main/content/TransportadorCarroComponents/Vehiculo/vehiculo.module';
 import { ReporteMetasEstructuraModule } from 'app/main/content/AltaGerenciaComponents/ReporteMetasEstructura/ReporteMetasEstructura.module';
+import { ImpugnacionModule } from 'app/main/content/EscrutinioComponents/Impugnacion/impugnacion.module';
+import { MainEscrutinioModule } from 'app/main/content/EscrutinioComponents/MainEscrutinio/MainEscrutinio.module';
 
 
 const appRoutes: Routes = [
@@ -123,7 +125,7 @@ const appRoutes: Routes = [
     { path: 'ListarMetasCall', redirectTo: '/ListarMetasCall', pathMatch: 'full' },
     { path: 'ListarLlamadas', redirectTo: '/ListarLlamadas', pathMatch: 'full' },
     { path: 'ReporteMetasEstructura', redirectTo: '/ReporteMetasEstructura', pathMatch: 'full' },
-    
+
     //Gerente
     { path: 'maingerente', redirectTo: '/maingerente', pathMatch: 'full' },
     { path: 'directordepartamento', redirectTo: '/directordepartamento', pathMatch: 'full' },
@@ -149,12 +151,16 @@ const appRoutes: Routes = [
     //Conductor
     { path: 'maintransportadorcarro', redirectTo: '/maintransportadorcarro', pathMatch: 'full' },
     { path: 'vehiculo', redirectTo: '/vehiculo', pathMatch: 'full' },
-    
+
     //AltaGerencia
     { path: 'mainpagealtagerencia', redirectTo: '/mainpagealtagerencia', pathMatch: 'full' },
     { path: 'reporteactividades', redirectTo: '/reporteactividades', pathMatch: 'full' },
     { path: 'ReporteIndividuo2', redirectTo: '/ReporteIndividuo2', pathMatch: 'full' },
     { path: 'ReporteMetasAlta', redirectTo: '/ReporteMetasAlta', pathMatch: 'full' },
+
+    //Escrutinio
+    { path: 'MainEscrutinioComponent', redirectTo: '/MainEscrutinioComponent', pathMatch: 'full' },
+    { path: 'impugnacion', redirectTo: '/impugnacion', pathMatch: 'full' },
 
 
 
@@ -236,7 +242,9 @@ const appRoutes: Routes = [
         ListMetasCallModule,
         ListarLlamadasModule,
         VehiculoModule,
-        ReporteMetasEstructuraModule
+        ReporteMetasEstructuraModule,
+        ImpugnacionModule,
+        MainEscrutinioModule
 
     ],
     providers: [

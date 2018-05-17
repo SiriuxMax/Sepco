@@ -1,6 +1,7 @@
 export class E_TipoImpugnacion {
+    Estado: boolean;
     public Id: number
-    public Nombre: string
-    public Activo: boolean    
-    
+    public Descripcion: string
+    public Activo: boolean
+
 }

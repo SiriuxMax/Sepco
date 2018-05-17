@@ -13,7 +13,9 @@ export enum Perfiles {
     Abogado = 11,
     DelegadosEscrutinio = 12,
     TransportadorCarro = 13,
-    AltaGerencia = 14
+    AltaGerencia = 14,
+    UsuarioSac= 15,
+    Escrutinio = 16,
 }
 export enum TipoPersona1 {
     CoodinadorElectoral = 1,
