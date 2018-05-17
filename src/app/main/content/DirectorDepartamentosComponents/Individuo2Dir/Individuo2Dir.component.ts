@@ -31,6 +31,7 @@ import { E_TipoIndividuo1 } from 'app/Models/E_TipoIndividuo1';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 import { E_DirectorDepartamento } from '../../../../Models/E_DirectorDepartamento';
+import { E_ReporteIndividuo2 } from '../../../../Models/E_ReporteIndividuo2';
 @Component({
     moduleId: module.id,
     selector: 'Individuo2Dir',
@@ -77,6 +78,7 @@ export class Individuo2DirComponent implements OnInit {
     ListDepartamentos: E_Departamentos[];
     SucceSave: boolean;
     dataURL: any;
+    editar:boolean;
     public MaskedNumber: any[]
     MaskedNumberNoDecimal: any[]
     form: FormGroup;
@@ -87,6 +89,8 @@ export class Individuo2DirComponent implements OnInit {
     public Nombre: string;
     public descripcion: string;
     public checked;
+    public xx: E_ReporteIndividuo2;
+    public indi2 : E_Individuo2 ;
     // Horizontal Stepper
     constructor(private formBuilder: FormBuilder,
         private ParameterService: ParameterService,
@@ -96,7 +100,7 @@ export class Individuo2DirComponent implements OnInit {
         private Router: Router,
         private UserService: UserService,
         private Matdialog: MatDialog,
-        private IndividuoServices: IndividuoServices
+        private IndividuoServices: IndividuoServices,private navigation: NavigationInfoService
     ) { }
 
 
@@ -106,7 +110,7 @@ export class Individuo2DirComponent implements OnInit {
     }
     ReturnPage(event: Event) {
         event.preventDefault();
-        this.Router.navigate(['/mainpageindividuo1'])
+        this.Router.navigate(['/ReporteIndividuo2FromDirector'])
     }
 
 
@@ -133,6 +137,52 @@ export class Individuo2DirComponent implements OnInit {
         //   this.AdminServices.crearIndividuo2(objIndividuo2).subscribe((x: boolean) => { this.SucceSave = x })
 
     }
+
+
+    ConfirmData() {
+        debugger;
+        this.confirmDialogRef = this.Matdialog.open(FuseConfirmDialogComponent, {})
+        this.confirmDialogRef.componentInstance.confirmMessage = '¿Estas seguro de realizar esta acción?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) { this.GuardadoAsegurado2() }
+            this.confirmDialogRef = null;
+        });
+
+    }
+
+    GuardadoAsegurado2() {
+        debugger;
+        this.SaveInProgress = true
+        this.ShowErrorSave = false
+        this.ShowSuccess = false
+        var objIndividuo2: E_Individuo2 = new E_Individuo2()
+        objIndividuo2.Cedula = this.form.value.Cedula.replace(/\./g, "");
+        objIndividuo2.Nombres = this.form.value.Nombre
+        objIndividuo2.Apellidos = this.form.value.Apellido
+        objIndividuo2.Direccion = this.form.value.Direccion
+        objIndividuo2.Correo = this.form.value.email.toLowerCase()
+        objIndividuo2.Telefono = this.form.value.Telefonof
+        objIndividuo2.Celular = this.form.value.Celular
+        objIndividuo2.Activo = true
+        objIndividuo2.FechaCreacion = new Date();  
+        objIndividuo2.observacionsac = this.form.value.Observacion    
+      
+
+        this.AdminServices.modificarIndividuo22(objIndividuo2).subscribe((x: boolean) => {
+            if (x) {
+                
+                        this.ShowSuccess = true
+                        this.Clearforms()
+                        this.clearDetail()                   
+                    this.SaveInProgress = false
+                
+            }
+            
+
+        })
+
+    }
+
     GuardadoAsegurado() {
 
         this.SaveInProgress = true
@@ -442,9 +492,39 @@ export class Individuo2DirComponent implements OnInit {
         this.ParameterService.ListarMunicipios()
             .subscribe((x: Array<E_Municipios>) => {
                 this.ListMunicipiosBase = x
+                
+                this.xx = this.navigation.reporte2;
+                console.log(this.xx);
+                if(this.xx != undefined){
+                   this.indi2 = new E_Individuo2();
+                   this.indi2.Correo=this.xx.Correo;
+                    this.AdminServices.Individuo2xCorreo(this.indi2)
+                    .subscribe((x: E_Individuo2) => {
+                        debugger;
+                        this.indi2 = x
+
+                        this.form = this.formBuilder.group({
+                            email: [this.indi2.Correo, [Validators.required, Validators.email]],
+                            Cedula: [this.indi2.Cedula, [Validators.required]],
+                            Telefonof: [this.indi2.Telefono],
+                            Celular: [this.indi2.Celular, [Validators.required]],
+                            Nombre: [this.indi2.Nombres, [Validators.required]],
+                            Apellido: [this.indi2.Apellidos, [Validators.required]],
+                            Direccion: [this.indi2.Direccion, [Validators.required]],
+                            TipoIndividuo2: [this.indi2.Id_tipoindividuo2, [Validators.required]],
+                            TipoIndividuo1: [this.indi2.Id_individuo1, [Validators.required]]   ,                         
+                            Observacion: [this.indi2.observacionsac, [Validators.required]] 
+                        });
+
+                        this.editar=true;                        
+                        
+                    })
+
+                   
+                }
             })
 
-
+           
 
 
 
@@ -519,7 +599,8 @@ export class Individuo2DirComponent implements OnInit {
             Apellido: ['', [Validators.required]],
             Direccion: ['', [Validators.required]],
             TipoIndividuo2: [undefined, [Validators.required]],
-            TipoIndividuo1: [undefined, [Validators.required]]
+            TipoIndividuo1: [undefined, [Validators.required]],
+            Observacion: [""],
 
         });
         var options = [Validators.required]
@@ -551,7 +632,8 @@ export class Individuo2DirComponent implements OnInit {
             Apellido: '',
             Direccion: '',
             TipoIndividuo2: 0,
-            TipoIndividuo1: 0
+            TipoIndividuo1: 0,
+            Observacion: ''
         })
     }
 }

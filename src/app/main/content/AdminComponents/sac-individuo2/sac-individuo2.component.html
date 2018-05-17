@@ -20,6 +20,12 @@
         </div>
         <div class="content p-24">
             <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row" style="display: none;" class="filtros">
+                <mat-form-field fxFlex="100" >
+                    <input matInput placeholder="Escriba la palabra que desea buscar" (keyup)="changeFilter($event)" [(ngModel)]="filtrado">
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="start start" fxLayout.gt-md="row" style="display: none;" class="filtros">
 
                 <mat-form-field fxFlex="100" style="display: none;">
                     <input matInput placeholder="Cedula" [(ngModel)]="cedula">
@@ -63,17 +69,16 @@
 
                 <ngx-datatable-column name="Name">
                     <ng-template let-column="column" ngx-datatable-header-template>
-                      Holla! 
+                     
                     </ng-template>
                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                      <button (click)="modificar(row)" class="botoncito">Administrar</button>
                     </ng-template>
                   </ngx-datatable-column>
-                <ngx-datatable-column name="Id" prop="Id">
+                <!-- <ngx-datatable-column name="Id" prop="Id">
 
-                </ngx-datatable-column>
-                <ngx-datatable-column name="FechaCreacion" prop="FechaCreacion"></ngx-datatable-column>
-                <ngx-datatable-column name="Activo" prop="Activo"></ngx-datatable-column>
+                </ngx-datatable-column>                
+                <ngx-datatable-column name="Activo" prop="Activo"></ngx-datatable-column> -->
                 <ngx-datatable-column name="Cedula" prop="Cedula"></ngx-datatable-column>
                 <ngx-datatable-column name="Nombres" prop="Nombres"></ngx-datatable-column>
                 <ngx-datatable-column name="Apellidos" prop="Apellidos"></ngx-datatable-column>
@@ -81,11 +86,12 @@
                 <ngx-datatable-column name="Correo" prop="Correo"></ngx-datatable-column>
                 <ngx-datatable-column name="Telefono" prop="Telefono"></ngx-datatable-column>
                 <ngx-datatable-column name="Celular" prop="Celular"></ngx-datatable-column>
-                <ngx-datatable-column name="Observaciones" prop="Observaciones"></ngx-datatable-column>
-                <ngx-datatable-column name="Id_departamento" prop="Id_departamento"></ngx-datatable-column>
-                <ngx-datatable-column name="Id_tipoindividuo2" prop="Id_tipoindividuo2"></ngx-datatable-column>
+                <ngx-datatable-column name="Observaciones" prop="observacionsac"></ngx-datatable-column>
+                <ngx-datatable-column name="Estado" prop="nombreTR"></ngx-datatable-column>
+                <!-- <ngx-datatable-column name="Id_departamento" prop="Id_departamento"></ngx-datatable-column>
+                <ngx-datatable-column name="Id_tipoindividuo2" prop="Id_tipoindividuo2"></ngx-datatable-column> -->
 
-                 <!-- <ngx-datatable-column name="Ruta" prop="Ruta"></ngx-datatable-column>  -->
+                <!-- <ngx-datatable-column name="Ruta" prop="Ruta"></ngx-datatable-column>  -->
                 <ngx-datatable-column name="Fecha Creacion" prop="FechaCreacion"></ngx-datatable-column>
             </ngx-datatable>
 

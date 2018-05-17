@@ -21,6 +21,8 @@ import { E_TipoEstadoRevision } from '../../../../../Models/E_TipoEstadoRevision
 import { id } from '@swimlane/ngx-datatable/release/utils';
 import { E_antecedentesxindividuo2 } from '../../../../../Models/E_antecedentesxindividuo2';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { ProfileConfig } from '../../../../../Tools/ProfileConfig';
+
 
 @Component({
     moduleId: module.id,
@@ -255,6 +257,14 @@ export class AdminIndividuo2Component implements OnInit {
             ;
             this.SucceSave = x;
             this.resultado = "Exito al modificar!";
+            if(this.tiporevisionselec==3){
+                var cl : E_Cliente = new E_Cliente();
+                cl.EmailObjeto.cuerpo = ProfileConfig.cuerpo2(this.form.value.Cedula, this.form.value.Nombre)
+                        this.AdminServices.enviarEmail(cl).subscribe((x: boolean) => {
+                            
+                        });
+            }
+            
         })
 
     }

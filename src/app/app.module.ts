@@ -82,6 +82,7 @@ import { LlamadasModule } from './main/content/AdminComponents/llamadas/llamadas
 import { ListMetasCallModule } from './main/content/AdminComponents/metas-call/list-metas-call/list-metas-call.module';
 import { ListarLlamadasModule } from './main/content/AdminComponents/llamadas/listar-llamadas/listar-llamadas.module';
 import { VehiculoModule } from './main/content/TransportadorCarroComponents/Vehiculo/vehiculo.module';
+import { ReporteMetasEstructuraModule } from 'app/main/content/AltaGerenciaComponents/ReporteMetasEstructura/ReporteMetasEstructura.module';
 
 
 const appRoutes: Routes = [
@@ -121,6 +122,8 @@ const appRoutes: Routes = [
     { path: 'Llamadas', redirectTo: '/Llamadas', pathMatch: 'full' },
     { path: 'ListarMetasCall', redirectTo: '/ListarMetasCall', pathMatch: 'full' },
     { path: 'ListarLlamadas', redirectTo: '/ListarLlamadas', pathMatch: 'full' },
+    { path: 'ReporteMetasEstructura', redirectTo: '/ReporteMetasEstructura', pathMatch: 'full' },
+    
     //Gerente
     { path: 'maingerente', redirectTo: '/maingerente', pathMatch: 'full' },
     { path: 'directordepartamento', redirectTo: '/directordepartamento', pathMatch: 'full' },
@@ -232,7 +235,8 @@ const appRoutes: Routes = [
         LlamadasModule,
         ListMetasCallModule,
         ListarLlamadasModule,
-        VehiculoModule
+        VehiculoModule,
+        ReporteMetasEstructuraModule
 
     ],
     providers: [

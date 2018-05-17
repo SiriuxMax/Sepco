@@ -74,7 +74,8 @@ export class ReporteIndividuo2FromDirectorComponent implements OnInit {
         private Router: Router,
         private AdminServices: AdminServices,
         private IndividuoServices: IndividuoServices,
-        private UserService: UserService) {
+        private UserService: UserService,public navigation:NavigationInfoService) {
+            if (this.NavigationData.storage == undefined) {}
     }
 
 
@@ -248,5 +249,13 @@ export class ReporteIndividuo2FromDirectorComponent implements OnInit {
         } else {
             this.chargeParamsBasic()
         }
+    }
+
+    modificar(event:any){
+        
+        console.log(event);
+        this.navigation.reporte2=event;
+        this.Router.navigate(['/Individuo2Dir'])
+
     }
 }

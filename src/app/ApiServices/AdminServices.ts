@@ -170,6 +170,13 @@ export class AdminServices {
             , request, httpOptions).map(this.EvalBool)
     }
 
+    modificarIndividuo22(CLient: E_Individuo2): Observable<boolean> {
+        const httpOptions = this.HeaderBuilder.HeadNow()
+        var request = JSON.stringify(CLient)
+        return this.Http.post(this.UrlNow + "Individuo/ModificarIndividuo2"
+            , request, httpOptions).map(this.EvalBool)
+    }
+
     ListarDirectorDepto(CLient: E_DirectorDepartamento): Observable<Array<E_DirectorDepartamento>> {
         const httpOptions = this.HeaderBuilder.HeadNow()
         var request = JSON.stringify(CLient)

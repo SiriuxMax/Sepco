@@ -11,6 +11,7 @@ export class E_Individuo2 {
     public Correo: string
     public Telefono: string
     public Celular: string       
+    public nombreTR: string   
     public Activo: boolean
     public FechaCreacion: Date
     public Id_departamento: number
@@ -20,6 +21,7 @@ export class E_Individuo2 {
     public CambiarClave: boolean
     public Detalleindividuo:Array<E_DetalleIndividuo> 
     public observacionsac: string
+    public Estado: string
     public antecedendes:Array<E_antecedentesxindividuo2>
     
     constructor() { }

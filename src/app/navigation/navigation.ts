@@ -140,6 +140,15 @@ export const navigationAdmin = [
                 'icon': 'map',
                 'url': '/MetasCall',
             },
+            {
+                'id': 'Llamadas',
+                'title': 'Llamadas CallCenter',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'map',
+                'url': '/Llamadas',
+            },
+            
             
 
 
@@ -381,7 +390,16 @@ export const navigationAltaGerencia = [
                 'type': 'item',
                 'icon': 'assessment',
                 'url': '/ReporteMetasAlta',
-            },            
+            },   
+            {
+                'id': 'ReporteMetasEstructura',
+                'title': 'Reporte Metas de Estructura',
+                'translate': 'NAV.SAMPLE.TITLE',
+                'type': 'item',
+                'icon': 'assessment',
+                'url': '/ReporteMetasEstructura',
+            },        
+                
             {
                 'id': 'Salir',
                 'title': 'Salir',
